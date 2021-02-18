@@ -1,8 +1,11 @@
 
+import 'react-native-gesture-handler';
 import { StatusBar } from 'expo-status-bar';
 import React, { useEffect, useState } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import { fetchMeetups } from './constants/api';
+import Sandbox from './components/sandbox';
+import SignUp from './screens/registratrion';
 
 export default function App() {
   const test_data = useState();
@@ -17,10 +20,16 @@ export default function App() {
   },[])
  
   return (
+    //<Sandbox />
     <View style={styles.container}>
-      <Text>LookUp</Text>
-      <Text></Text>
-      <StatusBar style="auto" />
+      <SignUp />
+        <View>
+          
+          <View>
+            <Text>Blank</Text>
+         
+          </View>
+        </View>
     </View>
   );
 }
@@ -28,8 +37,6 @@ export default function App() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
+    backgroundColor: '#0a031d',
   },
 });
