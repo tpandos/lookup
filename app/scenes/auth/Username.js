@@ -52,3 +52,4 @@ Username.navigationOptions = ({}) => {
         title: ``
     }
 };
+
