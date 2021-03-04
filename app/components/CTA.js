@@ -42,12 +42,12 @@ const styles = StyleSheet.create({
     footerText: {
         fontSize: 16,
         fontFamily: "Helvetica Neue",
-        color: "#636466"
+        color: "#fff"
     },
 
     footerCTA: {
         fontSize: 16,
-        color: "#733AC2",
+        color: '#00ffff',
         fontWeight: "500",
         fontFamily: "Helvetica Neue"
     }

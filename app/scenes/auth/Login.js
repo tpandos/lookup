@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import {View} from 'react-native';
+import {View, Text, Image} from 'react-native';
+import Logo from "../../../assets/logo2.png"
 
 import * as api from "../../services/auth";
 import { useAuth } from "../../providers/auth";
@@ -41,9 +42,12 @@ export default function Login(props) {
         }
     }
 
-    let formProps = {title: "Login", fields, onSubmit, loading};
+    let formProps = { title: "Login", fields, onSubmit, loading};
     return (
-        <View style={{flex: 1, paddingHorizontal: 16, backgroundColor:"#fff"}}>
+        <View style={{flex: 1, paddingHorizontal: 16, backgroundColor:"#000033"}}>
+             <View>
+                <Image source={Logo} style={{marginHorizontal: 80}}/>
+            </View>
             <Header title={"Login"}/>
             <View style={{flex: 1}}>
                 <ErrorText error={error}/>
