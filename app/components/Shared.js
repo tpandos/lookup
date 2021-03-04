@@ -37,7 +37,7 @@ const styles = StyleSheet.create({
 
     headerText: {
         fontSize: 25,
-        color: "#362068",
+        color: "#00ffff",
         fontWeight: "400",
         fontFamily: "Helvetica Neue"
     },

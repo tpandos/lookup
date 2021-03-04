@@ -36,7 +36,7 @@ export default function ForgotPassword(props) {
 
     let formProps = {title: "Submit", fields, onSubmit, loading };
     return (
-        <View style={{flex: 1, paddingHorizontal: 16, backgroundColor:"#fff"}}>
+        <View style={{flex: 1, paddingHorizontal: 16, backgroundColor:"#000033"}}>
             <Header title={"Recover Password"}/>
             <View style={{flex:1}}>
                 <ErrorText error={error}/>
