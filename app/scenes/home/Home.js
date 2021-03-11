@@ -10,7 +10,7 @@ export default function Home(props) {
     const user = state.user;
 
     return (
-        <View style={{flex: 1, backgroundColor: '#fff', alignItems: 'center', justifyContent: 'center'}}>
+        <View style={{flex: 1, backgroundColor: 'red', alignItems: 'center', justifyContent: 'center'}}> 
             <Text>{`Welcome ${user.firstName} ${user.lastName} (${user.username})`}</Text>
 
             <Button title={"Update Profile"} onPress={() => navigate('UpdateProfile')}/>
