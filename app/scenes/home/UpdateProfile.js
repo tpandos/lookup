@@ -4,7 +4,7 @@ import {View} from 'react-native';
 import * as api from "../../services/auth";
 import { useAuth } from "../../providers/auth";
 
-import Form from 'react-native-basic-form';
+import Form, { TYPES } from 'react-native-basic-form';
 import {ErrorText} from "../../components/Shared";
 
 export default function UpdateProfile (props) {
@@ -21,8 +21,10 @@ export default function UpdateProfile (props) {
         {name: 'username', label: 'Username', required: true},
 
         // *********** extra profile stuff
-        {name: 'institution', label: 'Institution', required: true}
-
+        {name: 'role', label: 'Occupation', required: true},
+        {name: 'institute', label: 'Institution', required: true},
+        {name: 'major', label: 'Major', required: true},
+        {name: 'grade', label: 'Grade Level', required: true},
     ];
 
     async function onSubmit(data) {
@@ -42,7 +44,7 @@ export default function UpdateProfile (props) {
     }
 
     return (
-        <View style={{flex: 1, paddingHorizontal: 16, backgroundColor:"#fff"}}>
+        <View style={{flex: 1, paddingHorizontal: 16, backgroundColor:'#000033'}}>
             <View style={{flex:1}}>
                 <ErrorText error={error}/>
                 <Form
