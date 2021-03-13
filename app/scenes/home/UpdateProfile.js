@@ -44,7 +44,7 @@ export default function UpdateProfile (props) {
     }
 
     return (
-        <View style={{flex: 1, paddingHorizontal: 16, backgroundColor:'#000033'}}>
+        <View style={{flex: 1, paddingHorizontal: 16, backgroundColor:'yellow'}}>
             <View style={{flex:1}}>
                 <ErrorText error={error}/>
                 <Form
