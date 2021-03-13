@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import {View} from 'react-native';
+import {View, ScrollView} from 'react-native';
 
 import * as api from "../../services/auth";
 import { useAuth } from "../../providers/auth";
@@ -15,6 +15,9 @@ export default function UpdateProfile (props) {
     const [loading, setLoading] = useState(false);
     const { state, updateUser } = useAuth();
 
+    
+        
+                
     const fields = [
         {name: 'firstName', label: 'First Name', required: true},
         {name: 'lastName', label: 'Last Name', required: true},
@@ -44,8 +47,9 @@ export default function UpdateProfile (props) {
     }
 
     return (
-        <View style={{flex: 1, paddingHorizontal: 16, backgroundColor:'yellow'}}>
-            <View style={{flex:1}}>
+      <ScrollView>
+        <View style={{flex: 1, paddingHorizontal: 16, backgroundColor:'#000033'}}>
+            <View style={{flex:1, padding:10}}>
                 <ErrorText error={error}/>
                 <Form
                     fields={fields}
@@ -56,6 +60,8 @@ export default function UpdateProfile (props) {
                     onSubmit={onSubmit}/>
             </View>
         </View>
+        
+       </ScrollView>
     );
 };
 

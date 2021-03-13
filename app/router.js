@@ -5,7 +5,7 @@ import {createAppContainer, createSwitchNavigator} from 'react-navigation';
 //IMPORT ROUTES
 import AuthStack from "./routes/auth";
 import HomeStack from "./routes/home";
-
+import FriendListStack from "./routes/friendlist";
 import AuthLoading from "./scenes/auth/AuthLoading";
 import AuthProvider from "./providers/auth";
 
@@ -14,7 +14,9 @@ const AppStack = createSwitchNavigator(
     {
         Loading: AuthLoading,
         Auth: AuthStack,
-        App: HomeStack
+        App: HomeStack,
+        FriendList : FriendListStack
+        
     },
     {initialRouteName: 'Loading'}
 );
