@@ -5,6 +5,7 @@ import { Ionicons } from '@expo/vector-icons';
 import { FontAwesome } from '@expo/vector-icons';
 
 import { useAuth } from "../../providers/auth";
+import { TouchableOpacity } from 'react-native-gesture-handler';
 
 export default function Home(props) {
     const {navigate} = props.navigation;
@@ -13,44 +14,69 @@ export default function Home(props) {
     const user = state.user;
 
     return (
-        <View> 
-            <ScrollView showsVerticalScrollIndicator={false}>
-                <View style={{padding:10, width: '100%', backgroundColor: '#000033', height: 100}}>
+        <View style={{flex:1, flexDirection:'column', backgroundColor:'#000033'}}> 
+
+            <View style={{ width: '100%', backgroundColor: '#000033', height: 80}}>
+            </View>
+                
+            <View style={{alignItems: 'center', backgroundColor:'white'}}>
+                <Image source={require('../../../assets/alien.png')} style={{width: 140, height: 140, borderRadius: 100, marginTop: -70}}></Image>
+                <Text style={{fontSize: 25, fontWeight: 'bold', padding: 10}}>{user.firstName} {user.lastName}</Text>
+            </View>
+            <ScrollView showsVerticalScrollIndicator={false} style={{backgroundColor: '#000033'}}>
+                <View style={styles.fieldview}>
+                    <FontAwesome5 name="school" size={20} color="#00ffff" />
+                    <Text style={styles.fieldstext}> {user.institute}</Text>
+                </View>
+                <View style={styles.fieldview}>
+                    <FontAwesome name="id-card" size={20} color="#00ffff" />
+                    <Text style={styles.fieldstext}> {user.role}</Text>
+                </View>
+                <View style={styles.fieldview}>
+                    <FontAwesome5 name="book" size={20} color="#00ffff" />
+                    <Text style={styles.fieldstext}> {user.major}</Text>
+                </View>
+                <View style={styles.fieldview}>
+                    <Ionicons name="school-sharp" size={20} color="#00ffff" />
+                    <Text style={styles.fieldstext}> {user.grade}</Text>
+                </View> 
+
+                <View style={{backgroundColor:'#262626', marginTop:50, marginBottom:20}}>
+                        <Text style={{padding:10, color: 'white', fontWeight:'bold', fontSize:20}}>SKILLS</Text>
+                </View>
+                
+                <View style={{flex:1,flexDirection:'row', backgroundColor:'red'}}>
+                    <Text>skill1</Text>
+                    <Text>skill2</Text>
+                    <Text>skill3</Text>
+
+                    </View>
+
+
+
+
+             <View style={{flex:1, flexDirection:'row', alignSelf:'center', backgroundColor:'#000033'}}>
             
 
-
-
-            {/* <Text style={styles.userinfo}>{`Welcome ${user.firstName} ${user.lastName} (${user.username})`}</Text>
-            <Text style={styles.userinfo}>{user.institute}</Text>
-            <Text style={styles.userinfo}>{user.major}</Text>
-            <Text style={styles.userinfo}>{user.grade}</Text> 
-
-            <Button title={"Update Profile"} onPress={() => navigate('UpdateProfile')}/>
-            <Button title={"Log Out"} onPress={() => {handleLogout(); navigate('Auth');}}/> */}
-                </View>
-                <View style={{alignItems: 'center'}}>
-                    <Image source={require('../../../assets/alien.png')} style={{width: 140, height: 140, borderRadius: 100, marginTop: -70}}></Image>
-                    <Text style={{fontSize: 25, fontWeight: 'bold', padding: 10}}>{user.firstName} {user.lastName}</Text>
-                </View>
-                <View style={styles.fieldview}>
-                <FontAwesome5 name="school" size={20} color="black" />
-                <Text style={{fontSize: 18, fontWeight: 'bold', padding: 3}}> {user.institute}</Text>
-                </View>
-                <View style={styles.fieldview}>
-                <FontAwesome name="id-card" size={24} color="black" />
-                <Text style={{fontSize: 18, fontWeight: 'bold', padding: 3}}> {user.role}</Text>
-                </View>
-                <View style={styles.fieldview}>
-               <FontAwesome5 name="book" size={24} color="black" />
-                <Text style={{fontSize: 18, fontWeight: 'bold', padding: 3}}> {user.major}</Text>
-                </View>
-                <View style={styles.fieldview}>
-                <Ionicons name="school-sharp" size={24} color="black" />
-                <Text style={{fontSize: 18, fontWeight: 'bold', padding: 3}}> {user.grade}</Text>
-                </View> 
+                   
+                <TouchableOpacity onPress={() => {handleLogout(); navigate('Auth');}}>
+                    <View style={styles.button}>
+                        <Text style={{fontWeight:'bold'}}>Log Out</Text>
+                    </View>
+                </TouchableOpacity>
+               
+               
+                <TouchableOpacity onPress={() => {navigate('UpdateProfile')}}>
+                    <View style={styles.button}>
+                        <Text style={{fontWeight: 'bold'}}>Update Profile</Text>
+                    </View>    
+                </TouchableOpacity>
+                </View>   
+              
             </ScrollView>
-
+            
         </View>
+        
     );
 }
 
@@ -59,13 +85,39 @@ const styles = StyleSheet.create({
         alignSelf: 'center', 
         flexDirection: 'row', 
         justifyContent: 'center',
-        backgroundColor: 'white', 
+        backgroundColor: '#000033', 
         width: '90%',
-        padding: 12, 
-        paddingBottom: 22, 
-        borderRadius: 50, 
-        shadowOpacity: 80, 
+        padding: 10, 
+        paddingBottom: 20, 
+        borderRadius: 10, 
+        borderColor: 'cyan', 
+        borderWidth: 2, 
+        shadowOpacity: 80,
+        shadowColor: 'white',  
         elevation: 15, 
         marginTop: 20,
-        marginBottom: 1}
+        marginBottom: 1
+    }, 
+    button: {
+        
+        fontWeight: 'bold', 
+        padding:10, 
+        backgroundColor:'#09ff00',
+        borderRadius:10,
+        marginHorizontal: 5
+    }, 
+    fieldstext: {
+        fontSize: 18, 
+        fontWeight: 'bold', 
+        padding: 1,
+        color: 'white'
+    }
 })
+
+      {/* <Text style={styles.userinfo}>{`Welcome ${user.firstName} ${user.lastName} (${user.username})`}</Text>
+            <Text style={styles.userinfo}>{user.institute}</Text>
+            <Text style={styles.userinfo}>{user.major}</Text>
+            <Text style={styles.userinfo}>{user.grade}</Text> 
+
+            <Button title={"Update Profile"} onPress={() => navigate('UpdateProfile')}/>
+            <Button title={"Log Out"} onPress={() => {handleLogout(); navigate('Auth');}}/> */}
