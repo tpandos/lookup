@@ -14,6 +14,7 @@ export default function Home(props) {
     const user = state.user;
     
     return (
+        <View style={{flex:1, backgroundColor:'#000033'}}>
         <ScrollView showsVerticalScrollIndicator={false} style={{backgroundColor: '#000033'}}>
 
             <View style={{flex:1, flexDirection:'column', backgroundColor:'#000033'}}> 
@@ -37,7 +38,7 @@ export default function Home(props) {
                     </View>
             </View>
         
-        
+    
             <View style={styles.fieldview}>
                 <FontAwesome5 name="school" size={20} color="#00ffff" />
                 <Text style={styles.fieldstext}> {user.institute}</Text>
@@ -85,6 +86,26 @@ export default function Home(props) {
         
             </View>
         </ScrollView>
+        <TouchableOpacity onPress={() => {navigate('Search')}}>
+        <View style={{ 
+            flexDirection:'row', 
+            padding:5,
+            marginBottom:10,
+            marginHorizontal:50, 
+            paddingLeft:90,
+            alignContent:'center',
+            borderRadius:10, 
+            backgroundColor:'#29e3dd'
+            }}>
+        
+        <Text style={{color:'black', fontSize:20, marginRight:30, fontWeight:'bold'}}>
+            Explore
+        </Text>
+        <FontAwesome5 name="search-location" size={30} color="black" />
+        
+        </View>
+        </TouchableOpacity>
+        </View>
         );
     }
     
