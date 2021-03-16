@@ -11,7 +11,7 @@ export default function Home(props) {
 
     return (
         <View style={{flex: 1, backgroundColor: '#fff', alignItems: 'center', justifyContent: 'center'}}>
-            <Text>{`Welcome ${user.firstName} ${user.lastName} (${user.username})`}</Text>
+            <Text>{`Welcome! ${user.firstName} ${user.lastName} (${user.username})`}</Text>
 
             <Button title={"Update Profile"} onPress={() => navigate('UpdateProfile')}/>
 
