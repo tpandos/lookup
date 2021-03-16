@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
-import {View} from 'react-native';
+import {View, ScrollView} from 'react-native';
 
 import * as api from "../../services/auth";
 import { useAuth } from "../../providers/auth";
 
-import Form from 'react-native-basic-form';
+import Form, { TYPES } from 'react-native-basic-form';
 import {ErrorText} from "../../components/Shared";
 
 export default function UpdateProfile (props) {
@@ -15,10 +15,19 @@ export default function UpdateProfile (props) {
     const [loading, setLoading] = useState(false);
     const { state, updateUser } = useAuth();
 
+    
+        
+                
     const fields = [
         {name: 'firstName', label: 'First Name', required: true},
         {name: 'lastName', label: 'Last Name', required: true},
         {name: 'username', label: 'Username', required: true},
+
+        // *********** extra profile stuff
+        {name: 'role', label: 'Occupation', required: true},
+        {name: 'institute', label: 'Institution', required: true},
+        {name: 'major', label: 'Major', required: true},
+        {name: 'grade', label: 'Grade Level', required: true},
     ];
 
     async function onSubmit(data) {
@@ -38,8 +47,9 @@ export default function UpdateProfile (props) {
     }
 
     return (
-        <View style={{flex: 1, paddingHorizontal: 16, backgroundColor:"#fff"}}>
-            <View style={{flex:1}}>
+      <ScrollView>
+        <View style={{flex: 1, paddingHorizontal: 16, backgroundColor:'#000033'}}>
+            <View style={{flex:1, padding:10}}>
                 <ErrorText error={error}/>
                 <Form
                     fields={fields}
@@ -50,6 +60,8 @@ export default function UpdateProfile (props) {
                     onSubmit={onSubmit}/>
             </View>
         </View>
+        
+       </ScrollView>
     );
 };
 
