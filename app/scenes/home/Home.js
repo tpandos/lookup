@@ -5,14 +5,35 @@ import { Ionicons } from '@expo/vector-icons';
 import { FontAwesome } from '@expo/vector-icons';
 
 import { useAuth } from "../../providers/auth";
-import { TouchableHighlight, TouchableOpacity } from 'react-native-gesture-handler';
+import { FlatList, TouchableHighlight, TouchableOpacity } from 'react-native-gesture-handler';
 
 export default function Home(props) {
     const {navigate} = props.navigation;
     
     const {state, handleLogout} = useAuth();
     const user = state.user;
-    
+
+    // start loop
+    var myloop = [];
+
+    for (let i = 0; i < user.skills.length; i++) {
+        myloop.push(
+        <View key={i}>
+        <Text style={{ textAlign: 'center', marginTop: 5 }} >{user.skills[i].name}: {user.skills[i].rank}</Text>
+        </View>
+        );
+    }
+    // end loop
+
+    // profile Image url
+    let profileImage;
+    // set defalut profile Image 
+    if (!user.profileImage) {
+        profileImage = require('../../../assets/alien.png')
+    } else {
+        profileImage = {uri: user.profileImage}
+    }
+
     return (
         <View style={{flex:1, backgroundColor:'#000033'}}>
         <ScrollView showsVerticalScrollIndicator={false} style={{backgroundColor: '#000033'}}>
@@ -22,8 +43,9 @@ export default function Home(props) {
                 </View>
         
             <View style={{alignItems: 'center', backgroundColor:'white',borderWidth: 3, borderColor:'#00ffff', borderRadius:20}}>
-                <Image source={require('../../../assets/alien.png')} style={{width: 140, height: 140, borderRadius: 100, marginTop: -70}}></Image>
-                <Text style={{fontSize: 25, fontWeight: 'bold', padding: 10}}>{user.firstName} {user.lastName}</Text>
+           
+                <Image source={profileImage} style={{width: 260, height: 260, borderRadius: 200, marginTop: -70}}></Image>
+                <Text style={{fontSize: 25, fontWeight: 'bold', padding: 10}}>{user.username}</Text>
         
                     <View style={{flexDirection:'row'}}>
                         <View style={{ padding:10, marginHorizontal:100, marginBottom:5}}>
@@ -62,11 +84,10 @@ export default function Home(props) {
             <View style={{backgroundColor:'#262626', marginTop:50, marginBottom:20}}>
                 <Text style={{padding:10, color: 'white', fontWeight:'bold', fontSize:20}}>SKILLS</Text>
             </View>
-        
+            
+            {/* call loop */}
             <View style={{flex:1,flexDirection:'row', backgroundColor:'red', padding:10}}>
-                <Text>skill1</Text>
-                <Text>skill2</Text>
-                <Text>skill3</Text>
+                <Text>{myloop}</Text>
             </View>
         
             <View style={{flex:1, flexDirection:'row', alignSelf:'center', backgroundColor:'#000033', padding:30}}>
@@ -108,6 +129,7 @@ export default function Home(props) {
         </View>
         );
     }
+
     
     const styles = StyleSheet.create({
         fieldview: {
@@ -142,4 +164,5 @@ export default function Home(props) {
             color: 'white'
         }
     })
+    
     

@@ -40,12 +40,44 @@ export async function updateProfile(userId, data){
                 "Content-Type": "multipart/form-data"
             }
         };
+        console.log('data==========================', data)
+        console.log('datalength', data.skills_1)
+
+        let skills = [];
+        let rank = [];
+        let i = 1;
+        for (let key in data) {
+            console.log('key', key)
+            if (i > 3) return;
+            if (key == `skills_${i}`) {
+                for (let key_2 in data) {
+                    if (key_2 == `rank_${i}`) {
+                        console.log('find it ===============')
+                        console.log('value', data[key])
+                        skills.push(data[key])
+                        rank.push(data[key_2])   
+                    }
+                }
+                delete data.skills_1
+                delete data.rank_1
+                i++;
+            }
+               
+        }
+        console.log('skills ================', skills)
+        console.log('rank:===================', rank)
 
         const form_data = new FormData();
+        console.log('type of form_data', form_data)
+        console.log('data==================')
+        console.log(data)
         for ( let key in data )
             form_data.append(key, data[key]);
 
+        console.log('formdata=====================')
+        console.log(form_data)
         let res = await axios.put(`${c.UPDATE_PROFILE}/${userId}`, form_data, options);
+
         return res.data;
     }catch (e) {
         throw handler(e);
