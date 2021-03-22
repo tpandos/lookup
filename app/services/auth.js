@@ -46,32 +46,37 @@ export async function updateProfile(userId, data){
         
         let skills = [];
         let rank = [];
-        let i = 1;
+        // let i = 1;
 
    
 
-        for (let key in data) {
-            console.log('key', key)
-            if (i > 3) return;
-            if (key == `skills_${i}`) {
-                for (let key_2 in data) {
-                    if (key_2 == `rank_${i}`) {
-                        // console.log('find it ===============')
-                       // console.log('value', data[key])
-                        skills.push(data[key])
-                        rank.push(data[key_2])   
-                    }
-                   // console.log('key_2', key_2)
-                }
-                delete data.skills_1
-                delete data.rank_1
-                i++;
-            }
+        // for (let key in data) {
+        //     console.log('key', key)
+        //     if (i > 3) return;
+        //     if (key == `skills_${i}`) {
+        //         for (let key_2 in data) {
+        //             if (key_2 == `rank_${i}`) {
+        //                 // console.log('find it ===============')
+        //                // console.log('value', data[key])
+        //                 skills.push(data[key])
+        //                 rank.push(data[key_2])   
+        //             }
+        //            // console.log('key_2', key_2)
+        //         }
+        //         delete data.skills_1
+        //         delete data.rank_1
+        //         i++;
+        //     }
                
-        }
+        // }
 
-        // create an object
-        let aSkills = {skills, rank}
+         // gotta fixx the loop, this is temporary   
+        skills.push(data.skills_1); 
+        rank.push(data.rank_1); 
+        skills.push(data.skills_2); 
+        rank.push(data.rank_2); 
+        skills.push(data.skills_3); 
+        rank.push(data.rank_3); 
 
         const form_data = new FormData();
         console.log('type of form_data', form_data)
@@ -90,17 +95,9 @@ export async function updateProfile(userId, data){
         form_data.append("skills", JSON.stringify(skills));
         form_data.append("rank", JSON.stringify(rank));
 
-
-        
-
         console.log('formdata=====================')
         console.log(form_data)
         console.log(userId); 
-      //  console.log('object keys');
-        // let somekeys = Object.keys(skills); 
-        // let somekeys2 = Object.keys(skills2); 
-        // console.log(somekeys);
-        // console.log(somekeys2);
 
 
         let res = await axios.put(`${c.UPDATE_PROFILE}/${userId}`, form_data, options);

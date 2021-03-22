@@ -25,35 +25,19 @@ export default function UpdateProfile (props) {
         {name: 'institute', label: 'Institution', required: true},
         {name: 'major', label: 'Major', required: true},
         {name: 'grade', label: 'Grade Level', required: true},
-        
-        {  name: 'skills_1', label: 'Skills-1'},
-        {  name: 'skills_2', label: 'Skills-2'},
-        // {  name: 'skills-3', label: 'Skills-3'},
-        {  name: 'rank_1', label: 'Rank-1'},
-        {  name: 'rank_2', label: 'Rank-2'},
-
-     
-  
-        // {  name: 'rank-3', label: 'Rank-3'},
-    /*req.body =  { 
-          skills: ['PYTHON', 'JAVA']
-          rank: [5, 6]
-
-          */
-     
+        [
+            {  name: 'skills_1', label: 'Skill-1', required: true},
+            {  name: 'rank_1', label: 'Rank-1', required: true},
+        ],
+        [
+            {  name: 'skills_2', label: 'Skill-2', required: true},
+            {  name: 'rank_2', label: 'Rank-2', required: true}, 
+        ],
+        [
+            {  name: 'skills_3', label: 'Skill-3', required: true},
+            {  name: 'rank_3', label: 'Rank-3', required: true}, 
+        ]
     ];
-
-    /*
-
-        ..
-        skills: [{
-            name: '',
-            rank: '',
-        }]
-
-
-    */
-
 
 
     async function onSubmit(data) {
