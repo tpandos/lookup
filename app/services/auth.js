@@ -41,39 +41,47 @@ export async function updateProfile(userId, data){
             }
         };
         console.log('data==========================', data)
-        console.log('datalength', data.skills_1)
 
-        let skills = [];
-        let rank = [];
-        let i = 1;
-        for (let key in data) {
-            console.log('key', key)
-            if (i > 3) return;
-            if (key == `skills_${i}`) {
-                for (let key_2 in data) {
-                    if (key_2 == `rank_${i}`) {
-                        console.log('find it ===============')
-                        console.log('value', data[key])
-                        skills.push(data[key])
-                        rank.push(data[key_2])   
-                    }
-                }
-                delete data.skills_1
-                delete data.rank_1
-                i++;
-            }
-               
-        }
+        // let skills = [];
+        // let rank = [];
+        // let i = 1;
+        // for (let key in data) {
+        //     if (i > 3) return;
+        //     if (key == `skills_${i}`) {
+        //         for (let key_2 in data) {
+        //             if (key_2 == `rank_${i}`) {
+        //                 console.log('find it ===============')
+        //                 console.log('value', data[key])
+        //                 skills.push(data[key])       
+        //                 rank.push(data[key_2])   
+        //                 delete data[key]
+        //                 delete data[key_2]
+        //             }
+        //         }
+        //         i++;
+        //     } 
+        // }
+        
         console.log('skills ================', skills)
         console.log('rank:===================', rank)
+        console.log('data before ==================')
+        console.log(data)
+
+        data['skills'] = skills;
+        data['rank'] = rank
+       
+        console.log('data after==================')
+        console.log(data)
 
         const form_data = new FormData();
-        console.log('type of form_data', form_data)
-        console.log('data==================')
-        console.log(data)
+        
         for ( let key in data )
             form_data.append(key, data[key]);
-
+        // for (let key in data) {
+        //     Array.isArray(data[key])
+        //         ? data[key].forEach(value => form_data.append(key + '[]', value))
+        //         : form_data.append(key, data[key]) ;
+        // }
         console.log('formdata=====================')
         console.log(form_data)
         let res = await axios.put(`${c.UPDATE_PROFILE}/${userId}`, form_data, options);

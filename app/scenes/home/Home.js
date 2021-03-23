@@ -23,6 +23,7 @@ export default function Home(props) {
         </View>
         );
     }
+    
     // end loop
 
     // profile Image url
