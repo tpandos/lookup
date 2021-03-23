@@ -108,6 +108,17 @@ export async function updateProfile(userId, data){
     }
 }
 
+export function updateLocation(userId, data) {
+    
+    axios.put(`${c.UPDATE_PROFILE}/${userId}/updateGeoPoint`, {geoPoint: data})
+        .then(response => { console.log(response); })
+        .catch(error => { console.log(error.response); });
+
+        console.log("jammeseeeeey");
+        console.log(data);
+
+}
+
 export function handler(err) {
     let error = err;
 
