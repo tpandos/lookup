@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import {View, ScrollView, Text, Image} from 'react-native';
+import {View, ScrollView, Text, Image, StyleSheet} from 'react-native';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 
 import * as api from "../../services/auth";
 import { useAuth } from "../../providers/auth";
@@ -11,6 +12,7 @@ export default function UpdateProfile (props) {
     const {navigation} = props;
 
     //1 - DECLARE VARIABLES
+    const {navigate} = props.navigation;
     const [error, setError] = useState(null);
     const [loading, setLoading] = useState(false);
     const { state, updateUser } = useAuth();
@@ -76,6 +78,11 @@ export default function UpdateProfile (props) {
             <View style={{flex:1, padding:10}}>
                 <ErrorText error={error}/>
                 <Image source={profileImage} style={{width: 200, height: 200, borderRadius: 100, marginTop: -30, marginLeft:60}}></Image>
+                <TouchableOpacity onPress={() => {navigate('AllowLocation')}}>
+                    <View style={styles.button}>
+                        <Text style={{fontWeight: 'bold'}} >Allow Location</Text>
+                    </View>    
+                </TouchableOpacity>
                 <Form
                     fields={fields}
                     title={'Submit'}
@@ -89,6 +96,17 @@ export default function UpdateProfile (props) {
        </ScrollView>
     );
 };
+
+const styles = StyleSheet.create({
+    button: {
+            
+        fontWeight: 'bold', 
+        padding:10, 
+        backgroundColor:'#09ff00',
+        borderRadius:10,
+        marginHorizontal: 5
+    }
+})
 
 
 UpdateProfile.navigationOptions = ({}) => {
