@@ -24,44 +24,36 @@ export default function UpdateProfile (props) {
         {name: 'institute', label: 'Institution', required: true},
         {name: 'major', label: 'Major', required: true},
         {name: 'grade', label: 'Grade Level', required: true},
-        
-        {  name: 'skills_1', label: 'Skills-1', },
-        {  name: 'rank_1', label: 'Rank-1',},
-        {  name: 'skills_2', label: 'Skills-2'},
-        {  name: 'rank_2', label: 'Rank-2'}, 
-        // {  name: 'skills_3', label: 'Skills-3'},
-        // {  name: 'rank_3', label: 'Rank-3'},
-     
-     
+        [
+            {  name: 'skills_1', label: 'Skill-1', required: true},
+            {  name: 'rank_1', label: 'Rank-1', required: true},
+        ],
+        [
+            {  name: 'skills_2', label: 'Skill-2', required: true},
+            {  name: 'rank_2', label: 'Rank-2', required: true}, 
+        ],
+        [
+            {  name: 'skills_3', label: 'Skill-3', required: true},
+            {  name: 'rank_3', label: 'Rank-3', required: true}, 
+        ]
     ];
 
-    // constructor(props) 
-    // {
-    //     // super(props);
-    //     this.state = {
-    //         username: '',
-    //         role: '',
-    //         institute: '',
-    //         major: '',
-    //         grade: '',
-    //         skills_1: '',
-    //         rank_1: '',
-    //         skills_2: '',
-    //         rank_2: '',
-    //     }
-    // }
 
     async function onSubmit(data) {
+        console.log('@@@@', data)
         setLoading(true);
 
         try {
-            let response = await api.updateProfile(state.user._id, data);
+           let response = await api.updateProfile(state.user._id, data);
+        //    let response = await api.updateProfile(state.user._id, {
+        //     data);
             updateUser(response.user);
-
+            // console.log("this is from upprof: ", data);
             setLoading(false);
 
             navigation.goBack();
         } catch (error) {
+            console.log('***', error)
             setError(error.message);
             setLoading(false)
         }
