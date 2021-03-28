@@ -94,6 +94,14 @@ export async function updateProfile(userId, data){
         // object to string before the put
         form_data.append("skills", JSON.stringify(skills));
         form_data.append("rank", JSON.stringify(rank));
+        form_data.append("profileImage", {
+            uri: data.profileImage,
+            name: data.filename, 
+            type: data.type
+
+        })
+
+        
 
         console.log('formdata=====================')
         console.log(form_data)
