@@ -42,7 +42,7 @@ export async function updateProfile(userId, data){
             }
             
         };
-        console.log('data==========================', data)
+        // console.log('data==========================', data)
         
         let skills = [];
         let rank = [];
@@ -95,9 +95,9 @@ export async function updateProfile(userId, data){
         form_data.append("skills", JSON.stringify(skills));
         form_data.append("rank", JSON.stringify(rank));
 
-        console.log('formdata=====================')
-        console.log(form_data)
-        console.log(userId); 
+        // console.log('formdata=====================')
+        // console.log(form_data)
+        // console.log(userId); 
 
 
         let res = await axios.put(`${c.UPDATE_PROFILE}/${userId}`, form_data, options);
@@ -106,6 +106,13 @@ export async function updateProfile(userId, data){
     }catch (e) {
         throw handler(e);
     }
+}
+
+export function updateLocation(userId, data) {
+    axios.put(`${c.UPDATE_PROFILE}/${userId}/updateGeoPoint`, {geoPoint: data})
+        .then()
+        .catch(error => { console.log(error.response); });
+
 }
 
 export function handler(err) {
