@@ -84,6 +84,65 @@ export async function updateProfile(userId, data){
     }
 }
 
+
+export async function search(userId, data1, data2) {
+    console.log(data1);
+    console.log(data2);
+    /*onst params = new FormData({
+        keyword : 'data1',
+        method : 'data2'
+    }
+    );
+    params.append('keyword', data1)
+    params.append('method', data2)*/
+
+        const options = {
+            method: 'POST',
+            headers: {
+                Accept: 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({data1,data2})
+        };
+
+        try {
+        let res = await axios.post(`${c.SEARCH}/${userId}/search`, {
+            keyword: {keyword : data1},
+            method :{method : data2}
+        }, options);
+        /*let res = await fetch('c.SEARCH}/${userId}/search', options);*/
+        console.log(res.data1);
+        console.log(res.data2);
+        return res.data1, res.data2;
+        
+    }catch (e) {
+        throw handler(e);
+    }
+}
+//let res = await axios.post(`${c.SEARCH}/${userId}/search`, {params : {[keyword] : data1} & {[method] : data2}} , options);
+
+/*export async function searchFilter(userId, data1, data2) {
+    console.log(data);
+        const options = {
+            method: 'POST',
+            headers: {
+                Accept: 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({data1, data2})
+        };
+        try {
+        let res = await axios.post(`${c.SEARCH}/${userId}/search`, data, options);
+        //let res = await fetch(c.SEARCH, options);
+        return res.data;
+    }catch (e) {
+        throw handler(e);
+    }
+}*/
+
+
+
+
 export function handler(err) {
     let error = err;
 

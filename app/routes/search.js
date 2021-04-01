@@ -1,5 +1,5 @@
-import React from 'react';
 import {createStackNavigator} from 'react-navigation-stack';
+
 
 import SearchScreen from "../scenes/home/Search"; 
 import HomeScreen from "../scenes/home/Home"; 
@@ -20,4 +20,6 @@ const SearchStack = createStackNavigator(
     }
      
 );
+
+  
 export default SearchStack; 
