@@ -24,14 +24,17 @@ const [error, setError] = useState(null);
 const [loading, setLoading] = useState(false);
 const { state, updateUser } = useAuth();
 const [condition , searchBarFocused] = useState(false);
-const fields = [{name: 'search', label: 'Search a Keyword', required: true} , {name: 'searchfilter', label: 'Filter method', required: true}]
+const fields = [{name: 'keyword', label: 'Search a Keyword', required: true} , {name: 'method', label: 'Filter method', required: true}]
 
-    async function onSubmit(data1, data2) {
+    async function onSubmit(data) {
       setLoading(true);
 
       try {
-          let response = await api.search(state.user._id, data1, data2);
-          updateUser(response.user);
+          let response = await api.search(state.user._id, data);
+          console.log('response');
+          console.log(response)
+          
+          //updateUser(response.user);
 
           setLoading(false);
 

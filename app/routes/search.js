@@ -22,4 +22,4 @@ const SearchStack = createStackNavigator(
 );
 
   
-export default SearchStack; 
+export default SearchStack;
