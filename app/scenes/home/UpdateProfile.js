@@ -181,11 +181,11 @@ export default function UpdateProfile (props) {
                 <Image source={profileImage} style={{width: 200, height: 200, borderRadius: 100, marginTop: -30, marginLeft:60}}></Image>
                 <View style={{flex:1, flexDirection:'row', alignSelf:'center', backgroundColor:'#000033', padding:30}}>
 
-                <TouchableOpacity onPress={() => {navigate('AllowLocation')}}>
+                {/* <TouchableOpacity onPress={() => {navigate('AllowLocation')}}>
                     <View style={styles.button}>
                         <Text style={{fontWeight: 'bold'}} >Allow Location</Text>
                     </View>    
-                </TouchableOpacity>
+                </TouchableOpacity> */}
 
                 <TouchableOpacity onPress={pickImage}>
                     <View style={styles.button}>
