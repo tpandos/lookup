@@ -17,8 +17,42 @@ export default function UpdateProfile (props) {
     const [error, setError] = useState(null);
     const [loading, setLoading] = useState(false);
     const { state, updateUser } = useAuth();
-    // for photo*******
+    
+    const options = [
+        {label: '1', value:1},
+        {label: '2', value:2},
+        {label: '3', value:3},
+        {label: '4', value:4},
+        {label: '5', value:5},
+        {label: '6', value:6},
+        {label: '7', value:7},
+        {label: '8', value:8},
+        {label: '9', value:9},
+        {label: '10', value:10},
+    ]
    
+    // // set defalut profile Image 
+    // if (state.user.skills.length === 0) {
+    //     console.log("1111111111111111111111111111"); 
+    // } else{
+    //     console.log("*********************************"); 
+    //     console.log(state.user.skills.length);
+    // }
+
+    // // for photo*******
+    const initialData = {
+        "username": state.user.username,
+        "role": state.user.role,
+        "institute": state.user.institute,
+        "major": state.user.major,
+        "grade": state.user.grade,
+        "skills_1":state.user.skills[0].name,
+        "rank_1": state.user.skills[0].rank,
+        "skills_2": state.user.skills[1].name,
+        "rank_2": state.user.skills[1].rank,
+        "skills_3": state.user.skills[2].name,
+        "rank_3": 9,
+    };
 
     // console.log(state.user)
 
@@ -32,26 +66,36 @@ export default function UpdateProfile (props) {
         {name: 'grade', label: 'Grade Level', required: true},
         [
             {  name: 'skills_1', label: 'Skill-1', required: true},
-            {  name: 'rank_1', label: 'Rank-1', required: true},
+            {  name: 'rank_1', label: 'Rank (1-10)', required: true, type: TYPES.Number},
         ],
         [
             {  name: 'skills_2', label: 'Skill-2', required: true},
-            {  name: 'rank_2', label: 'Rank-2', required: true}, 
+            {  name: 'rank_2', label: 'Rank (1-10)', required: true, type: TYPES.Number}, 
         ],
         [
             {  name: 'skills_3', label: 'Skill-3', required: true},
-            {  name: 'rank_3', label: 'Rank-3', required: true}, 
+           // {  name: 'rank_3', label: 'Rank (1-10)', required: true, type: TYPES.Number},
+             {  name: 'rank_3', label: 'Rank', required: true, type: TYPES.Dropdown, options: options}, 
         ]
+       // {  name: 'rank_3', label: 'Rank', required: true, type: TYPES.Dropdown, options: options}, 
+        
     ];
 
 
     async function onSubmit(data) {
         console.log('@@@@', data)
         setLoading(true);
-        data.profileImage = profileImage; 
-        data.filename = data.profileImage.split('/').pop();
-        match = /\.(\w+)$/.exec(filename);
-        data.type = match ? `image/${match[1]}` : `image`;
+        console.log("profile---////////////////////////////-", profileImage); 
+
+       // if(!profileImage){
+            data.profileImage = profileImage; 
+            data.filename = data.profileImage.split('/').pop();
+            match = /\.(\w+)$/.exec(filename);
+            data.type = match ? `image/${match[1]}` : `image`;
+       // }
+        
+
+       console.log("profile---////////////////////////////-", profileImage); 
         console.log("data.profile----", data.profileImage);  
         console.log("data.type----", data.type); 
         console.log("filename-----", data.filename);  
@@ -79,7 +123,7 @@ export default function UpdateProfile (props) {
     let match;
     let type;
 
-    // set defalut profile Image 
+    // profileImage for image view
     if (!state.user.profileImage) {
         profileImage = require('../../../assets/alien.png')
     } else {
@@ -141,7 +185,8 @@ export default function UpdateProfile (props) {
                     fields={fields}
                     title={'Submit'}
                     loading={loading}
-                    initialData={state.user}
+                    //initialData={state.user}
+                    initialData = {initialData}
                     error={error}
                     onSubmit={onSubmit}/>
             </View>
@@ -168,4 +213,3 @@ UpdateProfile.navigationOptions = ({}) => {
         title: `Update Profile`
     }
 };
-

@@ -98,11 +98,9 @@ export async function updateProfile(userId, data){
             uri: data.profileImage,
             name: data.filename, 
             type: data.type
-
         })
 
         
-
         console.log('formdata=====================')
         console.log(form_data)
         console.log(userId); 
