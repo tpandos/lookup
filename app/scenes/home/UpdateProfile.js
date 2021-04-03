@@ -31,16 +31,28 @@ export default function UpdateProfile (props) {
         {label: '10', value:10},
     ]
    
-    // // set defalut profile Image 
-    // if (state.user.skills.length === 0) {
-    //     console.log("1111111111111111111111111111"); 
-    // } else{
-    //     console.log("*********************************"); 
-    //     console.log(state.user.skills.length);
-    // }
+    let initialData = {}
+    // // set initial data 
+    if (state.user.skills.length === 0) {
+        console.log("1111111111111111111111111111"); 
 
-    // // for photo*******
-    const initialData = {
+         initialData = {
+            "username": state.user.username,
+            "role":  "",
+            "institute": "",
+            "major":  "",
+            "grade":  "",
+            "skills_1": "",
+            "rank_1":  "",
+            "skills_2":  "",
+            "rank_2":  "",
+            "skills_3":  "",
+            "rank_3":  "",
+        };
+    } else{
+        console.log("*********************************"); 
+
+        initialData = {
         "username": state.user.username,
         "role": state.user.role,
         "institute": state.user.institute,
@@ -51,8 +63,17 @@ export default function UpdateProfile (props) {
         "skills_2": state.user.skills[1].name,
         "rank_2": state.user.skills[1].rank,
         "skills_3": state.user.skills[2].name,
-        "rank_3": 9,
+        "rank_3": state.user.skills[2].rank,
     };
+
+        console.log(state.user.skills.length);
+    }
+
+        // profile Image url
+        let profileImage;
+        let filename; 
+        let match;
+        //let type;
 
     // console.log(state.user)
 
@@ -74,8 +95,8 @@ export default function UpdateProfile (props) {
         ],
         [
             {  name: 'skills_3', label: 'Skill-3', required: true},
-           // {  name: 'rank_3', label: 'Rank (1-10)', required: true, type: TYPES.Number},
-             {  name: 'rank_3', label: 'Rank', required: true, type: TYPES.Dropdown, options: options}, 
+            {  name: 'rank_3', label: 'Rank (1-10)', required: true, type: TYPES.Number},
+             
         ]
        // {  name: 'rank_3', label: 'Rank', required: true, type: TYPES.Dropdown, options: options}, 
         
@@ -94,8 +115,6 @@ export default function UpdateProfile (props) {
             data.type = match ? `image/${match[1]}` : `image`;
        // }
         
-
-       console.log("profile---////////////////////////////-", profileImage); 
         console.log("data.profile----", data.profileImage);  
         console.log("data.type----", data.type); 
         console.log("filename-----", data.filename);  
@@ -117,11 +136,7 @@ export default function UpdateProfile (props) {
         }
     }
     
-    // profile Image url
-    let profileImage;
-    let filename; 
-    let match;
-    let type;
+
 
     // profileImage for image view
     if (!state.user.profileImage) {
