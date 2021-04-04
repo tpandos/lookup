@@ -43,6 +43,8 @@ export async function updateProfile(userId, data){
             
         };
         console.log('data==========================', data)
+
+        
         
         let skills = [];
         let rank = [];
@@ -94,15 +96,25 @@ export async function updateProfile(userId, data){
         // object to string before the put
         form_data.append("skills", JSON.stringify(skills));
         form_data.append("rank", JSON.stringify(rank));
-        form_data.append("profileImage", {
+
+        if(data.profileImage[0] !== "h"){
+
+            let filename; 
+            let match;
+            data.filename = data.profileImage.split('/').pop();
+            //console.log("from auuuuuthhhh&***************&&^^^%%^%%%%%%%%%%%%%%%%%%", data.profileImage); 
+            match = /\.(\w+)$/.exec(filename);
+            data.type = match ? `image/${match[1]}` : `image`;
+
+            form_data.append("profileImage", {
             uri: data.profileImage,
             name: data.filename, 
             type: data.type
-
         })
-
+        }
         
 
+        
         console.log('formdata=====================')
         console.log(form_data)
         console.log(userId); 
@@ -122,8 +134,8 @@ export function updateLocation(userId, data) {
         .then(response => { console.log(response); })
         .catch(error => { console.log(error.response); });
 
-        console.log("jammeseeeeey");
-        console.log(data);
+        //console.log("jammeseeeeey");
+        //console.log(data);
 
 }
 
