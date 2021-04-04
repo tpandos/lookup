@@ -93,18 +93,22 @@ export default function UpdateProfile (props) {
     async function onSubmit(data) {
         console.log('@@@@', data)
         setLoading(true);
-        console.log("profile---////////////////////////////-", profileImage); 
+        //console.log("profile---////////////////////////////-", profileImage); 
 
-       // if(!profileImage){
+        if(profileImage[0] === "f"){
+            console.log("profile if f---////////////////////////////-", profileImage); 
             data.profileImage = profileImage; 
-            data.filename = data.profileImage.split('/').pop();
-            match = /\.(\w+)$/.exec(filename);
-            data.type = match ? `image/${match[1]}` : `image`;
-       // }
+            // data.filename = data.profileImage.split('/').pop();
+            // match = /\.(\w+)$/.exec(filename);
+            // data.type = match ? `image/${match[1]}` : `image`;
+        }else{
+            data.profileImage = state.user.profileImage; 
+            console.log("profile if not changed---()()()()()()()()()()()())-", profileImage);
+        }
         
-        console.log("data.profile----", data.profileImage);  
-        console.log("data.type----", data.type); 
-        console.log("filename-----", data.filename);  
+        //console.log("data.profile----", data.profileImage);  
+        //console.log("data.type----", data.type); 
+        //console.log("filename-----", data.filename);  
          
 
         try {
