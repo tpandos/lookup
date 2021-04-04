@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { useEffect } from 'react';
 
 import * as c from '../constants';
 
@@ -131,15 +132,7 @@ export async function search(userId, data) {
     console.log('data=========')
     console.log(data);
 
-//     //console.log(data2);
-//    const form_data = new FormData({
-//     form_data.append("institute", data['institute']);
-//     form_data.append("major", data['major']);
-//        keyword : 'data',
-//    }
-//    );
-   //params.append('keyword', data)
-    //params.append('method', data2)
+    
     try {
     const form_data = new FormData();
     /*for (let key in data) {
@@ -161,13 +154,19 @@ export async function search(userId, data) {
         body: JSON.stringify({data})
         
     };  
-        let res = await axios.post(`${c.SEARCH}/${userId}/search`, form_data, options);
+        
+        let res = await axios.post(`${c.UPDATE_PROFILE}/${userId}/search`, data);
+        
+        console.log(res.data.results[0].username);
+        console.log(res.data.results[0].profileImage);
+       
         //let res = axios.post('c.SEARCH}/${userId}/search', data, options);
-        console.log(res.data);
+        
         //console.log(res.data2)
         return res.data;
-        
-    }catch (e) {
+    
+    }
+    catch (e) {
         throw handler(e);
     }
 }

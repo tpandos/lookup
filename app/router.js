@@ -10,6 +10,7 @@ import AuthLoading from "./scenes/auth/AuthLoading";
 import AuthProvider from "./providers/auth";
 import SearchStack from "./routes/search"; 
 import AllowLocationStack from "./routes/allowlocation";
+import SearchResultsStack from "./routes/searchresults"
 
 
 //APP ROUTES STACK
@@ -20,7 +21,8 @@ const AppStack = createSwitchNavigator(
         App: HomeStack,
         Search: SearchStack, 
         FriendList : FriendListStack,
-        AllowLocation : AllowLocationStack
+        AllowLocation : AllowLocationStack,
+        SearchResults : SearchResultsStack
         
     },
     {initialRouteName: 'Loading'}
