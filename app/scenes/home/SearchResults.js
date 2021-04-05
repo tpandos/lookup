@@ -14,48 +14,67 @@ import { Button } from 'react-native';
 import {createStackNavigator} from 'react-navigation-stack';
 import SearchScreen from "./Search"
 
-export default function SearchResults (Array1, Array2) {
-    // const {navigation} = props;
-    // const {navigate} = props.navigation;
+export default function SearchResults (props) {
+    const {navigation} = props;
+    const {navigate} = props.navigation;
 
-    //const { Usernames, ProfileImages } = route.params;
+    const user_name = props.navigation.getParam('Usernames', "Not Matched");
+    const profile_image = props.navigation.getParam('ProfileImages', "Default Photo");
+    const rank = props.navigation.getParam('Ranking', "No Rank");
+
+    console.log(user_name)
+    console.log(profile_image)
+
+    //console.log("Usernames")
+    //let name = JSON.stringify(user_name)
+
     //const Stack = createStackNavigator()
     
-    const Usernames = [];
-    for (let i = 0; i < Array1.length; i++) {
-          Usernames.push(Array1[i])
-            }
-    console.log('Array1==========');    
-    console.log(Array1);
-    console.log(Usernames);
+    // const Usernames = [];
+    // for (let i = 0; i < Array1.length; i++) {
+    //       Usernames.push(Array1[i])
+    //         }
+    // console.log('Usernames');    
+    // //console.log(Array1);
+    // console.log(Usernames);
 
 
-    const ProfileImages = [];
-    for (let i = 0; i < Array2.length; i++) {
-          ProfileImages.push(Array2[i])
-        }
-    console.log('Array2=======');    
-    console.log(Array2);
-    console.log(ProfileImages);
+    // const ProfileImages = [];
+    // for (let i = 0; i < Array2.length; i++) {
+    //       ProfileImages.push(Array2[i])
+    //     }
+    // console.log('ProfilesImages');    
+    // //console.log(Array2);
+    // console.log(ProfileImages);
+
 
 
         
-
     return(
-     
 
         <View style= {styles.container}>
-        <Text Texstyle={{flex:1, padding:50}}> Search Results </Text>
+        <TouchableOpacity
+        style={{alignItems: 'center', backgroundColor: 'white', marginTop:2, marginLeft: 10, padding: 20, width: 200, borderRadius: 30, marginHorizontal: 2, borderColor:'#37474f', borderWidth: '2'}}
+        onPress ={()=>{navigate('Search')}}> 
+        <Text Texstyle={{flex:1, color: '#37474f', padding:50, justifyContent: 'center', alignItems: 'center'}}> Back to Search </Text>
+        </TouchableOpacity>
+        
+
         <FlatList
-         data = {Array1}
+         data = {user_name}
+         extraData = {rank}
           renderItem = {
-            ({item}) => 
-          //<TouchableOpacity
-          //style={{backgroundColor: '#37474f', marginTop:2, marginLeft: 10, padding: 200, width: 150, borderRadius: 30, marginHorizontal: 2, borderColor:'#fff', borderWidth: '2'}}>
-          <Text> {item} </Text>
-          //</TouchableOpacity>
+            ({item, index}) => 
+          <TouchableOpacity
+          style={{flex : 1, backgroundColor: '#37474f', marginTop:2, marginLeft: 10, padding: 20, width: 400, borderRadius: 30, marginHorizontal: 2, borderColor:'#fff', borderWidth: '2'}}>
+          <Text style={{ textAlign: 'left', color: '#fff', fontSize: 18}}> User: {item} {'\n'} Ranking:  {rank[index]} </Text>
+          </TouchableOpacity>
           }
+          //keyExtractor = {(item,index) => index.toString()}
+          keyExtractor={item => item}
         /> 
+
+            
       </View>
     )
 }

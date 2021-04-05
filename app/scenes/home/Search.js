@@ -1,8 +1,8 @@
-import React, {useState, useContext,SetStateAction, useEffect} from 'react';
+import React, {useState, useContext, useEffect} from 'react';
 import 'react-native-gesture-handler';
 import { StatusBar } from 'expo-status-bar';
 import { Component } from 'react'
-import { FlatList,Keyboard, Image, ImageBackground, SafeAreaView, ActivityIndicator, ScrollView, StyleSheet, Text, View} from 'react-native'
+import { FlatList, SafeAreaView, ActivityIndicator, ScrollView, StyleSheet, Text, View} from 'react-native'
 import Icon from 'react-native-vector-icons/Ionicons'
 import { TextInput, TouchableOpacity } from 'react-native-gesture-handler';
 import * as Animatable from 'react-native-animatable'
@@ -10,7 +10,6 @@ import * as api from "../../services/auth";
 import { useAuth } from "../../providers/auth";
 import Form, { TYPES } from 'react-native-basic-form';
 import {ErrorText} from "../../components/Shared";
-import { Button } from 'react-native';
 import SearchResults from "./SearchResults"
 
 
@@ -18,7 +17,7 @@ import SearchResults from "./SearchResults"
 
 export default function Search (props) {
   const {navigation} = props;
-    const {navigate} = props.navigation;
+  const {navigate} = props.navigation;
 
 const [error, setError] = useState(null);
 const [loading, setLoading] = useState(false);
@@ -52,7 +51,6 @@ const fields = [
     const {navigate} = props.navigation;
     setLoading(true);
     
-      
       try {
         let response = await api.search(state.user._id, data);
         console.log('response');
@@ -72,11 +70,17 @@ const fields = [
         }); 
         console.log(ProfileImageArray.length);
         console.log(ProfileImageArray);
+
+        const RankingArray = response.results.map((item) => {
+          return item.ranking
+        }); 
+        console.log(RankingArray.length);
+        console.log(RankingArray);
         
-        SearchResults (UsernameArray, ProfileImageArray)
-        navigate('SearchResults')
+       navigate('SearchResults', {Usernames : UsernameArray , ProfileImages: ProfileImageArray, Ranking : RankingArray})
 
     } 
+    
     catch (error) {
         setError(error.message);
         setLoading(false)

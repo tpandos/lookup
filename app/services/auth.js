@@ -134,17 +134,6 @@ export async function search(userId, data) {
 
     
     try {
-    const form_data = new FormData();
-    /*for (let key in data) {
-            Array.isArray(data[key])
-                ? data[key].forEach(value => form_data.append(key + '[]', value)) : form_data.append(key, data[key])}*/
-
-    form_data.append("keyword", data['keyword']);
-    form_data.append("method", data['method']);
-
-    console.log("form_data");
-    console.log(form_data);
-
        const options = {
         headers: {
             Accept: "application/json",
@@ -154,20 +143,7 @@ export async function search(userId, data) {
         body: JSON.stringify({data})
         
     };  
-        
         let res = await axios.post(`${c.UPDATE_PROFILE}/${userId}/search`, data)
-        /*.then (res => { 
-            return res.json();
-        }).then (responseData => {
-            console.log(responseData);
-        })*/
-
-        //console.log(res.data.results[0].username);
-        //console.log(res.data.results[0].profileImage);
-       
-        //let res = axios.post('c.SEARCH}/${userId}/search', data, options);
-        
-        //console.log(res.data2)
         return res.data;
     
     }
@@ -175,26 +151,6 @@ export async function search(userId, data) {
         throw handler(e);
     }
 }
-//let res = await axios.post(`${c.SEARCH}/${userId}/search`, {params : {[keyword] : data1} & {[method] : data2}} , options);
-
-/*export async function searchFilter(userId, data1, data2) {
-    console.log(data);
-        const options = {
-            method: 'POST',
-            headers: {
-                Accept: 'application/json',
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({data1, data2})
-        };
-        try {
-        let res = await axios.post(`${c.SEARCH}/${userId}/search`, data, options);
-        //let res = await fetch(c.SEARCH, options);
-        return res.data;
-    }catch (e) {
-        throw handler(e);
-    }
-}*/
 
 
 export function handler(err) {
