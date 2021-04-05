@@ -17,6 +17,7 @@ export default function Register(props) {
     const fields = [
         {name: 'firstName', label: 'First Name', required: true},
         {name: 'lastName', label: 'Last Name', required: true},
+        {name: 'username', label: 'User Name', required:true},
         {name: 'email', label: 'Email Address', required: true},
         {name: 'password', label: 'Password', required: true, secure:true},
     ];

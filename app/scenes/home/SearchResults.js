@@ -12,7 +12,6 @@ import Form, { TYPES } from 'react-native-basic-form';
 import {ErrorText} from "../../components/Shared";
 import { Button } from 'react-native';
 import {createStackNavigator} from 'react-navigation-stack';
-import SearchScreen from "./Search"
 
 export default function SearchResults (props) {
     const {navigation} = props;
@@ -22,8 +21,8 @@ export default function SearchResults (props) {
     const profile_image = props.navigation.getParam('ProfileImages', "Default Photo");
     const rank = props.navigation.getParam('Ranking', "No Rank");
 
-    console.log(user_name)
-    console.log(profile_image)
+    //console.log(user_name)
+    //console.log(rank)
 
     //console.log("Usernames")
     //let name = JSON.stringify(user_name)
@@ -63,15 +62,14 @@ export default function SearchResults (props) {
         <FlatList
          data = {user_name}
          extraData = {rank}
+         keyExtractor = {(item,index) => index.toString()}
           renderItem = {
-            ({item, index}) => 
+            ({item , index}) => 
           <TouchableOpacity
           style={{flex : 1, backgroundColor: '#37474f', marginTop:2, marginLeft: 10, padding: 20, width: 400, borderRadius: 30, marginHorizontal: 2, borderColor:'#fff', borderWidth: '2'}}>
-          <Text style={{ textAlign: 'left', color: '#fff', fontSize: 18}}> User: {item} {'\n'} Ranking:  {rank[index]} </Text>
+          <Text style={{ textAlign: 'left', color: '#fff', fontSize: 18}}> {item} {'\n'} Ranking:  {rank[index]} </Text>
           </TouchableOpacity>
           }
-          //keyExtractor = {(item,index) => index.toString()}
-          keyExtractor={item => item}
         /> 
 
             

@@ -10,7 +10,6 @@ import * as api from "../../services/auth";
 import { useAuth } from "../../providers/auth";
 import Form, { TYPES } from 'react-native-basic-form';
 import {ErrorText} from "../../components/Shared";
-import SearchResults from "./SearchResults"
 
 
 //const ListItems = ['C++', 'Js', 'Bussiness', 'IOS development']
@@ -62,20 +61,20 @@ const fields = [
         const UsernameArray = response.results.map((item) => {
           return item.username
         }); 
-        console.log(UsernameArray.length);
-        console.log(UsernameArray);
+        //console.log(UsernameArray.length);
+        //console.log(UsernameArray);
 
         const ProfileImageArray = response.results.map((item) => {
           return item.profileImage
         }); 
-        console.log(ProfileImageArray.length);
-        console.log(ProfileImageArray);
+        //console.log(ProfileImageArray.length);
+        //console.log(ProfileImageArray);
 
         const RankingArray = response.results.map((item) => {
           return item.ranking
         }); 
-        console.log(RankingArray.length);
-        console.log(RankingArray);
+        //console.log(RankingArray.length);
+        //console.log(RankingArray);
         
        navigate('SearchResults', {Usernames : UsernameArray , ProfileImages: ProfileImageArray, Ranking : RankingArray})
 
@@ -109,7 +108,7 @@ const fields = [
             <TouchableOpacity
             style={{backgroundColor: '#6D25BE', alignItems: 'center',  marginTop:2, marginLeft: 2, padding: 10, width: 150, borderRadius: 30, borderColor:'#fff', borderWidth: '2'}}
             onPress={()=>{navigate('Home')}}> 
-            <Text style={{ textAlign: 'center', color: '#fff', fontSize: 15}}>Back to Home</Text>
+            <Text style={{ textAlign: 'center', color: '#fff', fontSize: 15}}> Back to Home</Text>
             </TouchableOpacity>
             
         </View>
