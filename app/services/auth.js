@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { useEffect } from 'react';
 
 import * as c from '../constants';
 
@@ -128,17 +129,17 @@ export async function updateProfile(userId, data){
     }
 }
 
-export async function search(userId, data) {
-    try {
-        let res = await axios.post(`${c.UPDATE_PROFILE}/${userId}/search`, data);
-        console.log(res.data);
-        //console.log(res.data2)
-        return res.data;
+// export async function search(userId, data) {
+//     try {
+//         let res = await axios.post(`${c.UPDATE_PROFILE}/${userId}/search`, data);
+//         console.log(res.data);
+//         //console.log(res.data2)
+//         return res.data;
         
-    }catch (e) {
-        throw handler(e);
-    }
-}
+//     }catch (e) {
+//         throw handler(e);
+//     }
+// }
 
 
 
@@ -147,6 +148,16 @@ export function updateLocation(userId, data) {
         .then()
         .catch(error => { console.log(error.response); });
 
+}
+
+export async function search(userId, data) {
+    try {
+        let res = await axios.post(`${c.UPDATE_PROFILE}/${userId}/search`, data)
+        return res.data;
+    }
+    catch (e) {
+        throw handler(e);
+    }
 }
 
 export function handler(err) {
