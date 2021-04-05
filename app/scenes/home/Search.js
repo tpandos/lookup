@@ -1,19 +1,15 @@
-import React, {useState, useContext,SetStateAction, useEffect} from 'react';
+import React, {useState, useContext, useEffect} from 'react';
 import 'react-native-gesture-handler';
 import { StatusBar } from 'expo-status-bar';
 import { Component } from 'react'
-import { FlatList,Keyboard, Image, ImageBackground, SafeAreaView, ActivityIndicator, ScrollView, StyleSheet, Text, View} from 'react-native'
+import { FlatList, SafeAreaView, ActivityIndicator, ScrollView, StyleSheet, Text, View} from 'react-native'
 import Icon from 'react-native-vector-icons/Ionicons'
 import { TextInput, TouchableOpacity } from 'react-native-gesture-handler';
-
-import SearchResults from "./SearchResults"
 import * as Animatable from 'react-native-animatable'
 import * as api from "../../services/auth";
 import { useAuth } from "../../providers/auth";
 import Form, { TYPES } from 'react-native-basic-form';
 import {ErrorText} from "../../components/Shared";
-import { Button } from 'react-native';
-
 
 
 //const ListItems = ['C++', 'Js', 'Bussiness', 'IOS development']
@@ -54,7 +50,6 @@ const fields = [
     const {navigate} = props.navigation;
     setLoading(true);
     
-      
       try {
         let response = await api.search(state.user._id, data);
         console.log('response');
@@ -66,19 +61,25 @@ const fields = [
         const UsernameArray = response.results.map((item) => {
           return item.username
         }); 
-        console.log(UsernameArray.length);
-        console.log(UsernameArray);
+        //console.log(UsernameArray.length);
+        //console.log(UsernameArray);
 
         const ProfileImageArray = response.results.map((item) => {
           return item.profileImage
         }); 
-        console.log(ProfileImageArray.length);
-        console.log(ProfileImageArray);
+        //console.log(ProfileImageArray.length);
+        //console.log(ProfileImageArray);
+
+        const RankingArray = response.results.map((item) => {
+          return item.ranking
+        }); 
+        //console.log(RankingArray.length);
+        //console.log(RankingArray);
         
-        SearchResults (UsernameArray, ProfileImageArray)
-        navigate('SearchResults')
+       navigate('SearchResults', {Usernames : UsernameArray , ProfileImages: ProfileImageArray, Ranking : RankingArray})
 
     } 
+    
     catch (error) {
         setError(error.message);
         setLoading(false)
@@ -107,7 +108,7 @@ const fields = [
             <TouchableOpacity
             style={{backgroundColor: '#6D25BE', alignItems: 'center',  marginTop:2, marginLeft: 2, padding: 10, width: 150, borderRadius: 30, borderColor:'#fff', borderWidth: '2'}}
             onPress={()=>{navigate('Home')}}> 
-            <Text style={{ textAlign: 'center', color: '#fff', fontSize: 15}}>Back to Home</Text>
+            <Text style={{ textAlign: 'center', color: '#fff', fontSize: 15}}> Back to Home</Text>
             </TouchableOpacity>
             
         </View>

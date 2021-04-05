@@ -1,5 +1,5 @@
-import React from 'react';
 import {createStackNavigator} from 'react-navigation-stack';
+
 
 import SearchScreen from "../scenes/home/Search"; 
 import HomeScreen from "../scenes/home/Home"; 
@@ -10,9 +10,9 @@ import {headerStyle, headerTitleStyle} from '../theme';
 
 const SearchStack = createStackNavigator(
     {
-        Search: SearchScreen,
+        
         Home: HomeScreen,
-       
+        Search: SearchScreen,
     },
     {
         initialRouteName:'Search',
@@ -20,4 +20,6 @@ const SearchStack = createStackNavigator(
     }
      
 );
-export default SearchStack; 
+
+  
+export default SearchStack;
