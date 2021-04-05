@@ -63,5 +63,8 @@ export default function AllowLocation(props) {
     );
 }
 
-
+// this is page not necessary
+// update geolocation background automatic update (for moving)
+//this code allows location 
+// this is FIND MY LOCATION AT BY ALLOWING LOCATION 
 
