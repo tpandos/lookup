@@ -94,6 +94,14 @@ export async function updateProfile(userId, data){
         // object to string before the put
         form_data.append("skills", JSON.stringify(skills));
         form_data.append("rank", JSON.stringify(rank));
+        form_data.append("profileImage", {
+            uri: data.profileImage,
+            name: data.filename, 
+            type: data.type
+
+        })
+
+        
 
         // console.log('formdata=====================')
         // console.log(form_data)
@@ -107,6 +115,20 @@ export async function updateProfile(userId, data){
         throw handler(e);
     }
 }
+
+export async function search(userId, data) {
+    try {
+        let res = await axios.post(`${c.UPDATE_PROFILE}/${userId}/search`, data);
+        console.log(res.data);
+        //console.log(res.data2)
+        return res.data;
+        
+    }catch (e) {
+        throw handler(e);
+    }
+}
+
+
 
 export function updateLocation(userId, data) {
     axios.put(`${c.UPDATE_PROFILE}/${userId}/updateGeoPoint`, {geoPoint: data})

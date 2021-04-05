@@ -105,7 +105,7 @@ export default function Home(props) {
                     </View>    
                 </TouchableOpacity>
             </View>   
-        
+    
             </View>
         </ScrollView>
         <TouchableOpacity onPress={() => {navigate('Search')}}>

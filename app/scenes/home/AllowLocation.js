@@ -38,6 +38,7 @@ export default function AllowLocation(props) {
         longitude = location.coords.longitude;
         lat_long = [latitude,longitude];
     }
+    console.log(lat_long);
 
     try {
         api.updateLocation(state.user._id, lat_long);
@@ -46,14 +47,14 @@ export default function AllowLocation(props) {
     }
     
     return (
+
         <View>
-            <TouchableOpacity onPress={() => { navigate('Home'); }}>
+            <TouchableOpacity onPress={() => { navigate('UpdateProfile'); }}>
                 <Text >
-                    Touch to go back to Home
+                    Touch to go back to profile
             </Text>
             </TouchableOpacity>
             <View >
-                <Text>  Waiting </Text>
                 <Text > Latiude {latitude}</Text>
                 <Text > Longitude {longitude}</Text>
             </View>
