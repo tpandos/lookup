@@ -10,9 +10,9 @@ import {headerStyle, headerTitleStyle} from '../theme';
 
 const SearchStack = createStackNavigator(
     {
-        
-        Home: HomeScreen,
         Search: SearchScreen,
+        Home: HomeScreen,
+       
     },
     {
         initialRouteName:'Search',
