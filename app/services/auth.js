@@ -155,10 +155,15 @@ export async function search(userId, data) {
         
     };  
         
-        let res = await axios.post(`${c.UPDATE_PROFILE}/${userId}/search`, data);
-        
-        console.log(res.data.results[0].username);
-        console.log(res.data.results[0].profileImage);
+        let res = await axios.post(`${c.UPDATE_PROFILE}/${userId}/search`, data)
+        /*.then (res => { 
+            return res.json();
+        }).then (responseData => {
+            console.log(responseData);
+        })*/
+
+        //console.log(res.data.results[0].username);
+        //console.log(res.data.results[0].profileImage);
        
         //let res = axios.post('c.SEARCH}/${userId}/search', data, options);
         

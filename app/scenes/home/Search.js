@@ -11,6 +11,7 @@ import { useAuth } from "../../providers/auth";
 import Form, { TYPES } from 'react-native-basic-form';
 import {ErrorText} from "../../components/Shared";
 import { Button } from 'react-native';
+import SearchResults from "./SearchResults"
 
 
 //const ListItems = ['C++', 'Js', 'Bussiness', 'IOS development']
@@ -44,32 +45,44 @@ const fields = [
   required: true}]
 
   //const initialData = {"method" : 1};
-
-  async function onSubmit (data) {
+  
+   async function onSubmit (data) {
+    //useEffect (async () => {
     const {navigation} = props;
     const {navigate} = props.navigation;
     setLoading(true);
     
+      
       try {
-  
         let response = await api.search(state.user._id, data);
         console.log('response');
-        //console.log(response)
+        console.log(response)
+        console.log(response.results.length)
         //updateUser(response.user);
         setLoading(false);
-        setData(response)
-        console.log("res")
-        console.log(res)
+        
+        const UsernameArray = response.results.map((item) => {
+          return item.username
+        }); 
+        console.log(UsernameArray.length);
+        console.log(UsernameArray);
+
+        const ProfileImageArray = response.results.map((item) => {
+          return item.profileImage
+        }); 
+        console.log(ProfileImageArray.length);
+        console.log(ProfileImageArray);
+        
+        SearchResults (UsernameArray, ProfileImageArray)
         navigate('SearchResults')
-        console.log(response.results[0].username)
+
     } 
     catch (error) {
         setError(error.message);
         setLoading(false)
     }
-
   }
-  
+
         
   return(
   <View>
@@ -77,22 +90,21 @@ const fields = [
     <View style= {styles.container}>
         <View style={{flex:1, padding:50}}>
             <ErrorText error={error}/>
-            <Animatable.View animation = "slideInRight" duration= {1000} style= {{width: 380, height: 250, backgroundColor: 'white', 
+            <Animatable.View animation = "slideInRight" duration= {1000} style= {{width: 380, height: 350, backgroundColor: 'white', 
             flexDirection:'row', padding: 5, alignItems: 'center', paddingRight:5, borderRadius: 1}}>
               <Animatable.View animation = "fadeInLeft" duration = {400}> 
               </Animatable.View>
               <Form
                 fields={fields}
-                title={'Submit'}
+                title={'Search'}
                 loading={loading}
                 initialData={state.user}
                 error={error}
                 onSubmit={onSubmit}/>
             </Animatable.View>
-        
             <TouchableOpacity
             style={{backgroundColor: '#6D25BE', alignItems: 'center',  marginTop:2, marginLeft: 2, padding: 10, width: 150, borderRadius: 30, borderColor:'#fff', borderWidth: '2'}}
-            onPress={()=>{navigate('SearchResults')}}> 
+            onPress={()=>{navigate('Home')}}> 
             <Text style={{ textAlign: 'center', color: '#fff', fontSize: 15}}>Back to Home</Text>
             </TouchableOpacity>
             
