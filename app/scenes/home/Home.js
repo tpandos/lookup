@@ -18,6 +18,15 @@ export default function Home(props) {
 
     // start loop
 
+    // set friends to pass to friendlist__________________________________________________
+    async function onSubmit(data) {
+        console.log('@@@@ SUBMIT CLICKED')
+       
+
+       
+    }
+    //_____________________________________________________________________________________
+
     useEffect(() => {
         (async () => {
             let { status } = await Location.requestPermissionsAsync();
@@ -75,6 +84,7 @@ export default function Home(props) {
     // profile Image url
     let profileImage;
     // set defalut profile Image 
+    
     if (!user.profileImage) {
         profileImage = require('../../../assets/alien.png')
     } else {

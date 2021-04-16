@@ -2,6 +2,7 @@ import axios from 'axios';
 import { useEffect } from 'react';
 
 import * as c from '../constants';
+import FriendList from '../scenes/home/FriendList';
 
 export async function register(data){
     try{
@@ -43,7 +44,7 @@ export async function updateProfile(userId, data){
             }
             
         };
-        console.log('data==========================', data)
+        //console.log('data==========================', data)
 
         
         
@@ -82,9 +83,9 @@ export async function updateProfile(userId, data){
         rank.push(data.rank_3); 
 
         const form_data = new FormData();
-        console.log('type of form_data', form_data)
-        console.log('data==================')
-        console.log(data)
+        //console.log('type of form_data', form_data)
+        //console.log('data==================')
+        //console.log(data)
 
         // skills = ['python','java'];
         // rank = [34, 67];
@@ -116,9 +117,9 @@ export async function updateProfile(userId, data){
         
 
         
-        console.log('formdata=====================')
-        console.log(form_data)
-        console.log(userId); 
+        console.log('###  FORMDATA SENT TO DATABASE')
+        console.log(form_data.username)
+        //console.log(userId); 
 
 
         let res = await axios.put(`${c.UPDATE_PROFILE}/${userId}`, form_data, options);
@@ -141,8 +142,8 @@ export function updateLocation(userId, data) {
 }
 
 export async function search(userId, data) {
-    console.log('data=========')
-    console.log(data);
+    console.log("*** DATA FROM SEARCH")
+    console.log(data.username);
 
     
     try {

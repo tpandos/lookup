@@ -52,8 +52,8 @@ const fields = [
     
       try {
         let response = await api.search(state.user._id, data);
-        console.log('response');
-        console.log(response)
+        console.log("&&&& SUBMIT SEARCH RESPONSE LENGTH");
+        //console.log(response)
         console.log(response.results.length)
         //updateUser(response.user);
         setLoading(false);
