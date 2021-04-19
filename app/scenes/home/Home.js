@@ -21,9 +21,7 @@ export default function Home(props) {
     // set friends to pass to friendlist__________________________________________________
     async function onSubmit(data) {
         console.log('@@@@ SUBMIT CLICKED')
-       
-
-       
+       //on touching the friend list should get the data. like in update profile 
     }
     //_____________________________________________________________________________________
 
