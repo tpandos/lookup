@@ -174,3 +174,10 @@ export function handler(err) {
 
     return new Error(error.message);
 }
+
+ //DELETE FRIEND
+// router.put('/:id/deleteFriend', User.deleteFriend);
+
+export async function deleteFriend(userId, data){
+    
+}

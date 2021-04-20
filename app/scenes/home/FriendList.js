@@ -1,7 +1,9 @@
+import { stopLocationUpdatesAsync } from 'expo-location';
 import React, {useState, useContext} from 'react';
 import { Profiler } from 'react';
-import {Text, View, StyleSheet, Image, FlatList} from 'react-native';
+import {Text, View, StyleSheet, Image, FlatList,Alert} from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
+import { Entypo } from '@expo/vector-icons';
 
 import { useAuth } from "../../providers/auth";
 
@@ -14,9 +16,6 @@ export default function FriendList(props) {
     const user = state.user; 
     
     console.log("username---------------", user.username); 
-    // console.log("userskill---------------", user.skills[0].name);
-    // console.log(user.friends[0].username);  // the update catches the data. need to capture the data 
-   // console.log(user.friends[1].username);
 
   if(user.friends.length === 0){
     console.log("xxxxxxxxxxxxxxxxxxx Friend list is empty", user.friends.length); 
@@ -25,7 +24,6 @@ export default function FriendList(props) {
   }
 
   var friendLoop = [];
-  var profImageloop = []; 
 
   for(let i = 0; i < user.friends.length; i++){
     friendLoop.push({
@@ -36,71 +34,88 @@ export default function FriendList(props) {
   }
 
 
-    
+  const deleteFriendAlert = () =>
+  Alert.alert(
+    "Remove",
+    "Are you sure you sure you want to delete this friend?",
+    [
+      {
+        text: "Cancel",
+        onPress: () => console.log("Cancel Pressed"),
+        style: "cancel"
+      },
+      { text: "OK", onPress: () => console.log("delte")
+}
+    ]
+  );
+
+ 
+      
+ 
     return (
       <View style={styles.container}>
-       <View>
-         <View>
+       <View style={{flex:1}}>
 
-         <FlatList
-            data = {friendLoop}
-            keyExtractor={profile => profile.id.toString()}
-            renderItem={({item})=>(
-              <View style={{flex:1,flexDirection:'row'}}>
-                <TouchableOpacity style={styles.friendList}>
+            <FlatList
+              data = {friendLoop}
+                keyExtractor={profile => profile.id.toString()}
+                renderItem={({item})=>(
+                  <View style={{flex:1,flexDirection:'row', padding: 8}}>
 
-                   <View>
-                    <Image source={item.profileImage} style={styles.imageDisplay}/>
+                   
+                      <View>
+                         <TouchableOpacity >
+                        <Image source={item.profileImage} style={styles.imageDisplay}/>
+                        </TouchableOpacity>
+                      </View>
+                    
+                    <View style={{flex:1, flexDirection:'row'}}>
+                    <View style={{flex:1,marginTop:20}}>
+                        <Text style={{ color: 'white', fontSize: 18}}> {item.username} </Text>
+                    </View>
+
+                    <View style={{marginTop:15}}>
+                      <TouchableOpacity onPress={deleteFriendAlert}>
+                      
+                      <Text style={{color:'white',borderColor:'white',borderWidth:2, padding:10, borderRadius:10}}>
+                        Remove
+                      </Text>
+                      </TouchableOpacity>
+                    </View>
+                    </View>
                   </View>
-
-                  <View style={{marginLeft:70, alignContent:'center'}}>
-                    <Text style={{ color: '#000033', fontSize: 18,fontWeight:'bold'}}> {item.username} </Text>
-                  </View>
-                 
-                </TouchableOpacity>
-              </View>
-              )}>
+                )}>
               
-        </FlatList>
-
-          <TouchableOpacity onPress={()=>{navigate('Home')}}>
-        
-            <Text style={{color:'white'}}>
-                Touch to go back to profile
-            </Text>
-          </TouchableOpacity> 
+            </FlatList>
+          
        </View>
-       
-       </View>
-       </View>
+       <View style={styles.bottompane}>
+         <View style={{flex:1, alignItems:'center', paddingBottom:10}}>
+            <TouchableOpacity onPress={()=>{navigate('Home')}}>
+            <Entypo name="home" size={35} color="#29e3dd" />
+            </TouchableOpacity> 
+          </View>
+        </View>
+      </View>
         );
     }
 
     const styles = StyleSheet.create({
       container: {
         flex: 1,
-       // alignItems: 'center',
-        //justifyContent: 'center',
         backgroundColor: "#000033"
       }, 
-      friendList: {
-        backgroundColor: 'white', 
-        //marginTop: 2, 
-        marginLeft: 10, 
-        //padding: 10,
-        marginBottom:10,
-        width: 400, 
-        borderRadius: 30, 
-        //marginHorizontal: 2, 
-        borderColor:'green', 
-        borderWidth: 2,
-      },
       imageDisplay:{
-        alignSelf: 'flex-start',
         borderWidth: 2,
         borderRadius:50,
-        width: 60, 
-        height: 60,
+        borderColor: '#29e3dd', 
+        width: 70, 
+        height: 70,
+      },
+      bottompane:{
+        flexDirection:'row',
+        padding:10,
+        paddingBottom:20
       }
     })
    

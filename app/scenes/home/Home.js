@@ -16,15 +16,6 @@ export default function Home(props) {
     const {state, handleLogout} = useAuth();
     const user = state.user;
 
-    // start loop
-
-    // set friends to pass to friendlist__________________________________________________
-    async function onSubmit(data) {
-        console.log('@@@@ SUBMIT CLICKED')
-       //on touching the friend list should get the data. like in update profile 
-    }
-    //_____________________________________________________________________________________
-
     useEffect(() => {
         (async () => {
             let { status } = await Location.requestPermissionsAsync();
@@ -110,6 +101,7 @@ export default function Home(props) {
                         <TouchableHighlight activeOpacity={0.5} underlayColor='lightgrey' onPress={() => {navigate('FriendList')}}>
                             <View style={{  padding:10, marginHorizontal:100}}>
                                 <FontAwesome5 name="user-friends" size={30} color="#6600FF" />
+
                             </View>
                         </TouchableHighlight>
                     </View>
