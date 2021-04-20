@@ -1,5 +1,5 @@
 import React, {useState, useContext, useEffect} from 'react';
-import {Text, View, Button, ActivityIndicator, Alert, StyleSheet, ScrollView, Image} from 'react-native';
+import {Text, View, StyleSheet, ScrollView, Image} from 'react-native';
 import { FontAwesome5 } from '@expo/vector-icons';
 import { Ionicons } from '@expo/vector-icons';
 import { FontAwesome } from '@expo/vector-icons';
@@ -7,7 +7,7 @@ import * as Location from 'expo-location';
 import * as api from "../../services/auth";
 
 import { useAuth } from "../../providers/auth";
-import { FlatList, TouchableHighlight, TouchableOpacity } from 'react-native-gesture-handler';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 
 export default function Home(props) {
     const {navigate} = props.navigation;
@@ -82,29 +82,38 @@ export default function Home(props) {
 
     return (
         <View style={{flex:1, backgroundColor:'#000033'}}>
-        <ScrollView showsVerticalScrollIndicator={false} style={{backgroundColor: '#000033'}}>
+        <ScrollView showsVerticalScrollIndicator={false} >
 
             <View style={{flex:1, flexDirection:'column', backgroundColor:'#000033'}}> 
-                <View style={{ width: '100%', backgroundColor: '#000033', height: 70}}>
+            <View style={{ flexDirection:'row'}}>
+                <View style={{ width: '50%', height: 70}}></View>
+                <View style={{ width: '50%', height: 70}}>
+                <View style={{marginLeft:100,padding:20}}>
+                    <TouchableOpacity onPress={() => {navigate('Notifications')}}>
+                <FontAwesome name="spinner" size={30} color="white" />
+                </TouchableOpacity>
+                </View>
+                </View>
+                    
                 </View>
         
-            <View style={{alignItems: 'center', backgroundColor:'white',borderWidth: 3, borderColor:'#00ffff', borderRadius:20}}>
-           
-                <Image source={profileImage} style={{width: 260, height: 260, borderRadius: 200, marginTop: -70,borderWidth:3,borderColor:'#00ffff'}}></Image>
-                <Text style={{fontSize: 25, fontWeight: 'bold', padding: 10}}>{user.username}</Text>
+            <View style={{alignItems: 'center', backgroundColor:'white',borderWidth: 3, borderColor:'#00ffff', borderRadius:10}}>
+                <Image source={profileImage} style={{width: 200, height: 200, borderRadius: 200, marginTop: -70,borderWidth:3,borderColor:'#00ffff'}}></Image>
+                <Text style={{fontSize: 25, fontWeight: 'bold', padding: 20}}>{user.username}</Text>
         
-                    <View style={{flexDirection:'row'}}>
-                        <View style={{ padding:10, marginHorizontal:100, marginBottom:5}}>
+                    {/* <View style={{flexDirection:'row'}}>
+                        <View style={{ padding:10, backgroundColor:'green'}}>
                             <FontAwesome5 name="network-wired" size={30} color="#FF00FF" />
                         </View>
-        
-                        <TouchableHighlight activeOpacity={0.5} underlayColor='lightgrey' onPress={() => {navigate('FriendList')}}>
-                            <View style={{  padding:10, marginHorizontal:100}}>
-                                <FontAwesome5 name="user-friends" size={30} color="#6600FF" />
 
-                            </View>
-                        </TouchableHighlight>
-                    </View>
+                        <View style={{  padding:10,  backgroundColor:'yellow'}}>
+                            <TouchableHighlight activeOpacity={0.5} underlayColor='lightgrey' onPress={() => {navigate('FriendList')}}>
+                                <FontAwesome5 name="user-friends" size={30} color="#6600FF" />
+                            </TouchableHighlight>
+                        </View>
+                        
+                        
+                    </View> */}
             </View>
         
     
@@ -157,7 +166,24 @@ export default function Home(props) {
         
             </View>
         </ScrollView>
-        <TouchableOpacity onPress={() => {navigate('Search')}}>
+        <View style={styles.bottompane}>
+         <View style={{ flex:1,padding:10, alignItems:'center'}}>
+            <TouchableOpacity>
+            <FontAwesome name="commenting" size={30} color="white" />
+            </TouchableOpacity> 
+          </View>
+          <View style={{ flex:1,padding:10, alignItems:'center'}}>
+          <TouchableOpacity onPress={() => {navigate('FriendList')}}>
+            <FontAwesome5 name="user-friends" size={30} color="white" />
+            </TouchableOpacity> 
+          </View>
+          <View style={{ flex:1,padding:10, alignItems:'center'}}>
+            <TouchableOpacity onPress={()=>{navigate('Search')}}>
+            <FontAwesome5 name="search-location" size={30} color="white" />
+            </TouchableOpacity> 
+          </View>
+        </View>
+        {/* <TouchableOpacity onPress={() => {navigate('Search')}}>
         <View style={styles.searchButton}>
         
         <Text style={{color:'black', fontSize:20, marginRight:30, fontWeight:'bold'}}>
@@ -166,7 +192,7 @@ export default function Home(props) {
         <FontAwesome5 name="search-location" size={30} color="black" />
         
         </View>
-        </TouchableOpacity>
+        </TouchableOpacity> */}
         </View>
         );
     }
@@ -190,8 +216,7 @@ export default function Home(props) {
             marginTop: 20,
             marginBottom: 1
         }, 
-        button: {
-            
+        button: { 
             fontWeight: 'bold', 
             padding:10, 
             backgroundColor:'#09ff00',
@@ -255,7 +280,12 @@ export default function Home(props) {
             alignContent:'center',
             borderRadius:10, 
             backgroundColor:'#29e3dd'
-        }
+        },
+        bottompane:{
+            flexDirection:'row',
+            padding:10,
+            paddingBottom:20,
+          }
     })
     
     
