@@ -6,13 +6,15 @@ import { TouchableOpacity } from 'react-native-gesture-handler';
 import { Entypo } from '@expo/vector-icons';
 
 import { useAuth } from "../../providers/auth";
-
+import * as api from "../../services/auth";
 
 export default function FriendList(props) {
+
     const {navigation} = props;
     const {navigate} = props.navigation;
     const {state, setState} = useAuth();
-   
+     const [error, setError] = useState(null);
+  const [loading, setLoading] = useState(false);
     const user = state.user; 
     
     console.log("username---------------", user.username); 
@@ -34,23 +36,38 @@ export default function FriendList(props) {
   }
 
 
-  const deleteFriendAlert = () =>
-  Alert.alert(
-    "Remove",
-    "Are you sure you sure you want to delete this friend?",
-    [
-      {
-        text: "Cancel",
-        onPress: () => console.log("Cancel Pressed"),
-        style: "cancel"
-      },
-      { text: "OK", onPress: () => console.log("delte")
-}
-    ]
-  );
+//   const deleteFriendAlert = () =>
+//   Alert.alert(
+//     "Remove",
+//     "Are you sure you sure you want to delete this friend?",
+//     [
+//       {
+//         text: "Cancel",
+//         onPress: () => console.log("Cancel Pressed"),
+//         style: "cancel"
+//       },
+//       { text: "OK", onPress: () => console.log("delte")
+// }
+//     ]
+//   );
 
- 
-      
+async function onDelete(data) {  //data is _id to be removed 
+
+  console.log("clicking remove ----------------------------------------------------------------------");
+  console.log(data);
+  let response = await api.deleteFriend(state.user._id,data);// <-- deletefriend id
+  console.log(response); 
+  //   try {
+  //     let response = await api.deleteFriend(state.user._id,data);
+  //     console.log("&&&& deleting friend");
+  //     //console.log(response)
+  //     console.log("response from deletefriend", response); 
+
+  //   } catch (error) {
+  //     setError(error.message);
+  //     setLoading(false)
+  // }
+}  
  
     return (
       <View style={styles.container}>
@@ -75,7 +92,7 @@ export default function FriendList(props) {
                     </View>
 
                     <View style={{marginTop:15}}>
-                      <TouchableOpacity onPress={deleteFriendAlert}>
+                      <TouchableOpacity onPress={() => {onDelete(item.id)}}>
                       
                       <Text style={{color:'white',borderColor:'white',borderWidth:2, padding:10, borderRadius:10}}>
                         Remove

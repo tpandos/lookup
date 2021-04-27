@@ -2,7 +2,6 @@ import axios from 'axios';
 import { useEffect } from 'react';
 
 import * as c from '../constants';
-import FriendList from '../scenes/home/FriendList';
 
 export async function register(data){
     try{
@@ -144,7 +143,6 @@ export function updateLocation(userId, data) {
 export async function search(userId, data) {
     console.log("*** DATA FROM SEARCH")
     console.log(data.username);
-
     
     try {
        const options = {
@@ -179,5 +177,40 @@ export function handler(err) {
 // router.put('/:id/deleteFriend', User.deleteFriend);
 
 export async function deleteFriend(userId, data){
-    
+console.log("userID ", userId); 
+    console.log("!!!!!!!!!!!!!!!!!!!!!!!!!! delete friend auth with data", data); 
+    try{
+        
+        console.log("in the try block********************"); 
+    let res = await axios.put(`${c.UPDATE_PROFILE}/${userId}/deleteFriend`, {other_userId: data});//<--- deleted friend ID
+    return res.data; 
+
+    }catch(e){
+        throw handler(e); 
+    }
 }
+
+// // @route DELETE FRIEND api/user/{id}/deleteFriend
+// // @desc Delete Friend
+// // @access Public
+// exports.deleteFriend = async function (req, res) {
+//     try {
+//         const id = req.params.id;
+//         const other_useId = req.body.userId;
+
+//         let curr_user = await User.findById(id).select('username profileImage');
+//         let other_user = await User.findById(other_useId).select('username profileImage');
+
+//         const update = await User.findByIdAndUpdate(id, {$pull: {'friends': other_user}});
+//         const update_other_user = await User.findByIdAndUpdate(other_useId, {$pull: {'friends': curr_user}});
+
+//         return res.status(200).json({update, update_other_user, message: 'Delete Friend Success'})
+
+//     } catch (error) {
+//         res.status(500).json({message: error.message});
+//     }
+// }
+
+/*
+user.messages loop 
+*/
