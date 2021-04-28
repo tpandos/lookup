@@ -15,7 +15,8 @@ export default function Home(props) {
     const [errorMsg, setErrorMsg] = useState(null);
     const {state, handleLogout} = useAuth();
     const user = state.user;
-
+    console.log("----------------------------------ssssss Message ", user.messages); 
+    console.log("----------------------------------USER ", user); 
     useEffect(() => {
         (async () => {
             let { status } = await Location.requestPermissionsAsync();

@@ -1,10 +1,8 @@
-import { stopLocationUpdatesAsync } from 'expo-location';
 import React, {useState, useContext} from 'react';
-import { Profiler } from 'react';
 import {Text, View, StyleSheet, Image, FlatList,Alert} from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { Entypo } from '@expo/vector-icons';
-
+import { MaterialIcons } from '@expo/vector-icons';
 import { useAuth } from "../../providers/auth";
 import * as api from "../../services/auth";
 
@@ -13,19 +11,11 @@ export default function FriendList(props) {
     const {navigation} = props;
     const {navigate} = props.navigation;
     const {state, setState} = useAuth();
-     const [error, setError] = useState(null);
-  const [loading, setLoading] = useState(false);
     const user = state.user; 
     
-    console.log("username---------------", user.username); 
+    //console.log("friennnnnnnnnnnnnnnnnnnnnnnnnnnndsa ", newFriendList); 
 
-  if(user.friends.length === 0){
-    console.log("xxxxxxxxxxxxxxxxxxx Friend list is empty", user.friends.length); 
-  }else{
-    console.log("array size friends VVVVVVVVVVVVVVVVV", user.friends.length);
-  }
-
-  var friendLoop = [];
+  var friendLoop = [];    // temporary loop for friend list, this is going to be removed 
 
   for(let i = 0; i < user.friends.length; i++){
     friendLoop.push({
@@ -35,54 +25,28 @@ export default function FriendList(props) {
     });
   }
 
-
-//   const deleteFriendAlert = () =>
-//   Alert.alert(
-//     "Remove",
-//     "Are you sure you sure you want to delete this friend?",
-//     [
-//       {
-//         text: "Cancel",
-//         onPress: () => console.log("Cancel Pressed"),
-//         style: "cancel"
-//       },
-//       { text: "OK", onPress: () => console.log("delte")
-// }
-//     ]
-//   );
-
 async function onDelete(data) {  //data is _id to be removed 
 
-  console.log("clicking remove ----------------------------------------------------------------------");
-  console.log(data);
+ // call deleteFriend function 
   let response = await api.deleteFriend(state.user._id,data);// <-- deletefriend id
-  console.log(response); 
-  //   try {
-  //     let response = await api.deleteFriend(state.user._id,data);
-  //     console.log("&&&& deleting friend");
-  //     //console.log(response)
-  //     console.log("response from deletefriend", response); 
 
-  //   } catch (error) {
-  //     setError(error.message);
-  //     setLoading(false)
-  // }
 }  
  
     return (
       <View style={styles.container}>
        <View style={{flex:1}}>
+      
+            {/* test flatlist direct================================ */}
 
             <FlatList
-              data = {friendLoop}
-                keyExtractor={profile => profile.id.toString()}
+              data = {user.friends}
+                keyExtractor={profile => profile._id.toString()}
                 renderItem={({item})=>(
-                  <View style={{flex:1,flexDirection:'row', padding: 8}}>
+                  <View style={{flex:1,flexDirection:'row', padding: 8, borderBottomColor: 'grey', borderBottomWidth:1}}>
 
-                   
                       <View>
                          <TouchableOpacity >
-                        <Image source={item.profileImage} style={styles.imageDisplay}/>
+                        <Image source={{uri: item.profileImage}} style={styles.imageDisplay}/>
                         </TouchableOpacity>
                       </View>
                     
@@ -91,20 +55,19 @@ async function onDelete(data) {  //data is _id to be removed
                         <Text style={{ color: 'white', fontSize: 18}}> {item.username} </Text>
                     </View>
 
-                    <View style={{marginTop:15}}>
-                      <TouchableOpacity onPress={() => {onDelete(item.id)}}>
+                    <View style={{marginTop:15, paddingHorizontal:15, paddingTop:10}}>
+                      <TouchableOpacity onPress={() => {onDelete(item._id)}}>
                       
-                      <Text style={{color:'white',borderColor:'white',borderWidth:2, padding:10, borderRadius:10}}>
-                        Remove
-                      </Text>
+                      <MaterialIcons name="person-remove-alt-1" size={32} color="#ff3300" />
                       </TouchableOpacity>
                     </View>
                     </View>
                   </View>
-                )}>
-              
+                )}
+                // extraData={removal}
+              >
             </FlatList>
-          
+
        </View>
        <View style={styles.bottompane}>
          <View style={{flex:1, alignItems:'center', paddingBottom:10}}>

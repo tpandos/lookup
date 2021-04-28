@@ -175,7 +175,6 @@ export function handler(err) {
 
  //DELETE FRIEND
 // router.put('/:id/deleteFriend', User.deleteFriend);
-
 export async function deleteFriend(userId, data){
 console.log("userID ", userId); 
     console.log("!!!!!!!!!!!!!!!!!!!!!!!!!! delete friend auth with data", data); 
@@ -190,27 +189,4 @@ console.log("userID ", userId);
     }
 }
 
-// // @route DELETE FRIEND api/user/{id}/deleteFriend
-// // @desc Delete Friend
-// // @access Public
-// exports.deleteFriend = async function (req, res) {
-//     try {
-//         const id = req.params.id;
-//         const other_useId = req.body.userId;
 
-//         let curr_user = await User.findById(id).select('username profileImage');
-//         let other_user = await User.findById(other_useId).select('username profileImage');
-
-//         const update = await User.findByIdAndUpdate(id, {$pull: {'friends': other_user}});
-//         const update_other_user = await User.findByIdAndUpdate(other_useId, {$pull: {'friends': curr_user}});
-
-//         return res.status(200).json({update, update_other_user, message: 'Delete Friend Success'})
-
-//     } catch (error) {
-//         res.status(500).json({message: error.message});
-//     }
-// }
-
-/*
-user.messages loop 
-*/
