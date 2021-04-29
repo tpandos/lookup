@@ -1,10 +1,10 @@
 import React from 'react';
 
 //API URL
-export const API_URL = 'https://lookupbackend.herokuapp.com/api';
+//export const API_URL = 'https://lookupbackend.herokuapp.com/api';
 
 //USING LOCAL
-//export const API_URL = 'http://192.168.1.188:3000/api';
+export const API_URL = 'http://192.168.1.188:3000/api';
 
 
 //API End Points
