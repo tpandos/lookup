@@ -110,7 +110,7 @@ async function fetchApi(){
             </Animatable.View>
             <TouchableOpacity
             style={{backgroundColor: '#6D25BE', alignItems: 'center',  marginTop:2, marginLeft: 2, padding: 10, width: 150, borderRadius: 30, borderColor:'#fff', borderWidth: '2'}}
-            onPress={()=>{navigate('Home')}}> 
+            onPress={()=>{navigate('App')}}> 
             <Text style={{ textAlign: 'center', color: '#fff', fontSize: 15}}> Back to Home</Text>
             </TouchableOpacity>
             

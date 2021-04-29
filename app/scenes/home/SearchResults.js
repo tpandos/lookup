@@ -49,6 +49,7 @@ const [userData , setData] = useState({userData});
     }, [])
   
 
+    console.log("SearchResults")
 
     async function OnPress(data){
       const {navigation} = props;
@@ -76,7 +77,7 @@ if (userData.message == "Results by ranking"){
       <SafeAreaView style= {styles.container}>
         <TouchableOpacity
         style={{alignItems: 'center', backgroundColor: 'white', marginTop:2, marginLeft: 10, padding: 20, width: 400, marginHorizontal: 2, fontSize: 24}}
-        onPress ={()=>{navigate('Search')}}> 
+        onPress ={()=>{navigate('Searchh')}}> 
         <Text Texstyle={{flex:1, color: '#37474f', padding:50, justifyContent: 'center', alignItems: 'center'}}> Back to Search </Text>
         </TouchableOpacity>
         
