@@ -1,5 +1,4 @@
 import axios from 'axios';
-import { useEffect } from 'react';
 
 import * as c from '../constants';
 
@@ -119,20 +118,27 @@ export function updateLocation(userId, data) {
 }
 
 export async function search(userId, data) {
-    console.log("*** DATA FROM SEARCH")
-    console.log(data.username);
+// const cancelToken = axios.CancelToken;
+// const source = cancelToken.source();
+    
+    // console.log('data=========')
+    // console.log(data);
+
+
     
     try {
-       const options = {
-        headers: {
-            Accept: "application/json",
-            //"Content-Type": "multipart/form-data",
-            "Content-Type": "application/x-www-form-urlencoded",
-        },
-        body: JSON.stringify({data})
+    //    const options = {
+    //     headers: {
+    //         Accept: "application/json",
+    //         //"Content-Type": "multipart/form-data",
+    //         "Content-Type": "application/x-www-form-urlencoded",
+    //     },
+    //     body: JSON.stringify({data})
         
-    };  
-        let res = await axios.post(`${c.UPDATE_PROFILE}/${userId}/search`, data)
+    //};  
+    
+        let res = await axios.post(`${c.UPDATE_PROFILE}/${userId}/search`, data )
+        //let res = await axios.post(`${c.UPDATE_PROFILE}/${userId}/search`, data , {cancelToken: source.token})
         return res.data;
     
     }
@@ -140,6 +146,34 @@ export async function search(userId, data) {
         throw handler(e);
     }
 }
+
+
+
+export async function SearchedProfileUSER(user_Id, data) {
+    
+    console.log('Now you are at the routes searchedProfile function')
+    console.log('data=========')
+    console.log(data);
+    
+    const DDD = JSON.stringify(data)
+    console.log("DDDDDDDD");
+    console.log(DDD);
+
+    
+    try {
+    
+        let res = await axios.post(`${c.SEARCHED_PROFILE}/${user_Id}/profile`, {userId : data}); 
+        // in {userId : data}, "userId" is the name of the param in the req.body.userId in the backend
+        // user_Id is the id of the user who makes the search (the state.user)
+        console.log("res is =============")
+        console.log(res.data)
+        return res.data;
+    }
+    catch (e) {
+        throw handler(e);
+    }
+}
+
 
 export function handler(err) {
     let error = err;

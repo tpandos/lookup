@@ -10,7 +10,8 @@ import AuthLoading from "./scenes/auth/AuthLoading";
 import AuthProvider from "./providers/auth";
 import SearchStack from "./routes/search"; 
 import AllowLocationStack from "./routes/allowlocation";
-import SearchResultsStack from "./routes/searchresults";
+import SearchResultsStack from "./routes/searchresults"
+import SearchedProfileStack from "./routes/searchedprofile"
 import NotificationStack from "./routes/notifications";
 
 
@@ -20,11 +21,13 @@ const AppStack = createSwitchNavigator(
         Loading: AuthLoading,
         Auth: AuthStack,
         App: HomeStack,
-        Search: SearchStack, 
+        Searchh: SearchStack,                    // stack name different than navigation screen
         FriendList : FriendListStack,
         AllowLocation : AllowLocationStack,
-        SearchResults : SearchResultsStack,
+        SearchResultss : SearchResultsStack,
+        SearchedUserProfile: SearchedProfileStack, // stack name different than
         Notifications : NotificationStack
+
         
     },
     {initialRouteName: 'Loading'}
