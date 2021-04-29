@@ -1,24 +1,24 @@
 import React from 'react';
 import {createStackNavigator} from 'react-navigation-stack';
 
-import SearchScreen from "../scenes/home/Search"; 
 import SearchResultsScreen from "../scenes/home/SearchResults"; 
+import SearchProfileScreen from "../scenes/home/SearchedProfile"; 
 
 
 //header across all the scenes 
 import {headerStyle, headerTitleStyle} from '../theme';
 
-const SearchResultsStack = createStackNavigator(
+const SearchedProfileStack = createStackNavigator(
     {
         
-        Search: SearchScreen,
-        SearchResults: SearchResultsScreen
+        SearchResults: SearchResultsScreen,
+        SearchedProfile: SearchProfileScreen,
     },
     {
-       initialRouteName:'Search',
+        initialRouteName:'SearchResults',
         defaultNavigationOptions:()=>({headerStyle, headerTitleStyle})
     }
      
 );
   
-export default SearchResultsStack;
+export default SearchedProfileStack ;
