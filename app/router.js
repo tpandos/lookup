@@ -12,6 +12,8 @@ import SearchStack from "./routes/search";
 import AllowLocationStack from "./routes/allowlocation";
 import SearchResultsStack from "./routes/searchresults"
 import SearchedProfileStack from "./routes/searchedprofile"
+import NotificationStack from "./routes/notifications";
+
 
 //APP ROUTES STACK
 const AppStack = createSwitchNavigator(
@@ -24,6 +26,8 @@ const AppStack = createSwitchNavigator(
         AllowLocation : AllowLocationStack,
         SearchResultss : SearchResultsStack,
         SearchedUserProfile: SearchedProfileStack, // stack name different than
+        Notifications : NotificationStack
+
         
     },
     {initialRouteName: 'Loading'}

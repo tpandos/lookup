@@ -42,35 +42,13 @@ export async function updateProfile(userId, data){
             }
             
         };
-        console.log('data==========================', data)
+        //console.log('data==========================', data)
 
         
         
         let skills = [];
         let rank = [];
         // let i = 1;
-
-   
-
-        // for (let key in data) {
-        //     console.log('key', key)
-        //     if (i > 3) return;
-        //     if (key == `skills_${i}`) {
-        //         for (let key_2 in data) {
-        //             if (key_2 == `rank_${i}`) {
-        //                 // console.log('find it ===============')
-        //                // console.log('value', data[key])
-        //                 skills.push(data[key])
-        //                 rank.push(data[key_2])   
-        //             }
-        //            // console.log('key_2', key_2)
-        //         }
-        //         delete data.skills_1
-        //         delete data.rank_1
-        //         i++;
-        //     }
-               
-        // }
 
          // gotta fixx the loop, this is temporary   
         skills.push(data.skills_1); 
@@ -81,9 +59,9 @@ export async function updateProfile(userId, data){
         rank.push(data.rank_3); 
 
         const form_data = new FormData();
-        console.log('type of form_data', form_data)
-        console.log('data==================')
-        console.log(data)
+        //console.log('type of form_data', form_data)
+        //console.log('data==================')
+        //console.log(data)
 
         // skills = ['python','java'];
         // rank = [34, 67];
@@ -115,9 +93,9 @@ export async function updateProfile(userId, data){
         
 
         
-        console.log('formdata=====================')
-        console.log(form_data)
-        console.log(userId); 
+        console.log('###  FORMDATA SENT TO DATABASE')
+        console.log(form_data.username)
+        //console.log(userId); 
 
 
         let res = await axios.put(`${c.UPDATE_PROFILE}/${userId}`, form_data, options);
@@ -145,6 +123,7 @@ export async function search(userId, data) {
     
     // console.log('data=========')
     // console.log(data);
+
 
     
     try {
@@ -204,4 +183,45 @@ export function handler(err) {
     else if (!err.hasOwnProperty("message")) error = err.toJSON();
 
     return new Error(error.message);
+}
+
+ //DELETE FRIEND
+// router.put('/:id/deleteFriend', User.deleteFriend);
+export async function deleteFriend(userId, data){
+console.log("userID ", userId); 
+    console.log("!!!!!!!!!!!!!!!!!!!!!!!!!! delete friend auth with data", data); 
+    try{
+        
+        console.log("in the try block********************"); 
+    let res = await axios.put(`${c.UPDATE_PROFILE}/${userId}/deleteFriend`, {other_userId: data});//<--- deleted friend ID
+    return res.data; 
+
+    }catch(e){
+        throw handler(e); 
+    }
+}
+
+
+// @route POST api/user/{id}/response
+// @desc response message from other users
+// @access Public
+// const userId = req.params.id;
+// const request = req.body.request;
+// const response = req.body.response;
+// const message_id = req.body.message_id;
+// only messageid, request type and response
+export async function response(userId, messId, reqType, reqRes){
+
+    console.log("data from the response===========AUTH"); 
+    console.log("message id", messId); 
+    console.log("request type ", reqType);
+    console.log("Accept or Ignore  ", reqRes); 
+    try{//message, 
+        let res = await axios.post(`${c.UPDATE_PROFILE}/${userId}/response`, {request:reqType, response:reqRes, message_id: messId,}); 
+        return res.data; 
+
+    }catch(e){
+        throw handler(e); 
+    }
+
 }

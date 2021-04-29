@@ -21,7 +21,7 @@ export default function UpdateProfile (props) {
     let initialData = {}
     // // set initial data 
     if (state.user.skills.length === 0) {
-        console.log("1111111111111111111111111111"); 
+        //console.log("1111111111111111111111111111"); 
 
          initialData = {
             "username": state.user.username,
@@ -37,7 +37,7 @@ export default function UpdateProfile (props) {
             "rank_3":  "",
         };
     } else{
-        console.log("*********************************"); 
+        //console.log("*********************************"); 
 
         initialData = {
         "username": state.user.username,
@@ -53,7 +53,7 @@ export default function UpdateProfile (props) {
         "rank_3": state.user.skills[2].rank,
     };
 
-        console.log(state.user.skills.length);
+        //console.log(state.user.skills.length);
     }
 
         // profile Image url
@@ -91,19 +91,19 @@ export default function UpdateProfile (props) {
 
 
     async function onSubmit(data) {
-        console.log('@@@@', data)
+        console.log('@@@@ SUBMIT CLICKED')
         setLoading(true);
         //console.log("profile---////////////////////////////-", profileImage); 
 
         if(profileImage[0] === "f"){
-            console.log("profile if f---////////////////////////////-", profileImage); 
+            console.log("***ADDING NEW PROFILE IMAGE",); 
             data.profileImage = profileImage; 
             // data.filename = data.profileImage.split('/').pop();
             // match = /\.(\w+)$/.exec(filename);
             // data.type = match ? `image/${match[1]}` : `image`;
         }else{
             data.profileImage = state.user.profileImage; 
-            console.log("profile if not changed---()()()()()()()()()()()())-", profileImage);
+            console.log("*** EXISTING PROFILE IMAGE");
         }
         
         //console.log("data.profile----", data.profileImage);  
@@ -156,7 +156,7 @@ export default function UpdateProfile (props) {
           quality: 1,
         });
     
-        console.log("URI::----> ", result.uri);
+        //console.log("URI::----> ", result.uri);
         
         if (!result.cancelled) {
         profileImage = result.uri; 

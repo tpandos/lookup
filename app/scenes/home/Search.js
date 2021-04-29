@@ -70,7 +70,6 @@ async function fetchApi(){
         const response = await api.search(state.user._id, formData);
         setLoading(false);
 
-
         await AsyncStorage.setItem( "userResponse" , JSON.stringify(response));
         props.navigation.navigate('SearchResults')
         

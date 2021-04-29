@@ -21,6 +21,7 @@ const [error, setError] = useState(null);
 const [loading, setLoading] = useState(false);
 const {state, updateUser } = useAuth();
 const [userData , setData] = useState({userData});
+    
 
     const {navigation} = props;
     const {navigate} = props.navigation;
