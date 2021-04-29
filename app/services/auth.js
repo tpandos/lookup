@@ -51,28 +51,6 @@ export async function updateProfile(userId, data){
         let rank = [];
         // let i = 1;
 
-   
-
-        // for (let key in data) {
-        //     console.log('key', key)
-        //     if (i > 3) return;
-        //     if (key == `skills_${i}`) {
-        //         for (let key_2 in data) {
-        //             if (key_2 == `rank_${i}`) {
-        //                 // console.log('find it ===============')
-        //                // console.log('value', data[key])
-        //                 skills.push(data[key])
-        //                 rank.push(data[key_2])   
-        //             }
-        //            // console.log('key_2', key_2)
-        //         }
-        //         delete data.skills_1
-        //         delete data.rank_1
-        //         i++;
-        //     }
-               
-        // }
-
          // gotta fixx the loop, this is temporary   
         skills.push(data.skills_1); 
         rank.push(data.rank_1); 
@@ -190,3 +168,26 @@ console.log("userID ", userId);
 }
 
 
+// @route POST api/user/{id}/response
+// @desc response message from other users
+// @access Public
+// const userId = req.params.id;
+// const request = req.body.request;
+// const response = req.body.response;
+// const message_id = req.body.message_id;
+// only messageid, request type and response
+export async function response(userId, messId, reqType, reqRes){
+
+    console.log("data from the response===========AUTH"); 
+    console.log("message id", messId); 
+    console.log("request type ", reqType);
+    console.log("Accept or Ignore  ", reqRes); 
+    try{//message, 
+        let res = await axios.post(`${c.UPDATE_PROFILE}/${userId}/response`, {request:reqType, response:reqRes, message_id: messId,}); 
+        return res.data; 
+
+    }catch(e){
+        throw handler(e); 
+    }
+
+}
