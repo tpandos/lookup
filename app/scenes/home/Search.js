@@ -95,10 +95,8 @@ async function fetchApi(){
     <View style= {styles.container}>
         <View style={{flex:1, padding:50}}>
             <ErrorText error={error}/>
-            <Animatable.View animation = "slideInRight" duration= {1000} style= {{width: 380, height: 350, backgroundColor: 'white', 
+            <Animatable.View animation = "slideInRight" duration= {1000} style= {{width: 380, height: 350, backgroundColor: '#000033', 
             flexDirection:'row', padding: 5, alignItems: 'center', paddingRight:5, borderRadius: 1}}>
-              <Animatable.View animation = "fadeInLeft" duration = {400}> 
-              </Animatable.View>
               <Form
                 fields={fields}
                 title={'Search'}
@@ -131,3 +129,6 @@ async function fetchApi(){
           backgroundColor: "#eaeaea"
         }
       })
+
+      // <Animatable.View animation = "fadeInLeft" duration = {400}> 
+      //         </Animatable.View>

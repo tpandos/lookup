@@ -225,3 +225,15 @@ export async function response(userId, messId, reqType, reqRes){
     }
 
 }
+
+export async function sendRequest(userId, reciever_id, req){
+
+    try{
+        let res = await axios.post(`${c.UPDATE_PROFILE}/${userId}/sendRequest`, {to_userId: reciever_id , request:req}); 
+        return res.data; 
+
+    }catch(e){
+        throw handler(e); 
+    }
+
+}
