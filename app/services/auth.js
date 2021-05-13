@@ -164,6 +164,45 @@ export async function search(userId, data) {
     }
 }
 
+export async function loadConversation(userId){
+    /*
+        axios.post(`${c.CONVERSATION}/${userId}/loadConversation`, {to_userId: "60592ef6f8cd70001599df31"})
+        .then(response => { console.log(response.data.exist_conversation[0].conversationHistory);})
+        .catch(error => { console.log(error.response); });
+        //console.log("------------------IT STARTS HERE--------------",response.data.exist_conversation[0].conversationHistory)
+    */
+        try {
+        let res = await axios.post(`${c.CONVERSATION}/${userId}/loadConversation`, {to_userId: "60592ef6f8cd70001599df31"})
+        //console.log("------------------IT STARTS HERE--------------",res.data.exist_conversation[0].conversationHistory)
+        return res.data.exist_conversation[0].conversationHistory;
+        }
+        catch (e) {
+            throw handler(e);
+        }
+
+    }
+
+    export async function addMessage(userId, text){
+        /*
+            axios.post(`${c.CONVERSATION}/${userId}/loadConversation`, {to_userId: "60592ef6f8cd70001599df31"})
+            .then(response => { console.log(response.data.exist_conversation[0].conversationHistory);})
+            .catch(error => { console.log(error.response); });
+            //console.log("------------------IT STARTS HERE--------------",response.data.exist_conversation[0].conversationHistory)
+        */
+            try {
+            let res = await axios.post(`${c.SEND_MESSAGE}/${userId}/sendMessage`, {conversationId: "60841769e5b35838526fe770", text: text})
+            //console.log("------------------IT STARTS HERE--------------",res.data.exist_conversation[0].conversationHistory)
+            return res;
+            }
+            catch (e) {
+                throw handler(e);
+            }
+    
+        }
+
+
+
+
 export function handler(err) {
     let error = err;
 

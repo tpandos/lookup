@@ -167,6 +167,17 @@ export default function Home(props) {
         
         </View>
         </TouchableOpacity>
+
+        <TouchableOpacity onPress={() => {navigate('ConversationList')}}>
+        <View style={styles.searchButton}>
+        
+        <Text style={{color:'black', fontSize:20, marginRight:30, fontWeight:'bold'}}>
+            Chatlist
+        </Text>
+        <FontAwesome5 name="search-location" size={30} color="black" />
+        
+        </View>
+        </TouchableOpacity>
         </View>
         );
     }
