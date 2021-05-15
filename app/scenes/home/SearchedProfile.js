@@ -157,7 +157,7 @@ export default function SearchedUserProfile (props) {
         
             </View>
         </ScrollView>
-        <TouchableOpacity onPress={() => {navigate('Searchh')}}>
+        <TouchableOpacity onPress={() => {navigate('Search_')}}>
         <View style={styles.searchButton}>
         
         <Text style={{color:'black', fontSize:20, marginRight:30, fontWeight:'bold'}}>

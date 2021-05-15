@@ -22,8 +22,6 @@ const [loading, setLoading] = useState(false);
 const {state, updateUser } = useAuth();
 const [userData , setData] = useState({userData});
 const scrollY = React.useRef(new Animated.Value(0)).current;
-// const moveAnimationValue = React.useRef(new Animated.ValueXY());
-// const opacityAnimationValue = React.useRef(new Animated.Value(1));
 const ITEM_SIZE = 160;
 
     const {navigation} = props;
@@ -80,7 +78,7 @@ if (userData.message == "Results by ranking"){
       <SafeAreaView style= {styles.container}>
         <TouchableOpacity
         style={{alignItems: 'center', backgroundColor: 'white', marginTop:2, marginLeft: 10, padding: 20, width: 400, marginHorizontal: 2, fontSize: 24}}
-        onPress ={()=>{navigate('Searchh')}}> 
+        onPress ={()=>{navigate('Search_')}}> 
         <Text Texstyle={{flex:1, color: '#37474f', padding:50, justifyContent: 'center', alignItems: 'center'}}> Back to Search </Text>
         </TouchableOpacity>
         
@@ -91,18 +89,6 @@ if (userData.message == "Results by ranking"){
            [{ nativeEvent : {contentOffset: {y : scrollY}}}],
            {useNativeDriver : true}
          )}
-        //  OnRender = {Animated.sequence([
-        //   Animated.timing(moveAnimationValue, {
-        //     toValue: 100,
-        //     duration: 500
-        //   }),
-        //   Animated.timing(opacityAnimationValue, {
-        //     toValue: 0,
-        //     duration: 200
-        //   })
-        // ])
-        // }
-         //extraData = {response.ranking, response.profileImage}
          keyExtractor = {(item, index) => index.toString()}
          //keyExtractor={item => item}
           renderItem = {
@@ -145,19 +131,39 @@ if (userData.message == "Results by ranking"){
         <SafeAreaView style= {styles.container}>
           <TouchableOpacity
           style={{alignItems: 'center', backgroundColor: 'white', marginTop:2, marginLeft: 10, padding: 20, width: 400, marginHorizontal: 2, fontSize: 24}}
-          onPress ={()=>{navigate('Search')}}> 
+          onPress ={()=>{navigate('Search_')}}> 
           <Text Texstyle={{flex:1, color: '#37474f', padding:50, justifyContent: 'center', alignItems: 'center'}}> Back to Search </Text>
           </TouchableOpacity>
           
-          <FlatList
-           data = {userData.results}
-           //extraData = {response.ranking, response.profileImage}
-           keyExtractor = {(item, index) => index.toString()}
-           //keyExtractor={item => item}
-            renderItem = {
-              ({item ,index}) => 
-              <Animatable.View animation = "slideInRight" duration= {1000} style= {{width: 380, height: 350, backgroundColor: '#000033', 
-            flexDirection:'row', padding: 5, alignItems: 'center', paddingRight:5, borderRadius: 1}}>
+          <Animated.FlatList
+         data = {userData.results}
+         onScroll = {Animated.event(
+           [{ nativeEvent : {contentOffset: {y : scrollY}}}],
+           {useNativeDriver : true}
+         )}
+         keyExtractor = {(item, index) => index.toString()}
+         //keyExtractor={item => item}
+          renderItem = {
+            ({item ,index}) => { 
+
+              const inputRange = [
+              -1, 
+              0,
+              ITEM_SIZE * index,
+              ITEM_SIZE * (index + 2) 
+              ]
+
+              const scale = scrollY.interpolate({
+                inputRange,
+                outputRange : [1 , 1 , 1, 0]
+              })
+              return <Animated.View
+              style = {{ 
+              shawdowColor: "#000",
+              shadowOffset: {width: 0, height: 10},
+              shadowOpacity : 0.3, 
+              transform : [{scale}]
+              }}>
             <TouchableOpacity
             onPress= {() => (OnPress(userData.results[index]._id))}
             
@@ -166,8 +172,8 @@ if (userData.message == "Results by ranking"){
             <Text style={{ textAlign: 'center', color: '#fff', fontSize: 22, fontWeight:"bold"}}> {item.username} </Text>
             <Text style={{ textAlign: 'right', color: '#fff', fontSize: 18}}> {userData.results[index].distance}m away </Text>
              </TouchableOpacity>
-          </Animatable.View>
-            }
+          </Animated.View>
+            }}
           /> 
         </SafeAreaView>
       )

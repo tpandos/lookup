@@ -21,11 +21,11 @@ const AppStack = createSwitchNavigator(
         Loading: AuthLoading,
         Auth: AuthStack,
         App: HomeStack,
-        Searchh: SearchStack,                    // stack name different than navigation screen
+        Search_: SearchStack,                    
         FriendList : FriendListStack,
         AllowLocation : AllowLocationStack,
-        SearchResultss : SearchResultsStack,
-        SearchedUserProfile: SearchedProfileStack, // stack name different than
+        Search_Results : SearchResultsStack,
+        SearchedUserProfile: SearchedProfileStack,
         Notifications : NotificationStack
 
         

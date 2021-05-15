@@ -11,6 +11,7 @@ import Form, { TYPES } from 'react-native-basic-form';
 import {ErrorText} from "../../components/Shared";
 import axios from 'axios';
 import * as c from '../../constants';
+import { Alert } from 'react-native';
 
 
 
@@ -70,13 +71,13 @@ async function fetchApi(){
         const response = await api.search(state.user._id, formData);
         setLoading(false);
 
-        await AsyncStorage.setItem( "userResponse" , JSON.stringify(response));
-        props.navigation.navigate('SearchResults')
-        
+            await AsyncStorage.setItem( "userResponse" , JSON.stringify(response));
+            props.navigation.navigate('SearchResults')
         
       }catch (error) {
-        setError(error.message);
+        //setError(error.message);
         setLoading(false)
+        Alert.alert("Search did not match")
         }
         //setMount(false)
       }
@@ -116,7 +117,6 @@ async function fetchApi(){
     </View>
    </ScrollView>
  </View>
-
         
     )
   }
