@@ -1,5 +1,5 @@
 import React, {useState, useContext, useEffect} from 'react';
-import {Text, View, Button, ActivityIndicator, Alert, StyleSheet, ScrollView, Image} from 'react-native';
+import {Text, View, Button, ActivityIndicator, Alert, StyleSheet, ScrollView, Image, SafeAreaView} from 'react-native';
 import { FontAwesome5 } from '@expo/vector-icons';
 import { Ionicons } from '@expo/vector-icons';
 import { FontAwesome } from '@expo/vector-icons';
@@ -14,17 +14,54 @@ export default function SearchedUserProfile (props) {
     const [location, setLocation] = useState(null);
     const [errorMsg, setErrorMsg] = useState(null);
     const {state, updateUser } = useAuth();
-    //const user = state.user;
+    
+    const user = props.navigation.getParam('userProfile', "No ID") // the user whose profile is searched
+    // state.user is the user who is making the search
 
-    const user = props.navigation.getParam('userProfile', "No ID")
+    async function onConnect(){
+        const request = 'friend';
+        try { 
+        let response = await api.sendRequest(state.user._id, user._id, request);
+        console.log("the onConnect response is ")
+        console.log(response)
+        Alert.alert(response.message)
+    }catch (error) {
+        setErrorMsg(error.message);
+        console.log("error.message is ")
+        console.log(error.message)
+        Alert.alert(error.message)
+        }
+    }
 
+    async function onTutorReq(skillName){
+        const request = skillName;
+        try { 
+        let response = await api.sendRequest(state.user._id, user._id, request);
+        console.log("the onTutorReq response is ")
+        console.log(response)
+        Alert.alert(response.message)
+    }catch (error) {
+        setErrorMsg(error.message);
+        console.log("error.message is ")
+        console.log(error.message)
+        Alert.alert(error.message)
+        }
+    }
 
+    //const user = props.navigation.getParam('userProfile', "No ID")
+
+    console.log('SEARCHED USER id')
+    console.log(user._id)
+
+    console.log('my user id')
+    console.log(state.user._id)
     
     var myloop = [];
 
     for (let i = 0; i < user.skills.length; i++) {
         myloop.push(
             <View key={i}>
+            <TouchableOpacity onPress={() => {onTutorReq(user.skills[i].name)}}>
             <View styles={{borderWidth:1}}>
              <Text style={styles.skillsStyle}>{user.skills[i].name} </Text>   
             </View>
@@ -32,6 +69,7 @@ export default function SearchedUserProfile (props) {
             <View>
              <Text style={styles.skillsRank}>{user.skills[i].rank}</Text>   
             </View>
+         </TouchableOpacity>
         
         </View>
         // <View key={i}>
@@ -105,12 +143,12 @@ export default function SearchedUserProfile (props) {
             </View>
             
             {/* call loop */}
-            <View style={styles.skillsLoop}>
-                <Text>{myloop}</Text>
-            </View>
+        <View style={styles.skillsLoop}>
+            <Text> {myloop} </Text>
+           </View>
         
             <View style={{flex:1, flexDirection:'row', alignSelf:'center', backgroundColor:'#000033', padding:30}}>
-            <TouchableOpacity>
+            <TouchableOpacity onPress={() => {onConnect()}}>
                     <View style={styles.button}>
                         <Text style={{fontWeight: 'bold', fontSize: 25}}>Connect</Text>
                     </View>    
@@ -119,7 +157,7 @@ export default function SearchedUserProfile (props) {
         
             </View>
         </ScrollView>
-        <TouchableOpacity onPress={() => {navigate('SearchResultss')}}>
+        <TouchableOpacity onPress={() => {navigate('Search_')}}>
         <View style={styles.searchButton}>
         
         <Text style={{color:'black', fontSize:20, marginRight:30, fontWeight:'bold'}}>

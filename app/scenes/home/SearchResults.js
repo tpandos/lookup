@@ -2,7 +2,7 @@ import React, {useState, useContext, useEffect} from 'react';
 import 'react-native-gesture-handler';
 import { StatusBar } from 'expo-status-bar';
 import { Component } from 'react'
-import { FlatList,Keyboard, Image, ImageBackground, Linking, ScrollView, StyleSheet, Text, View} from 'react-native'
+import { FlatList,Keyboard, Image, ImageBackground, Linking, ScrollView, StyleSheet, Text, View, Animated} from 'react-native'
 import Icon from 'react-native-vector-icons/Ionicons'
 import { TextInput, TouchableOpacity } from 'react-native-gesture-handler';
 import * as Animatable from 'react-native-animatable'
@@ -21,7 +21,8 @@ const [error, setError] = useState(null);
 const [loading, setLoading] = useState(false);
 const {state, updateUser } = useAuth();
 const [userData , setData] = useState({userData});
-    
+const scrollY = React.useRef(new Animated.Value(0)).current;
+const ITEM_SIZE = 160;
 
     const {navigation} = props;
     const {navigate} = props.navigation;
@@ -49,6 +50,7 @@ const [userData , setData] = useState({userData});
     }, [])
   
 
+    console.log("SearchResults")
 
     async function OnPress(data){
       const {navigation} = props;
@@ -76,18 +78,40 @@ if (userData.message == "Results by ranking"){
       <SafeAreaView style= {styles.container}>
         <TouchableOpacity
         style={{alignItems: 'center', backgroundColor: 'white', marginTop:2, marginLeft: 10, padding: 20, width: 400, marginHorizontal: 2, fontSize: 24}}
-        onPress ={()=>{navigate('Search')}}> 
+        onPress ={()=>{navigate('Search_')}}> 
         <Text Texstyle={{flex:1, color: '#37474f', padding:50, justifyContent: 'center', alignItems: 'center'}}> Back to Search </Text>
         </TouchableOpacity>
         
 
-        <FlatList
+        <Animated.FlatList
          data = {userData.results}
-         //extraData = {response.ranking, response.profileImage}
+         onScroll = {Animated.event(
+           [{ nativeEvent : {contentOffset: {y : scrollY}}}],
+           {useNativeDriver : true}
+         )}
          keyExtractor = {(item, index) => index.toString()}
          //keyExtractor={item => item}
           renderItem = {
-            ({item ,index}) => 
+            ({item ,index}) => { 
+
+              const inputRange = [
+              -1, 
+              0,
+              ITEM_SIZE * index,
+              ITEM_SIZE * (index + 2) 
+              ]
+
+              const scale = scrollY.interpolate({
+                inputRange,
+                outputRange : [1 , 1 , 1, 0]
+              })
+              return <Animated.View
+              style = {{ 
+              shawdowColor: "#000",
+              shadowOffset: {width: 0, height: 10},
+              shadowOpacity : 0.3, 
+              transform : [{scale}]
+              }}>
           <TouchableOpacity
           onPress= {() => (OnPress(userData.results[index]._id))}
           //onPress= {() => {navigate('SearchedUserProfile', { userprofile : api.SearchedUserProfile(state.user._id, response[index]._id)})}}
@@ -96,7 +120,8 @@ if (userData.message == "Results by ranking"){
           <Text style={{ textAlign: 'center', color: '#fff', fontSize: 22, fontWeight:"bold"}}> {item.username} </Text>
           <Text style={{ textAlign: 'right', color: '#fff', fontSize: 18}}> Ranking: {userData.results[index].ranking} </Text>
            </TouchableOpacity>
-          }
+          </Animated.View>
+           }}
         />  
       </SafeAreaView>
     )
@@ -106,18 +131,39 @@ if (userData.message == "Results by ranking"){
         <SafeAreaView style= {styles.container}>
           <TouchableOpacity
           style={{alignItems: 'center', backgroundColor: 'white', marginTop:2, marginLeft: 10, padding: 20, width: 400, marginHorizontal: 2, fontSize: 24}}
-          onPress ={()=>{navigate('Search')}}> 
+          onPress ={()=>{navigate('Search_')}}> 
           <Text Texstyle={{flex:1, color: '#37474f', padding:50, justifyContent: 'center', alignItems: 'center'}}> Back to Search </Text>
           </TouchableOpacity>
           
-  
-          <FlatList
-           data = {userData.results}
-           //extraData = {response.ranking, response.profileImage}
-           keyExtractor = {(item, index) => index.toString()}
-           //keyExtractor={item => item}
-            renderItem = {
-              ({item ,index}) => 
+          <Animated.FlatList
+         data = {userData.results}
+         onScroll = {Animated.event(
+           [{ nativeEvent : {contentOffset: {y : scrollY}}}],
+           {useNativeDriver : true}
+         )}
+         keyExtractor = {(item, index) => index.toString()}
+         //keyExtractor={item => item}
+          renderItem = {
+            ({item ,index}) => { 
+
+              const inputRange = [
+              -1, 
+              0,
+              ITEM_SIZE * index,
+              ITEM_SIZE * (index + 2) 
+              ]
+
+              const scale = scrollY.interpolate({
+                inputRange,
+                outputRange : [1 , 1 , 1, 0]
+              })
+              return <Animated.View
+              style = {{ 
+              shawdowColor: "#000",
+              shadowOffset: {width: 0, height: 10},
+              shadowOpacity : 0.3, 
+              transform : [{scale}]
+              }}>
             <TouchableOpacity
             onPress= {() => (OnPress(userData.results[index]._id))}
             
@@ -126,8 +172,9 @@ if (userData.message == "Results by ranking"){
             <Text style={{ textAlign: 'center', color: '#fff', fontSize: 22, fontWeight:"bold"}}> {item.username} </Text>
             <Text style={{ textAlign: 'right', color: '#fff', fontSize: 18}}> {userData.results[index].distance}m away </Text>
              </TouchableOpacity>
-            }
-          />  
+          </Animated.View>
+            }}
+          /> 
         </SafeAreaView>
       )
     }

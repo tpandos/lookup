@@ -11,6 +11,7 @@ import Form, { TYPES } from 'react-native-basic-form';
 import {ErrorText} from "../../components/Shared";
 import axios from 'axios';
 import * as c from '../../constants';
+import { Alert } from 'react-native';
 
 
 
@@ -70,13 +71,13 @@ async function fetchApi(){
         const response = await api.search(state.user._id, formData);
         setLoading(false);
 
-        await AsyncStorage.setItem( "userResponse" , JSON.stringify(response));
-        props.navigation.navigate('SearchResults')
-        
+            await AsyncStorage.setItem( "userResponse" , JSON.stringify(response));
+            props.navigation.navigate('SearchResults')
         
       }catch (error) {
-        setError(error.message);
+        //setError(error.message);
         setLoading(false)
+        Alert.alert("Search did not match")
         }
         //setMount(false)
       }
@@ -95,10 +96,8 @@ async function fetchApi(){
     <View style= {styles.container}>
         <View style={{flex:1, padding:50}}>
             <ErrorText error={error}/>
-            <Animatable.View animation = "slideInRight" duration= {1000} style= {{width: 380, height: 350, backgroundColor: 'white', 
+            <Animatable.View animation = "slideInRight" duration= {1000} style= {{width: 380, height: 350, backgroundColor: '#000033', 
             flexDirection:'row', padding: 5, alignItems: 'center', paddingRight:5, borderRadius: 1}}>
-              <Animatable.View animation = "fadeInLeft" duration = {400}> 
-              </Animatable.View>
               <Form
                 fields={fields}
                 title={'Search'}
@@ -110,7 +109,7 @@ async function fetchApi(){
             </Animatable.View>
             <TouchableOpacity
             style={{backgroundColor: '#6D25BE', alignItems: 'center',  marginTop:2, marginLeft: 2, padding: 10, width: 150, borderRadius: 30, borderColor:'#fff', borderWidth: '2'}}
-            onPress={()=>{navigate('Home')}}> 
+            onPress={()=>{navigate('App')}}> 
             <Text style={{ textAlign: 'center', color: '#fff', fontSize: 15}}> Back to Home</Text>
             </TouchableOpacity>
             
@@ -118,7 +117,6 @@ async function fetchApi(){
     </View>
    </ScrollView>
  </View>
-
         
     )
   }
@@ -131,3 +129,6 @@ async function fetchApi(){
           backgroundColor: "#eaeaea"
         }
       })
+
+      // <Animatable.View animation = "fadeInLeft" duration = {400}> 
+      //         </Animatable.View>
