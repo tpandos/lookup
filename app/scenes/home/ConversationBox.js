@@ -20,10 +20,11 @@ export default function ConversationBox (props){
   const friendId = props.navigation.getParam('friend_id', "No ID")
   const [messages, setMessages] = useState([]);
   const {state, setState} = useAuth();
+  const [convoHist, setConvoHist] = useState([]);
   const user = state.user;
   //const friendId = props.navigation.state.params('friend_id', "No such friend")
 
-  console.log("-------------------------------- friends id",friendId)
+  //console.log("-------------------------------- friends id",friendId)
   //const [loading, setLoading] = useState(false);
   //const [mount , setMount] = useState(false);
 /*
@@ -41,6 +42,7 @@ export default function ConversationBox (props){
 
     var messageLoop = [];
     var messageId = 0;
+    
 
     for(let i = 0; i < conversationHistory.length; i++){
       messageLoop.push({
@@ -56,18 +58,21 @@ export default function ConversationBox (props){
 
        });
   }
-//console.log("--------------------------CONVERSATIONHistory", messageLoop);
+  //setConvoHist(messageLoop);
+  setMessages(messageLoop)
+console.log("--------------------------CONVERSATIONHistory", conversationHistory);
 return messageLoop;
-}).then(results => {
-
-  qwel = results;
 })
+//console.log("--------------------------CONVERSATIONHistory", convoHist);
+
 } catch(err){
       console.warn(err);
   }
 
+  //qwel = response;
 
-console.log("--------------------------CONVERSATIONHistory", qwel);
+
+//console.log("--------------------------CONVERSATIONHistory", qwel);
   
   
   
@@ -108,11 +113,9 @@ console.log("--------------------------CONVERSATIONHistory", qwel);
 
   //console.log("-------------------------MESSAGELOOP",messageLoop)
 
-  
+  /*
   useEffect(() => {
-    
 
-    
     setMessages([
       {
         _id: 1,
@@ -136,14 +139,43 @@ console.log("--------------------------CONVERSATIONHistory", qwel);
       },
     ]);
   }, []); 
-  
+  */
 
-
-  /*
+/*
   useEffect(() => {
-    setMessages([qwerty()]);
+    
+    setMessages([
+
+      {
+       _id: 10,
+      createdAt: new Date(),
+      text: "Yo",
+    user:{
+      _id: 2,
+      avatar: "https://placeimg.com/140/140/any",
+      name: "React Native",
+      },
+    },
+    {
+        _id: 2,
+        text: 'Hello world',
+        createdAt: new Date(),
+        user: {
+          _id: 1,
+          name: 'React Native',
+          avatar: 'https://placeimg.com/140/140/any',
+        },
+      },
+    ]);
   }, []); 
   */
+
+
+  
+  /*useEffect(() => {
+    setMessages(convoHist);
+  }, []); */
+  
   /*
   const onSend = useCallback((messages = []) => {
     setMessages((previousMessages) =>
@@ -206,7 +238,7 @@ console.log("--------------------------CONVERSATIONHistory", qwel);
       messages={messages}
       onSend={(messages) => onSend(messages)}
       user={{
-        _id: 1,
+        _id: "604a631cf4e3610015e7c421",
       }}
       renderBubble={renderBubble}
       alwaysShowSend

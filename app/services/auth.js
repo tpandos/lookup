@@ -173,12 +173,14 @@ export async function loadConversation(userId){
     */
         try {
         let res = await axios.post(`${c.CONVERSATION}/${userId}/loadConversation`, {to_userId: "60592ef6f8cd70001599df31"})
+        //et res = fetch(`${c.CONVERSATION}/${userId}/loadConversation`, {method: 'POST'}, {to_userId: "60592ef6f8cd70001599df31"})
         //console.log("------------------IT STARTS HERE--------------",res.data.exist_conversation[0].conversationHistory)
         return res.data.exist_conversation[0].conversationHistory;
         }
         catch (e) {
             throw handler(e);
         }
+
 
     }
 
@@ -212,3 +214,11 @@ export function handler(err) {
 
     return new Error(error.message);
 }
+
+export function wait(ms){
+    var start = new Date().getTime();
+    var end = start;
+    while(end < start + ms) {
+      end = new Date().getTime();
+   }
+ }

@@ -13,7 +13,7 @@ export default function ConversationList(props) {
     const {navigation} = props;
     const {navigate} = props.navigation;
     const {state, setState} = useAuth();
-    //const [loading, setLoading] = useState(false);
+    const [friId, setFriId] = useState(false);
     
     const user = state.user;
 
@@ -36,6 +36,8 @@ export default function ConversationList(props) {
        profileImage: {uri: user.friends[i].profileImage}
       });
     }
+
+    console.log("----------------Friendloop", friendLoop[0].id)
 
 
     async function friendsInfo (selectedfriend) {
@@ -75,8 +77,9 @@ export default function ConversationList(props) {
   
               <FlatList
                 data = {friendLoop}
-                  keyExtractor={profile => profile.id.toString()}
-                  renderItem={({item})=>(
+                  keyExtractor={(item, index) => index.toString()}
+
+                  renderItem={({item,index})=>(
                     <View style={{flex:1,flexDirection:'row', padding: 8}}>
   
                      
@@ -92,7 +95,7 @@ export default function ConversationList(props) {
                       </View>
   
                       <View style={{marginTop:15}}>
-                        <TouchableOpacity onPress={() => {props.navigation.navigate('ConversationBox', {friend_id: item.id})}}>
+                        <TouchableOpacity onPress={() => {props.navigation.navigate('ConversationBox', {friend_id: {item}})}}>
                         
                         <Text style={{color:'white',borderColor:'white',borderWidth:2, padding:10, borderRadius:10}}>
                           message
