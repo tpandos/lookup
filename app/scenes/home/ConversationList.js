@@ -26,7 +26,7 @@ export default function ConversationList(props) {
     console.log("array size friends VVVVVVVVVVVVVVVVV", user.friends.length);
   }
 
-    var friendLoop = [];
+    /*var friendLoop = [];
 
 
     for(let i = 0; i < user.friends.length; i++){
@@ -35,12 +35,12 @@ export default function ConversationList(props) {
        username: user.friends[i].username, 
        profileImage: {uri: user.friends[i].profileImage}
       });
-    }
+    }*/
 
-    console.log("----------------Friendloop", friendLoop[0].id)
+    //console.log("----------------Friendloop", friendLoop[0].id)
 
 
-    async function friendsInfo (selectedfriend) {
+    async function onClick (data) {
 
         console.log("----------------we made it this far-------------")
 
@@ -57,9 +57,9 @@ export default function ConversationList(props) {
             */
 
           // i need to some how pass user id, friend id,  users username, and friends username
-          console.log("friendID---------------", selectedfriend);
+          //console.log("friendID---------------", selectedfriend);
             
-          //navigate('ConversationBox', {friend_id : selectedfriend } )
+          props.navigation.navigate('ConversationBox', {friend_info: data } )
         }
 
         catch (error) {
@@ -69,6 +69,8 @@ export default function ConversationList(props) {
 
 
     }
+
+    //{props.navigation.navigate('ConversationBox', {friend_info: "testing if this work"})}}
     
 
     return (
@@ -76,10 +78,10 @@ export default function ConversationList(props) {
          <View style={{flex:1}}>
   
               <FlatList
-                data = {friendLoop}
-                  keyExtractor={(item, index) => index.toString()}
+                data = {user.friends}
+                  keyExtractor={profile => profile._id.toString()}
 
-                  renderItem={({item,index})=>(
+                  renderItem={({item})=>(
                     <View style={{flex:1,flexDirection:'row', padding: 8}}>
   
                      
@@ -95,7 +97,7 @@ export default function ConversationList(props) {
                       </View>
   
                       <View style={{marginTop:15}}>
-                        <TouchableOpacity onPress={() => {props.navigation.navigate('ConversationBox', {friend_id: {item}})}}>
+                        <TouchableOpacity onPress={() => {onClick(item.id)}}>
                         
                         <Text style={{color:'white',borderColor:'white',borderWidth:2, padding:10, borderRadius:10}}>
                           message

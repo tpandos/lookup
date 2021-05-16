@@ -17,14 +17,14 @@ export default function ConversationBox (props){
   //const { friend_id } = route.params
   const {navigation} = props;
   const {navigate} = props.navigation;
-  const friendId = props.navigation.getParam('friend_id', "No ID")
+  const friendId = props.navigation.getParam('friend_info', "No ID")
   const [messages, setMessages] = useState([]);
   const {state, setState} = useAuth();
   const [convoHist, setConvoHist] = useState([]);
   const user = state.user;
   //const friendId = props.navigation.state.params('friend_id', "No such friend")
 
-  //console.log("-------------------------------- friends id",friendId)
+  console.log("-------------------------------- friends id",friendId)
   //const [loading, setLoading] = useState(false);
   //const [mount , setMount] = useState(false);
 /*
@@ -44,11 +44,11 @@ export default function ConversationBox (props){
     var messageId = 0;
     
 
-    for(let i = 0; i < conversationHistory.length; i++){
+    for(let i = conversationHistory.length-1; i >= 0; i--){
       messageLoop.push({
         _id: messageId = messageId + 1,
         text: conversationHistory[i].text,
-        createdAt: new Date(),
+        createdAt: conversationHistory[i].createdAt,
         user:{
             _id: conversationHistory[i]._id,
             name: 'React Native',
@@ -60,7 +60,7 @@ export default function ConversationBox (props){
   }
   //setConvoHist(messageLoop);
   setMessages(messageLoop)
-console.log("--------------------------CONVERSATIONHistory", conversationHistory);
+//console.log("--------------------------CONVERSATIONHistory", conversationHistory);
 return messageLoop;
 })
 //console.log("--------------------------CONVERSATIONHistory", convoHist);
