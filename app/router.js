@@ -13,6 +13,8 @@ import AllowLocationStack from "./routes/allowlocation";
 import SearchResultsStack from "./routes/searchresults"
 import SearchedProfileStack from "./routes/searchedprofile"
 import NotificationStack from "./routes/notifications";
+import ConversationListStack from "./routes/conversationlist";
+import ConversationBoxStack from "./routes/conversationbox";
 
 
 //APP ROUTES STACK
@@ -26,7 +28,9 @@ const AppStack = createSwitchNavigator(
         AllowLocation : AllowLocationStack,
         Search_Results : SearchResultsStack,
         SearchedUserProfile: SearchedProfileStack,
-        Notifications : NotificationStack
+        Notifications : NotificationStack,
+        ConversationList: ConversationListStack,
+        ConversationBox: ConversationBoxStack,
 
         
     },

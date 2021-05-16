@@ -237,3 +237,25 @@ export async function sendRequest(userId, reciever_id, req){
     }
 
 }
+
+export async function loadConversation(userId){
+        try {
+        let res = await axios.post(`${c.CONVERSATION}/${userId}/loadConversation`, {to_userId: "60592ef6f8cd70001599df31"})
+        return res.data.exist_conversation[0].conversationHistory;
+        }
+        catch (e) {
+            throw handler(e);
+        }
+    }
+
+export async function addMessage(userId, text){
+        try {
+        let res = await axios.post(`${c.SEND_MESSAGE}/${userId}/sendMessage`, {conversationId: "60841769e5b35838526fe770", text: text})
+        return res;
+        }
+        catch (e) {
+            throw handler(e);
+        }
+    
+    }
+

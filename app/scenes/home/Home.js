@@ -169,7 +169,7 @@ export default function Home(props) {
         </ScrollView>
         <View style={styles.bottompane}>
          <View style={{ flex:1,padding:10, alignItems:'center'}}>
-            <TouchableOpacity>
+            <TouchableOpacity onPress={() => {navigate('ConversationList')}}>
             <FontAwesome name="commenting" size={30} color="white" />
             </TouchableOpacity> 
           </View>
