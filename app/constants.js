@@ -11,4 +11,6 @@ export const UPLOAD_IMAGE = `${API_URL}/user/upload`;
 export const FORGOT_PASSWORD = `${API_URL}/auth/recover`;
 export const SEARCH = `${API_URL}/user`;
 export const SEARCHED_PROFILE = `${API_URL}/user`;
+export const CONVERSATION = `${API_URL}/user`;
+export const SEND_MESSAGE = `${API_URL}/user`;
 
