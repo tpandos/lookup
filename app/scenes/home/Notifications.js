@@ -1,9 +1,11 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {Text, View, StyleSheet, Image, FlatList,Alert} from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { useAuth } from "../../providers/auth";
 import { Entypo } from '@expo/vector-icons';
 import * as api from "../../services/auth";
+import * as c from '../../constants'
+import axios from 'axios';
 
 import { MaterialIcons } from '@expo/vector-icons';
 
@@ -11,12 +13,30 @@ export default function Notifications(props) {
     const {navigation} = props;
     const {navigate} = props.navigation;
     const {state, setState} = useAuth();
-   
+    const [newNotification, getNewNotification] = useState([]); 
+    const [loadNotUpdate, setLoadNot] = useState(true); // set to true for updating 
     const user = state.user; 
 
 
+     // adding new useeffect 
+     useEffect(()=>{
+      getAllNotifications();
+    },[loadNotUpdate]); 
+ 
+    const getAllNotifications = () => {
+      axios.get(`${c.UPDATE_PROFILE}/${user._id}`)
+      .then((response)=>{
+        const allNotifications = response.data.user; 
+
+        getNewNotification(allNotifications);
+        console.log("-----------> NOTIFICATIONS-------------", allNotifications);
+ 
+         setLoadNot(false); 
+      })
+      .catch(error => console.error(`error: ${error}`));
+    }
+
     // accept or ignore request
-    let requestResponse; 
 
     async function onResponse(messId, reqType, reqRes){
 
@@ -28,7 +48,7 @@ export default function Notifications(props) {
 
       
       let response = await api.response(user._id, messId, reqType, reqRes);
-      
+      setLoadNot(true); 
       
 
     }
@@ -42,6 +62,43 @@ export default function Notifications(props) {
 {/* code goes here */}
 
             <FlatList
+              data = {newNotification}
+                keyExtractor={messageId=>messageId.toString()}
+                renderItem={({item})=>(
+                  <View style={{flex:1,flexDirection:'row', padding: 8, borderBottomColor:'grey', borderBottomWidth:1}}>
+
+          
+                      <View>
+                         <TouchableOpacity >
+                        <Image source={{uri: item.from_profileImage}} style={styles.imageDisplay}/>
+                        </TouchableOpacity>
+                      </View>
+                    
+                    <View style={{flex:1, flexDirection:'row'}}>
+                    <View style={{flex:1,marginTop:20}}>
+                        <Text style={{ color: 'white', fontSize: 18}}> {item.from_username} Type: {item.request}</Text>
+                    </View>
+
+                    <View style={{marginTop:15,  paddingTop:8,paddingHorizontal:15}}>
+                      <TouchableOpacity onPress={() => {onResponse(item._id, item.request, requestResponse="Ignore")}}>
+                      
+                      <MaterialIcons name="cancel" size={35} color="red" />
+                      </TouchableOpacity>
+                    </View>
+                    <View style={{marginTop:15,paddingTop:8, paddingHorizontal:15}}>
+                      <TouchableOpacity onPress={() => {onResponse(item._id, item.request, requestResponse="Accept")}} >
+                      <MaterialIcons name="person-add-alt-1" size={35} color="#00ff00" />
+                      </TouchableOpacity>
+                    </View>
+                    </View>
+                  </View>
+                )}
+                // extraData={removal}
+              >
+            </FlatList>
+
+
+            {/* <FlatList
               data = {user.messages}
                 keyExtractor={messageId => messageId._id.toString()}
                 renderItem={({item})=>(
@@ -75,7 +132,7 @@ export default function Notifications(props) {
                 )}
                 // extraData={removal}
               >
-            </FlatList>
+            </FlatList> */}
  
 {/* ends here  */}
 

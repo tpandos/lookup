@@ -1,9 +1,8 @@
-import React, {useState, useContext, useEffect} from 'react';
-import {Text, View, Button, ActivityIndicator, Alert, StyleSheet, ScrollView, Image, SafeAreaView} from 'react-native';
+import React, {useState} from 'react';
+import {Text, View, Alert, StyleSheet, ScrollView, Image, SafeAreaView} from 'react-native';
 import { FontAwesome5 } from '@expo/vector-icons';
 import { Ionicons } from '@expo/vector-icons';
 import { FontAwesome } from '@expo/vector-icons';
-import * as Location from 'expo-location';
 import * as api from "../../services/auth";
 import { useAuth } from "../../providers/auth";
 import { FlatList, TouchableHighlight, TouchableOpacity } from 'react-native-gesture-handler';
@@ -11,7 +10,6 @@ import { FlatList, TouchableHighlight, TouchableOpacity } from 'react-native-ges
 export default function SearchedUserProfile (props) {
     const {navigation} = props;
     const {navigate} = props.navigation;
-    const [location, setLocation] = useState(null);
     const [errorMsg, setErrorMsg] = useState(null);
     const {state, updateUser } = useAuth();
     

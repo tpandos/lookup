@@ -1,35 +1,49 @@
-import React, {useState, useContext} from 'react';
+import React, {useState, useEffect} from 'react';
 import {Text, View, StyleSheet, Image, FlatList,Alert} from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { Entypo } from '@expo/vector-icons';
 import { MaterialIcons } from '@expo/vector-icons';
 import { useAuth } from "../../providers/auth";
 import * as api from "../../services/auth";
+import * as c from '../../constants'
+import axios from 'axios';
+import * as Animatable from 'react-native-animatable';
 
 export default function FriendList(props) {
 
     const {navigation} = props;
     const {navigate} = props.navigation;
     const {state, setState} = useAuth();
+    const [friendsList, getFriendList] = useState([]); 
+    const [loadFriendUpdate, setLoadFriend] = useState(false); // set to true for updating 
+
     const user = state.user; 
     
-    //console.log("friennnnnnnnnnnnnnnnnnnnnnnnnnnndsa ", newFriendList); 
+    // adding new useeffect 
+    useEffect(()=>{
+      getAllFriends();
+    },[loadFriendUpdate]); 
+ 
+    const getAllFriends = () => {
+      axios.get(`${c.UPDATE_PROFILE}/${user._id}`)
+      .then((response)=>{
+        const allFriends = response.data.user.friends; 
 
-  var friendLoop = [];    // temporary loop for friend list, this is going to be removed 
+        getFriendList(allFriends);
+       
+        console.log("GETFRIENDSLIST-----------> ", allFriends); 
+         setLoadFriend(false); 
+      })
+      .catch(error => console.error(`error: ${error}`));
+    }
 
-  for(let i = 0; i < user.friends.length; i++){
-    friendLoop.push({
-     id: user.friends[i]._id,
-     username: user.friends[i].username, 
-     profileImage: {uri: user.friends[i].profileImage}
-    });
-  }
+
 
 async function onDelete(data) {  //data is _id to be removed 
 
  // call deleteFriend function 
   let response = await api.deleteFriend(state.user._id,data);// <-- deletefriend id
-
+  setLoadFriend(true); 
 }  
  
     return (
@@ -37,9 +51,9 @@ async function onDelete(data) {  //data is _id to be removed
        <View style={{flex:1}}>
       
             {/* test flatlist direct================================ */}
-
-            <FlatList
-              data = {user.friends}
+            
+             <FlatList
+              data = {friendsList}
                 keyExtractor={profile => profile._id.toString()}
                 renderItem={({item})=>(
                   <View style={{flex:1,flexDirection:'row', padding: 8, borderBottomColor: 'grey', borderBottomWidth:1}}>
@@ -66,7 +80,7 @@ async function onDelete(data) {  //data is _id to be removed
                 )}
                 // extraData={removal}
               >
-            </FlatList>
+            </FlatList> 
 
        </View>
        <View style={styles.bottompane}>

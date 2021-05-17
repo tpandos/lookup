@@ -93,8 +93,8 @@ export async function updateProfile(userId, data){
         
 
         
-        console.log('###  FORMDATA SENT TO DATABASE')
-        console.log(form_data.username)
+      //  console.log('###  FORMDATA SENT TO DATABASE')
+      //  console.log(form_data.username)
         //console.log(userId); 
 
 
@@ -109,7 +109,7 @@ export async function updateProfile(userId, data){
 export function updateLocation(userId, data) {
     
     axios.put(`${c.UPDATE_PROFILE}/${userId}/updateGeoPoint`, {geoPoint: data})
-        .then(response => { console.log(response); })
+        .then(response => { /*console.log(response); */})
         .catch(error => { console.log(error.response); });
 
         //console.log("jammeseeeeey");
@@ -151,13 +151,13 @@ export async function search(userId, data) {
 
 export async function SearchedProfileUSER(user_Id, data) {
     
-    console.log('Now you are at the routes searchedProfile function')
-    console.log('data=========')
-    console.log(data);
+   // console.log('Now you are at the routes searchedProfile function')
+  //  console.log('data=========')
+ //   console.log(data);
     
-    const DDD = JSON.stringify(data)
-    console.log("DDDDDDDD");
-    console.log(DDD);
+ //   const DDD = JSON.stringify(data)
+ //   console.log("DDDDDDDD");
+ //   console.log(DDD);
 
     
     try {
@@ -165,8 +165,8 @@ export async function SearchedProfileUSER(user_Id, data) {
         let res = await axios.post(`${c.SEARCHED_PROFILE}/${user_Id}/profile`, {userId : data}); 
         // in {userId : data}, "userId" is the name of the param in the req.body.userId in the backend
         // user_Id is the id of the user who makes the search (the state.user)
-        console.log("res is =============")
-        console.log(res.data)
+      //  console.log("res is =============")
+     //   console.log(res.data)
         return res.data;
     }
     catch (e) {
