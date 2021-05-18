@@ -38,7 +38,7 @@ export default function AllowLocation(props) {
         longitude = location.coords.longitude;
         lat_long = [latitude,longitude];
     }
-    console.log(lat_long);
+    //console.log(lat_long);
 
     try {
         api.updateLocation(state.user._id, lat_long);

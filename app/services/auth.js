@@ -1,5 +1,4 @@
 import axios from 'axios';
-import { useEffect } from 'react';
 
 import * as c from '../constants';
 
@@ -38,39 +37,13 @@ export async function updateProfile(userId, data){
         const options = {
             headers: {
                 Accept: "application/json",
-                // "Content-Type": "multipart/form-data",
                 "Content-Type": "application/x-www-form-urlencoded",
             }
             
         };
-        
         let skills = [];
         let rank = [];
-        // let i = 1;
-
-   
-
-        // for (let key in data) {
-        //     console.log('key', key)
-        //     if (i > 3) return;
-        //     if (key == `skills_${i}`) {
-        //         for (let key_2 in data) {
-        //             if (key_2 == `rank_${i}`) {
-        //                 // console.log('find it ===============')
-        //                // console.log('value', data[key])
-        //                 skills.push(data[key])
-        //                 rank.push(data[key_2])   
-        //             }
-        //            // console.log('key_2', key_2)
-        //         }
-        //         delete data.skills_1
-        //         delete data.rank_1
-        //         i++;
-        //     }
-               
-        // }
-
-         // gotta fixx the loop, this is temporary   
+ 
         skills.push(data.skills_1); 
         rank.push(data.rank_1); 
         skills.push(data.skills_2); 
@@ -103,7 +76,7 @@ export async function updateProfile(userId, data){
             type: data.type
         })
         }
-
+        
         let res = await axios.put(`${c.UPDATE_PROFILE}/${userId}`, form_data, options);
 
         return res.data;
@@ -114,20 +87,35 @@ export async function updateProfile(userId, data){
 
 export function updateLocation(userId, data) {
     axios.put(`${c.UPDATE_PROFILE}/${userId}/updateGeoPoint`, {geoPoint: data})
-        .then()
+        .then(response => { /*console.log(response); */})
         .catch(error => { console.log(error.response); });
 
 }
 
 export async function search(userId, data) {
     try {
-        let res = await axios.post(`${c.UPDATE_PROFILE}/${userId}/search`, data)
+        let res = await axios.post(`${c.UPDATE_PROFILE}/${userId}/search`, data )
         return res.data;
     }
     catch (e) {
         throw handler(e);
     }
 }
+
+
+
+export async function SearchedProfileUSER(user_Id, data) {
+
+    try {
+    
+        let res = await axios.post(`${c.SEARCHED_PROFILE}/${user_Id}/profile`, {userId : data}); 
+        return res.data;
+    }
+    catch (e) {
+        throw handler(e);
+    }
+}
+
 
 export function handler(err) {
     let error = err;
@@ -137,4 +125,41 @@ export function handler(err) {
     else if (!err.hasOwnProperty("message")) error = err.toJSON();
 
     return new Error(error.message);
+}
+
+export async function deleteFriend(userId, data){
+console.log("userID ", userId); 
+
+    try{
+ 
+    let res = await axios.put(`${c.UPDATE_PROFILE}/${userId}/deleteFriend`, {other_userId: data});//<--- deleted friend ID
+    return res.data; 
+
+    }catch(e){
+        throw handler(e); 
+    }
+}
+
+export async function response(userId, messId, reqType, reqRes){
+
+    try{//message, 
+        let res = await axios.post(`${c.UPDATE_PROFILE}/${userId}/response`, {request:reqType, response:reqRes, message_id: messId,}); 
+        return res.data; 
+
+    }catch(e){
+        throw handler(e); 
+    }
+
+}
+
+export async function sendRequest(userId, reciever_id, req){
+
+    try{
+        let res = await axios.post(`${c.UPDATE_PROFILE}/${userId}/sendRequest`, {to_userId: reciever_id , request:req}); 
+        return res.data; 
+
+    }catch(e){
+        throw handler(e); 
+    }
+
 }

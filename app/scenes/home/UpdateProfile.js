@@ -21,6 +21,8 @@ export default function UpdateProfile (props) {
     let initialData = {}
     // // set initial data 
     if (state.user.skills.length === 0) {
+        //console.log("1111111111111111111111111111"); 
+
          initialData = {
             "username": state.user.username,
             "role":  "",
@@ -35,6 +37,8 @@ export default function UpdateProfile (props) {
             "rank_3":  "",
         };
     } else{
+        //console.log("*********************************"); 
+
         initialData = {
         "username": state.user.username,
         "role": state.user.role,
@@ -47,7 +51,9 @@ export default function UpdateProfile (props) {
         "rank_2": state.user.skills[1].rank,
         "skills_3": state.user.skills[2].name,
         "rank_3": state.user.skills[2].rank,
-        };
+    };
+
+        //console.log(state.user.skills.length);
     }
 
         // profile Image url
@@ -84,12 +90,16 @@ export default function UpdateProfile (props) {
 
 
     async function onSubmit(data) {
+        console.log('@@@@ SUBMIT CLICKED')
         setLoading(true);
-       
-        if (profileImage[0] === "f") {
+        //console.log("profile---////////////////////////////-", profileImage); 
+
+        if(profileImage[0] === "f"){
+            console.log("***ADDING NEW PROFILE IMAGE",); 
             data.profileImage = profileImage; 
         } else {
             data.profileImage = state.user.profileImage; 
+            console.log("*** EXISTING PROFILE IMAGE");
         }
 
         try {
@@ -132,7 +142,7 @@ export default function UpdateProfile (props) {
           quality: 1,
         });
     
-        console.log("URI::----> ", result.uri);
+        //console.log("URI::----> ", result.uri);
         
         if (!result.cancelled) {
         profileImage = result.uri; 

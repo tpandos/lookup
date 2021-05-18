@@ -11,6 +11,10 @@ import AuthProvider from "./providers/auth";
 import SearchStack from "./routes/search"; 
 import AllowLocationStack from "./routes/allowlocation";
 import SearchResultsStack from "./routes/searchresults"
+import SearchedProfileStack from "./routes/searchedprofile"
+import NotificationStack from "./routes/notifications";
+import ConversationListStack from "./routes/conversationlist";
+import ConversationBoxStack from "./routes/conversationbox";
 
 
 //APP ROUTES STACK
@@ -19,10 +23,15 @@ const AppStack = createSwitchNavigator(
         Loading: AuthLoading,
         Auth: AuthStack,
         App: HomeStack,
-        Search: SearchStack, 
+        Search_: SearchStack,                    
         FriendList : FriendListStack,
         AllowLocation : AllowLocationStack,
-        SearchResults : SearchResultsStack
+        Search_Results : SearchResultsStack,
+        SearchedUserProfile: SearchedProfileStack,
+        Notifications : NotificationStack,
+        ConversationList: ConversationListStack,
+        ConversationBox: ConversationBoxStack,
+
         
     },
     {initialRouteName: 'Loading'}

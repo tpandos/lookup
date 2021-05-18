@@ -12,10 +12,10 @@ const SearchResultsStack = createStackNavigator(
     {
         
         Search: SearchScreen,
-        SearchResults: SearchResultsScreen,
+        SearchResults: SearchResultsScreen
     },
     {
-        initialRouteName:'SearchResults',
+       initialRouteName:'SearchResults',
         defaultNavigationOptions:()=>({headerStyle, headerTitleStyle})
     }
      
