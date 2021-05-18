@@ -21,8 +21,6 @@ export default function UpdateProfile (props) {
     let initialData = {}
     // // set initial data 
     if (state.user.skills.length === 0) {
-        console.log("1111111111111111111111111111"); 
-
          initialData = {
             "username": state.user.username,
             "role":  "",
@@ -37,8 +35,6 @@ export default function UpdateProfile (props) {
             "rank_3":  "",
         };
     } else{
-        console.log("*********************************"); 
-
         initialData = {
         "username": state.user.username,
         "role": state.user.role,
@@ -51,9 +47,7 @@ export default function UpdateProfile (props) {
         "rank_2": state.user.skills[1].rank,
         "skills_3": state.user.skills[2].name,
         "rank_3": state.user.skills[2].rank,
-    };
-
-        console.log(state.user.skills.length);
+        };
     }
 
         // profile Image url
@@ -85,24 +79,18 @@ export default function UpdateProfile (props) {
             {  name: 'rank_3', label: 'Rank (1-10)', required: true, type: TYPES.Number},
              
         ]
-       // {  name: 'rank_3', label: 'Rank', required: true, type: TYPES.Dropdown, options: options}, 
-        
+     
     ];
 
 
     async function onSubmit(data) {
         setLoading(true);
-        //console.log("profile---////////////////////////////-", profileImage); 
-
-        if(profileImage[0] === "f"){
-            console.log("profile if f---////////////////////////////-", profileImage); 
-            data.profileImage = profileImage; 
-        }else{
-            data.profileImage = state.user.profileImage; 
-            console.log("profile if not changed---()()()()()()()()()()()())-", profileImage);
-        }
-        
        
+        if (profileImage[0] === "f") {
+            data.profileImage = profileImage; 
+        } else {
+            data.profileImage = state.user.profileImage; 
+        }
 
         try {
            let response = await api.updateProfile(state.user._id, data);
@@ -116,9 +104,6 @@ export default function UpdateProfile (props) {
             setLoading(false)
         }
     }
-
-    
-
 
     // profileImage for image view
     if (!state.user.profileImage) {
@@ -159,25 +144,14 @@ export default function UpdateProfile (props) {
         <View style={{flex: 1, paddingHorizontal: 16, backgroundColor:'#000033'}}>
             <View style={{flex:1, padding:10}}>
                 <ErrorText error={error}/>
-            
                 <Image source={profileImage} style={{width: 200, height: 200, borderRadius: 100, marginTop: -30, marginLeft:60}}></Image>
                 <View style={{flex:1, flexDirection:'row', alignSelf:'center', backgroundColor:'#000033', padding:30}}>
-
-                {/* <TouchableOpacity onPress={() => {navigate('AllowLocation')}}>
-                    <View style={styles.button}>
-                        <Text style={{fontWeight: 'bold'}} >Allow Location</Text>
-                    </View>    
-                </TouchableOpacity> */}
-
                 <TouchableOpacity onPress={pickImage}>
                     <View style={styles.button}>
                         <Text style={{fontWeight: 'bold'}} >Profile Photo</Text>
                     </View>    
                 </TouchableOpacity>
-
                 </View>
-
-               
                 <Form
                     fields={fields}
                     title={'Submit'}
@@ -187,7 +161,6 @@ export default function UpdateProfile (props) {
                     onSubmit={onSubmit}/>
             </View>
         </View>
-        
        </ScrollView>
     );
 };

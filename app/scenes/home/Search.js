@@ -1,59 +1,71 @@
-import React, {useState, useContext,SetStateAction, useEffect} from 'react';
+import React, {useState} from 'react';
 import 'react-native-gesture-handler';
-import { FlatList,Keyboard, Image, ImageBackground, SafeAreaView, ActivityIndicator, ScrollView, StyleSheet, Text, View} from 'react-native'
+import { FlatList, SafeAreaView, ActivityIndicator, ScrollView, StyleSheet, Text, View} from 'react-native'
 import { TextInput, TouchableOpacity } from 'react-native-gesture-handler';
-
-import SearchResults from "./SearchResults"
 import * as Animatable from 'react-native-animatable'
 import * as api from "../../services/auth";
 import { useAuth } from "../../providers/auth";
 import Form, { TYPES } from 'react-native-basic-form';
 import {ErrorText} from "../../components/Shared";
-import { Button } from 'react-native';
-import { StackView } from 'react-navigation-stack';
 
 export default function Search (props) {
   const {navigation} = props;
   const {navigate} = props.navigation;
 
-const [error, setError] = useState(null);
-const [loading, setLoading] = useState(false);
-const {state, updateUser } = useAuth();
-const [res, setData] = useState([])
+  const [error, setError] = useState(null);
+  const [loading, setLoading] = useState(false);
+  const {state, updateUser } = useAuth();
+  const [res, setData] = useState([])
 
 
-const options = [
-  {label:"Ranking", value: 'ranking'},
-  {label:"Distance", value: 'distance'}
-];
-const fields = [
-  { name: 'keyword', 
-    label: 'Search a Keyword', 
-    required: true
-  }, 
+  const options = [
+    {label:"Ranking", value: 'ranking'},
+    {label:"Distance", value: 'distance'}
+  ];
+  const fields = [
+    { name: 'keyword', 
+      label: 'Search a Keyword', 
+      required: true
+    }, 
 
-{
-  type: TYPES.Dropdown, 
-  name: 'method', 
-  label: 'Filter method',
-  options: options, 
-  mode: 'dialog',
-  required: true}]
-
-  //const initialData = {"method" : 1};
+  {
+    type: TYPES.Dropdown, 
+    name: 'method', 
+    label: 'Filter method',
+    options: options, 
+    mode: 'dialog',
+    required: true}]
   
    async function onSubmit (data) {
-    //useEffect (async () => {
     const {navigation} = props;
     const {navigate} = props.navigation;
     setLoading(true);
+    try {
+      let response = await api.search(state.user._id, data);
+      console.log('response');
+      console.log(response)
+      setLoading(false);
+      
+      const UsernameArray = response.results.map((item) => {
+        return item.username
+      }); 
     
-      try {
-        let response = await api.search(state.user._id, data);
-        console.log(response)
-        setLoading(false);
-        navigate('FriendList', {message: '12345'});
+      const ProfileImageArray = response.results.map((item) => {
+        return item.profileImage
+      }); 
+    
+      const RankingArray = response.results.map((item) => {
+        return item.ranking
+      }); 
+      
+      const UserId = response.results.map((item) => {
+        return item._id
+      });
+      
+      navigate('SearchResults', {Usernames: UsernameArray, ProfileImages: ProfileImageArray, Ranking: RankingArray})
+
     } 
+    
     catch (error) {
         setError(error.message);
         setLoading(false)
@@ -82,23 +94,21 @@ const fields = [
             <TouchableOpacity
             style={{backgroundColor: '#6D25BE', alignItems: 'center',  marginTop:2, marginLeft: 2, padding: 10, width: 150, borderRadius: 30, borderColor:'#fff', borderWidth: '2'}}
             onPress={()=>{navigate('Home')}}> 
-            <Text style={{ textAlign: 'center', color: '#fff', fontSize: 15}}>Back to Home</Text>
+            <Text style={{ textAlign: 'center', color: '#fff', fontSize: 15}}> Back to Home</Text>
             </TouchableOpacity>
             
         </View>
     </View>
    </ScrollView>
  </View>
-
-        
     )
   }
 
-      const styles = StyleSheet.create({
-        container: {
-          flex: 1,
-          alignItems: 'center',
-          justifyContent: 'center',
-          backgroundColor: "#eaeaea"
-        }
-      })
+  const styles = StyleSheet.create({
+    container: {
+      flex: 1,
+      alignItems: 'center',
+      justifyContent: 'center',
+      backgroundColor: "#eaeaea"
+    }
+  })

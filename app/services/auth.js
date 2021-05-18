@@ -43,9 +43,6 @@ export async function updateProfile(userId, data){
             }
             
         };
-        console.log('data==========================', data)
-
-        
         
         let skills = [];
         let rank = [];
@@ -81,12 +78,6 @@ export async function updateProfile(userId, data){
         skills.push(data.skills_3); 
         rank.push(data.rank_3); 
 
-        // data['skills'] = skills;
-        // data['rank'] = rank
-       
-        console.log('data after==================')
-        console.log(data)
-
         const form_data = new FormData();
 
         form_data.append("institute", data['institute']);
@@ -103,7 +94,6 @@ export async function updateProfile(userId, data){
             let filename; 
             let match;
             data.filename = data.profileImage.split('/').pop();
-            //console.log("from auuuuuthhhh&***************&&^^^%%^%%%%%%%%%%%%%%%%%%", data.profileImage); 
             match = /\.(\w+)$/.exec(filename);
             data.type = match ? `image/${match[1]}` : `image`;
 
@@ -113,13 +103,6 @@ export async function updateProfile(userId, data){
             type: data.type
         })
         }
-        
-
-        
-        console.log('formdata=====================')
-        console.log(form_data)
-        console.log(userId); 
-
 
         let res = await axios.put(`${c.UPDATE_PROFILE}/${userId}`, form_data, options);
 
@@ -128,20 +111,6 @@ export async function updateProfile(userId, data){
         throw handler(e);
     }
 }
-
-// export async function search(userId, data) {
-//     try {
-//         let res = await axios.post(`${c.UPDATE_PROFILE}/${userId}/search`, data);
-//         console.log(res.data);
-//         //console.log(res.data2)
-//         return res.data;
-        
-//     }catch (e) {
-//         throw handler(e);
-//     }
-// }
-
-
 
 export function updateLocation(userId, data) {
     axios.put(`${c.UPDATE_PROFILE}/${userId}/updateGeoPoint`, {geoPoint: data})
