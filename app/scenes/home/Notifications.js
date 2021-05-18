@@ -1,38 +1,51 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {Text, View, StyleSheet, Image, FlatList,Alert} from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { useAuth } from "../../providers/auth";
 import { Entypo } from '@expo/vector-icons';
 import * as api from "../../services/auth";
+import * as c from '../../constants'
+import axios from 'axios';
 
 import { MaterialIcons } from '@expo/vector-icons';
 
 export default function Notifications(props) {
-    const {navigation} = props;
-    const {navigate} = props.navigation;
-    const {state, setState} = useAuth();
+  const {navigation} = props;
+  const {navigate} = props.navigation;
+  const {state, setState} = useAuth();
+  const [newNotification, getNewNotification] = useState({}); 
+  const [loadNotUpdate, setLoadNot] = useState(true); // set to true for updating 
+  let user = state.user; 
    
-    const user = state.user; 
-
-
     // accept or ignore request
     let requestResponse; 
 
-    async function onResponse(messId, reqType, reqRes){
 
+     // adding new useeffect 
+     useEffect(()=>{
+      getAllNotifications();
+    },[loadNotUpdate]); 
+ 
+    const getAllNotifications = () => {
+      axios.get(`${c.UPDATE_PROFILE}/${user._id}`)
+      .then((response)=>{
+       const allNotifications = response.data; 
 
-      console.log("data from the OnResponse................", messId); 
-      console.log("request type ", reqType);
-      console.log("Accept or Ignore  ", reqRes); 
-      
-
-      
-      let response = await api.response(user._id, messId, reqType, reqRes);
-      
-      
-
+      getNewNotification(allNotifications);
+      setLoadNot(false); 
+      })
+      .catch(error => console.error(`error: ${error}`));
     }
 
+    // accept or ignore request
+
+    async function onResponse(messId, reqType, reqRes){
+      
+      let response = await api.response(user._id, messId, reqType, reqRes);
+      setLoadNot(true); 
+      user.messages = response.user.messages;
+
+    }
 
     return (
       <View style={styles.container}>
@@ -43,6 +56,7 @@ export default function Notifications(props) {
 
             <FlatList
               data = {user.messages}
+              extraData = {user}
                 keyExtractor={messageId => messageId._id.toString()}
                 renderItem={({item})=>(
                   <View style={{flex:1,flexDirection:'row', padding: 8, borderBottomColor:'grey', borderBottomWidth:1}}>

@@ -37,20 +37,14 @@ export async function updateProfile(userId, data){
         const options = {
             headers: {
                 Accept: "application/json",
-                // "Content-Type": "multipart/form-data",
                 "Content-Type": "application/x-www-form-urlencoded",
             }
             
         };
-        //console.log('data==========================', data)
 
-        
-        
         let skills = [];
         let rank = [];
-        // let i = 1;
-
-         // gotta fixx the loop, this is temporary   
+ 
         skills.push(data.skills_1); 
         rank.push(data.rank_1); 
         skills.push(data.skills_2); 
@@ -59,12 +53,6 @@ export async function updateProfile(userId, data){
         rank.push(data.rank_3); 
 
         const form_data = new FormData();
-        //console.log('type of form_data', form_data)
-        //console.log('data==================')
-        //console.log(data)
-
-        // skills = ['python','java'];
-        // rank = [34, 67];
 
         form_data.append("institute", data['institute']);
         form_data.append("major", data['major']);
@@ -80,7 +68,6 @@ export async function updateProfile(userId, data){
             let filename; 
             let match;
             data.filename = data.profileImage.split('/').pop();
-            //console.log("from auuuuuthhhh&***************&&^^^%%^%%%%%%%%%%%%%%%%%%", data.profileImage); 
             match = /\.(\w+)$/.exec(filename);
             data.type = match ? `image/${match[1]}` : `image`;
 
@@ -91,13 +78,6 @@ export async function updateProfile(userId, data){
         })
         }
         
-
-        
-        console.log('###  FORMDATA SENT TO DATABASE')
-        console.log(form_data.username)
-        //console.log(userId); 
-
-
         let res = await axios.put(`${c.UPDATE_PROFILE}/${userId}`, form_data, options);
 
         return res.data;
@@ -109,36 +89,14 @@ export async function updateProfile(userId, data){
 export function updateLocation(userId, data) {
     
     axios.put(`${c.UPDATE_PROFILE}/${userId}/updateGeoPoint`, {geoPoint: data})
-        .then(response => { console.log(response); })
+        .then(response => { /*console.log(response); */})
         .catch(error => { console.log(error.response); });
-
-        //console.log("jammeseeeeey");
-        //console.log(data);
 
 }
 
 export async function search(userId, data) {
-// const cancelToken = axios.CancelToken;
-// const source = cancelToken.source();
-    
-    // console.log('data=========')
-    // console.log(data);
-
-
-    
     try {
-    //    const options = {
-    //     headers: {
-    //         Accept: "application/json",
-    //         //"Content-Type": "multipart/form-data",
-    //         "Content-Type": "application/x-www-form-urlencoded",
-    //     },
-    //     body: JSON.stringify({data})
-        
-    //};  
-    
         let res = await axios.post(`${c.UPDATE_PROFILE}/${userId}/search`, data )
-        //let res = await axios.post(`${c.UPDATE_PROFILE}/${userId}/search`, data , {cancelToken: source.token})
         return res.data;
     
     }
@@ -150,23 +108,10 @@ export async function search(userId, data) {
 
 
 export async function SearchedProfileUSER(user_Id, data) {
-    
-    console.log('Now you are at the routes searchedProfile function')
-    console.log('data=========')
-    console.log(data);
-    
-    const DDD = JSON.stringify(data)
-    console.log("DDDDDDDD");
-    console.log(DDD);
 
-    
     try {
     
         let res = await axios.post(`${c.SEARCHED_PROFILE}/${user_Id}/profile`, {userId : data}); 
-        // in {userId : data}, "userId" is the name of the param in the req.body.userId in the backend
-        // user_Id is the id of the user who makes the search (the state.user)
-        console.log("res is =============")
-        console.log(res.data)
         return res.data;
     }
     catch (e) {
@@ -185,14 +130,11 @@ export function handler(err) {
     return new Error(error.message);
 }
 
- //DELETE FRIEND
-// router.put('/:id/deleteFriend', User.deleteFriend);
 export async function deleteFriend(userId, data){
 console.log("userID ", userId); 
-    console.log("!!!!!!!!!!!!!!!!!!!!!!!!!! delete friend auth with data", data); 
+
     try{
-        
-        console.log("in the try block********************"); 
+ 
     let res = await axios.put(`${c.UPDATE_PROFILE}/${userId}/deleteFriend`, {other_userId: data});//<--- deleted friend ID
     return res.data; 
 
@@ -201,21 +143,8 @@ console.log("userID ", userId);
     }
 }
 
-
-// @route POST api/user/{id}/response
-// @desc response message from other users
-// @access Public
-// const userId = req.params.id;
-// const request = req.body.request;
-// const response = req.body.response;
-// const message_id = req.body.message_id;
-// only messageid, request type and response
 export async function response(userId, messId, reqType, reqRes){
 
-    console.log("data from the response===========AUTH"); 
-    console.log("message id", messId); 
-    console.log("request type ", reqType);
-    console.log("Accept or Ignore  ", reqRes); 
     try{//message, 
         let res = await axios.post(`${c.UPDATE_PROFILE}/${userId}/response`, {request:reqType, response:reqRes, message_id: messId,}); 
         return res.data; 
@@ -237,25 +166,3 @@ export async function sendRequest(userId, reciever_id, req){
     }
 
 }
-
-export async function loadConversation(userId){
-        try {
-        let res = await axios.post(`${c.CONVERSATION}/${userId}/loadConversation`, {to_userId: "60592ef6f8cd70001599df31"})
-        return res.data.exist_conversation[0].conversationHistory;
-        }
-        catch (e) {
-            throw handler(e);
-        }
-    }
-
-export async function addMessage(userId, text){
-        try {
-        let res = await axios.post(`${c.SEND_MESSAGE}/${userId}/sendMessage`, {conversationId: "60841769e5b35838526fe770", text: text})
-        return res;
-        }
-        catch (e) {
-            throw handler(e);
-        }
-    
-    }
-
