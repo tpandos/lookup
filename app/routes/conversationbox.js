@@ -16,7 +16,7 @@ const ConversationBoxStack = createStackNavigator(
     },
     
     {
-        initialRouteName:'ConversationBox',
+        initialRouteName:'ConversationList',
         defaultNavigationOptions:()=>({headerStyle, headerTitleStyle})
     }
      

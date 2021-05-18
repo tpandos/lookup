@@ -16,7 +16,9 @@ export default function SearchedUserProfile (props) {
     const {state, updateUser } = useAuth();
     
     const user = props.navigation.getParam('userProfile', "No ID") // the user whose profile is searched
+    console.log("userData is", user)
     // state.user is the user who is making the search
+
 
     async function onConnect(){
         const request = 'friend';
@@ -106,7 +108,7 @@ export default function SearchedUserProfile (props) {
                             <FontAwesome5 name="network-wired" size={30} color="#FF00FF" />
                         </View>
         
-                        <TouchableHighlight activeOpacity={0.5} underlayColor='lightgrey' onPress={() => {navigate('FriendList')}}>
+                        <TouchableHighlight activeOpacity={0.5} underlayColor='lightgrey'>
                             <View style={{  padding:10, marginHorizontal:100}}>
                                 <FontAwesome5 name="user-friends" size={30} color="#6600FF" />
                             </View>

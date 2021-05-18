@@ -94,9 +94,9 @@ async function fetchApi(){
   <View>
     <ScrollView>
     <View style= {styles.container}>
-        <View style={{flex:1, padding:50}}>
+        <View style={{flex:1, padding:50, backgroundColor : "#000033"}}>
             <ErrorText error={error}/>
-            <Animatable.View animation = "slideInRight" duration= {1000} style= {{width: 380, height: 350, backgroundColor: '#000033', 
+            <Animatable.View animation = "slideInRight" duration= {1000} style= {{flex : 1, width: 380, height: 350, backgroundColor: '#000033', 
             flexDirection:'row', padding: 5, alignItems: 'center', paddingRight:5, borderRadius: 1}}>
               <Form
                 fields={fields}

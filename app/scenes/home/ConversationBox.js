@@ -25,36 +25,72 @@ export default function ConversationBox (props){
   const user = state.user;
   //const friendId = props.navigation.state.params('friend_id', "No such friend")
 
-  console.log("-------------------------------- friends id",friendId)
+  //console.log("-------------------------------- friends id",friendId)
 
- try{
-  let response = api.loadConversation(state.user._id)
-  .then(conversationHistory => {
+//  async function loadConversationData() { 
+//  try{
+//   let response = await api.loadConversation(state.user._id)
+//   .then(conversationHistory => {
 
-    var messageLoop = [];
-    var messageId = 0;
+//     var messageLoop = [];
+//     var messageId = 0;
     
 
-    for(let i = conversationHistory.length-1; i >= 0; i--){
-      messageLoop.push({
-        _id: messageId = messageId + 1,
-        text: conversationHistory[i].text,
-        createdAt: conversationHistory[i].createdAt,
-        user:{
-            _id: conversationHistory[i]._id,
-            name: 'React Native',
-            avatar: 'https://placeimg.com/140/140/any',
-         }
+//     for(let i = conversationHistory.length-1; i >= 0; i--){
+//       messageLoop.push({
+//         _id: messageId = messageId + 1,
+//         text: conversationHistory[i].text,
+//         createdAt: conversationHistory[i].createdAt,
+//         user:{
+//             _id: conversationHistory[i]._id,
+//             name: 'React Native',
+//             avatar: 'https://placeimg.com/140/140/any',
+//          }
 
 
-       });
-  }
-  setMessages(messageLoop)
-return messageLoop;
-})
-} catch(err){
-      console.warn(err);
-  }
+//        });
+//   }
+//   setMessages(messageLoop)
+// return messageLoop;
+// })
+// } catch(err){
+//       console.warn(err);
+//   }
+// }
+useEffect(() => {
+
+  async function loadConversationData() { 
+    try{
+     let response = await api.loadConversation(state.user._id)
+     .then(conversationHistory => {
+   
+       var messageLoop = [];
+       var messageId = 0;
+       
+   
+       for(let i = conversationHistory.length-1; i >= 0; i--){
+         messageLoop.push({
+           _id: messageId = messageId + 1,
+           text: conversationHistory[i].text,
+           createdAt: conversationHistory[i].createdAt,
+           user:{
+               _id: conversationHistory[i]._id,
+               name: 'React Native',
+               avatar: 'https://placeimg.com/140/140/any',
+            }
+   
+   
+          });
+     }
+     setMessages(messageLoop)
+   return messageLoop;
+   })
+   } catch(err){
+         console.warn(err);
+     }
+   }
+   loadConversationData();
+}, [])
 
   const onSend = useCallback((messages = []) => {
     let userText = messages[messages.length-1].text;
@@ -112,7 +148,7 @@ return messageLoop;
       messages={messages}
       onSend={(messages) => onSend(messages)}
       user={{
-        _id: "604a631cf4e3610015e7c421",
+        _id: friendId,
       }}
       renderBubble={renderBubble}
       alwaysShowSend

@@ -9,11 +9,13 @@ import * as c from '../../constants'
 import axios from 'axios';
 import * as Animatable from 'react-native-animatable';
 
+
 export default function FriendList(props) {
 
     const {navigation} = props;
     const {navigate} = props.navigation;
     const {state, setState} = useAuth();
+   
     const [friendsList, getFriendList] = useState([]); 
     const [loadFriendUpdate, setLoadFriend] = useState(false); // set to true for updating 
 
@@ -42,6 +44,8 @@ async function onDelete(data) {  //data is _id to be removed
 
  // call deleteFriend function 
   let response = await api.deleteFriend(state.user._id,data);// <-- deletefriend id
+
+
   setLoadFriend(true); 
 }  
  
