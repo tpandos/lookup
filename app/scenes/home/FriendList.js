@@ -1,19 +1,19 @@
-import React, {useState, useContext} from 'react';
+import React, {useState, useContext, useEffect} from 'react';
 import {Text, View, StyleSheet, Image, FlatList,Alert} from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { Entypo } from '@expo/vector-icons';
 import { MaterialIcons } from '@expo/vector-icons';
 import { useAuth } from "../../providers/auth";
 import * as api from "../../services/auth";
+import { set } from 'react-native-reanimated';
 
 export default function FriendList(props) {
 
     const {navigation} = props;
     const {navigate} = props.navigation;
     const {state, setState} = useAuth();
-    const user = state.user; 
-    
-    //console.log("friennnnnnnnnnnnnnnnnnnnnnnnnnnndsa ", newFriendList); 
+    const user = state.user;
+   
 
   var friendLoop = [];    // temporary loop for friend list, this is going to be removed 
 
@@ -30,8 +30,7 @@ async function onDelete(data) {  //data is _id to be removed
  // call deleteFriend function 
   let response = await api.deleteFriend(state.user._id,data);// <-- deletefriend id
 
-}  
- 
+} 
     return (
       <View style={styles.container}>
        <View style={{flex:1}}>

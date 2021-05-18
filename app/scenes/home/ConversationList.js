@@ -13,30 +13,12 @@ export default function ConversationList(props) {
     const {navigate} = props.navigation;
     const {state, setState} = useAuth();
     const [friId, setFriId] = useState(false);
-    
     const user = state.user;
 
-    console.log("username---------------", user.username); 
+    // console.log("username---------------", user.username); 
+    // console.log("array size friends_id===", user.friends._id);
 
-  if(user.friends.length === 0){
-    console.log("Friend list is empty", user.friends.length); 
-  }else{
-    console.log("array size friends", user.friends.length);
-  }
 
-    async function onClick (data) {
-        console.log("----------------we made it this far-------------")
-
-        
-        try{            
-          props.navigation.navigate('ConversationBox', {friend_info: data } )
-        }
-
-        catch (error) {
-            setError(error.message);
-        }
-
-    }
     
     return (
         <View style={styles.container}>
@@ -44,8 +26,8 @@ export default function ConversationList(props) {
   
               <FlatList
                 data = {user.friends}
-                  keyExtractor={profile => profile._id.toString()}
-                  renderItem={({item})=>(
+                keyExtractor = {(item, index) => index.toString()}
+                  renderItem={({item , index})=>(
                     <View style={{flex:1,flexDirection:'row', padding: 8, borderBottomColor: 'grey', borderBottomWidth:1}}>
 
                         <View>
@@ -60,7 +42,8 @@ export default function ConversationList(props) {
                       </View>
   
                       <View style={{marginTop:15}}>
-                        <TouchableOpacity onPress={() => {onClick(item.id)}}>
+                        <TouchableOpacity onPress={() => {props.navigation.navigate('ConversationBox', {friend_info: item._id})}}>
+      
                         
                         <Text style={{color:'white',borderColor:'white',borderWidth:2, padding:10, borderRadius:10}}>
                           message

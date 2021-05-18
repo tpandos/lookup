@@ -24,13 +24,13 @@ const AppStack = createSwitchNavigator(
         Auth: AuthStack,
         App: HomeStack,
         Search_: SearchStack,                    
-        FriendList : FriendListStack,
+        Friend_List : FriendListStack,
         AllowLocation : AllowLocationStack,
         Search_Results : SearchResultsStack,
         SearchedUserProfile: SearchedProfileStack,
         Notifications : NotificationStack,
-        ConversationList: ConversationListStack,
-        ConversationBox: ConversationBoxStack,
+        Conversation_List: ConversationListStack,
+        Conversation_Box: ConversationBoxStack,
 
         
     },
