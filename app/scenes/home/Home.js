@@ -162,7 +162,7 @@ export default function Home(props) {
         <View style={styles.bottompane}>
          <View style={{ flex:1,padding:10, alignItems:'center'}}>
          <Animatable.View animation = "bounceInRight" duration= {1000}>
-            <TouchableOpacity>
+            <TouchableOpacity onPress={() => {navigate('ConversationList')}}>
             <FontAwesome name="commenting" size={30} color="white" />
             </TouchableOpacity> 
             </Animatable.View>
