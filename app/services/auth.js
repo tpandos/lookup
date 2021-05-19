@@ -25,8 +25,8 @@ export async function login(data){
 export async function forgotPassword(data) {
     try {
         let res = await axios.post(c.FORGOT_PASSWORD, data);
-
         return res.data;
+        
     } catch (e) {
         throw handler(e);
     }
@@ -87,7 +87,6 @@ export async function updateProfile(userId, data){
 }
 
 export function updateLocation(userId, data) {
-    
     axios.put(`${c.UPDATE_PROFILE}/${userId}/updateGeoPoint`, {geoPoint: data})
         .then(response => { console.log(response); })
         .catch(error => { console.log(error.response); });
@@ -95,12 +94,9 @@ export function updateLocation(userId, data) {
 }
 
 export async function search(userId, data) {
-
     try {
- 
         let res = await axios.post(`${c.UPDATE_PROFILE}/${userId}/search`, data )
         return res.data;
-    
     }
     catch (e) {
         throw handler(e);
@@ -110,9 +106,7 @@ export async function search(userId, data) {
 
 
 export async function SearchedProfileUSER(user_Id, data) {
-  
     try {
-    
         let res = await axios.post(`${c.SEARCHED_PROFILE}/${user_Id}/profile`, {userId : data}); 
         return res.data;
     }
@@ -143,39 +137,28 @@ console.log("userID ", userId);
     }
 }
 
-
-
 export async function response(userId, messId, reqType, reqRes){
-
-    try{//message, 
+    try{
         let res = await axios.post(`${c.UPDATE_PROFILE}/${userId}/response`, {request:reqType, response:reqRes, message_id: messId,}); 
         return res.data; 
-
     }catch(e){
-        
         throw handler(e); 
     }
-
 }
 
 export async function sendRequest(userId, reciever_id, req){
-
     try{
         let res = await axios.post(`${c.UPDATE_PROFILE}/${userId}/sendRequest`, {to_userId: reciever_id , request:req}); 
         return res.data; 
-
     }catch(e){
         throw handler(e); 
     }
-
 }
 
 export async function loadConversation(userId , otherUserId){
         try {
-        let res = await axios.post(`${c.CONVERSATION}/${userId}/loadConversation`, {to_userId: otherUserId})
-        console.log("----------------------data",res.data.exist_conversation)
-        //return res.data.exist_conversation[0].conversationHistory;
-        return res.data.exist_conversation
+            let res = await axios.post(`${c.CONVERSATION}/${userId}/loadConversation`, {to_userId: otherUserId})
+            return res.data.exist_conversation
         }
         catch (e) {
             throw handler(e);
@@ -184,12 +167,10 @@ export async function loadConversation(userId , otherUserId){
 
 export async function addMessage(userId, convoId, text){
         try {
-        let res = await axios.post(`${c.SEND_MESSAGE}/${userId}/sendMessage`, {conversationId: convoId, text: text})
-        console.log("ADD MESSAGE RESPONSE IS" , res)
-        return res;
+            let res = await axios.post(`${c.SEND_MESSAGE}/${userId}/sendMessage`, {conversationId: convoId, text: text})
+            return res;
         }
         catch (e) {
             throw handler(e);
         }
-    
     }

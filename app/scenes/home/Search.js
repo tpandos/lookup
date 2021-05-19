@@ -62,10 +62,6 @@ function onSubmit (data) {
 useEffect(() => {
 if (mount == true ){
 
-   // console.log("state.user===")
-    //console.log(state.user);
- //   console.log(state.user._id);
-
 async function fetchApi(){
     setLoading(true);
       try {

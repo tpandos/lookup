@@ -12,49 +12,35 @@ import * as c from '../../constants';
 
 
 export default function ConversationBox (props){
-
-  //const { friendId } = navigation.getParam(friend_id, "No such friend");
-  //const friend_id  = navigation.state.params;
-  //const {friend_id} = navigation.getParam('friend_id');
-  //const { friend_id } = route.params
   const {navigation} = props;
   const {navigate} = props.navigation;
-  const friend = props.navigation.getParam('friend_info', "No ID")
-  const friendId = friend._id;
-  const friendImage = friend.profileImage;
+  const friend_id = props.navigation.getParam('friend_id', "No ID")
+  const friend_username = props.navigation.getParam('friend_username', "No Username")
+  const conver_history = props.navigation.getParam('history', "No history")
+  const conversation_id = props.navigation.getParam('conversation_id', "No conversation Id")
   const [messages, setMessages] = useState([]);
   const [convoId, setConvoId] = useState();
   const {state, setState} = useAuth();
   const user = state.user;
   const [mount , setmount] = useState(true);
-  //const friendId = props.navigation.state.params('friend_id', "No such friend")
-
-  console.log("-------------------------------- friends id",friendId)
-  // console.log("-------------------------------- friends Image",friendImage)
-
+  
 useEffect(() => {
-// if (mount == true) { 
   async function loadConversationData() { 
     try{
-     let response = await api.loadConversation(state.user._id, friendId)
+     let response = await api.loadConversation(state.user._id, friend_id)
    
        var messageLoop = [];
        var messageId = 0;
-        
-      setConvoId(response[0]._id);
-      console.log("convoId before useEffect" , convoId)
-      //  console.log("data" , data)
-       
-   
-       for(let i = response[0].conversationHistory.length-1; i >= 0; i--){
+      
+       for(let i = conver_history.length - 1; i >= 0; i--){
          messageLoop.push({
            _id: messageId = messageId + 1,
-           text: response[0].conversationHistory[i].text,
-           createdAt: response[0].conversationHistory[i].createdAt,
+           text: conver_history[i].text,
+           createdAt: conver_history[i].createdAt,
            user:{
-               _id: response[0].conversationHistory[i]._id,
-               name: 'React Native',
-               avatar: friendImage,
+               _id: conver_history[i]._id,
+               name: friend_username,
+              //  avatar: friend_image,
             }
           });
      }
@@ -65,17 +51,13 @@ useEffect(() => {
      }
    }
    loadConversationData();
-  //  setmount(false)
-  // }
-}, [convoId])
 
-console.log("convoId after effect" , convoId)
+}, [conversation_id])
 
   const onSend = useCallback((messages = []) => {
     let userText = messages[messages.length-1].text;
-    let response = api.addMessage(state.user._id, convoId , userText);
-    // setmount(true);
-
+    let response = api.addMessage(state.user._id, conversation_id , userText);
+   
     setMessages((previousMessages) => 
       GiftedChat.append(previousMessages, messages),
     );

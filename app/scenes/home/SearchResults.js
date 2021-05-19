@@ -20,7 +20,6 @@ const ITEM_SIZE = 160;
     const {navigation} = props;
     const {navigate} = props.navigation;
 
-    
     _retrieveData = async () => { 
     try {
       const response = await AsyncStorage.getItem('userResponse');
@@ -39,19 +38,16 @@ const ITEM_SIZE = 160;
 async function OnPress(data){
       const {navigation} = props;
       const {navigate} = props.navigation;
-  
-      //setLoading(true);
-      
-        try {
-          const res = await api.SearchedProfileUSER(state.user._id, data);
-          const resultedProfile = res.user;
+      try {
+        const res = await api.SearchedProfileUSER(state.user._id, data);
+        const resultedProfile = res.user;
 
-          props.navigation.navigate('SearchedProfile', {userProfile : resultedProfile})
+        props.navigation.navigate('SearchedProfile', {userProfile : resultedProfile})
 
-        }catch (error) {
-          setError(error.message);
-          setLoading(false)
-      }
+      }catch (error) {
+        setError(error.message);
+        setLoading(false)
+    }
   }
 
 if (userData.message == "Results by ranking"){
@@ -179,7 +175,6 @@ if (userData.message == "Results by ranking"){
           paddingBottom:15
         }
       })
-
 
       SearchResults.navigationOptions = ({}) => {
         return {

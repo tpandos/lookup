@@ -22,13 +22,9 @@ export default function SearchedUserProfile (props) {
         const request = 'friend';
         try { 
         let response = await api.sendRequest(state.user._id, user._id, request);
-        console.log("the onConnect response is ")
-        console.log(response)
         Alert.alert(response.message)
     }catch (error) {
         setErrorMsg(error.message);
-        console.log("error.message is ")
-        console.log(error.message)
         Alert.alert(error.message)
         }
     }
@@ -37,25 +33,13 @@ export default function SearchedUserProfile (props) {
         const request = skillName;
         try { 
         let response = await api.sendRequest(state.user._id, user._id, request);
-        console.log("the onTutorReq response is ")
-        console.log(response)
         Alert.alert(response.message)
     }catch (error) {
         setErrorMsg(error.message);
-        console.log("error.message is ")
-        console.log(error.message)
         Alert.alert(error.message)
         }
     }
 
-    //const user = props.navigation.getParam('userProfile', "No ID")
-
-    console.log('SEARCHED USER id')
-    console.log(user._id)
-
-    console.log('my user id')
-    console.log(state.user._id)
-    
     var myloop = [];
 
     for (let i = 0; i < user.skills.length; i++) {
@@ -141,8 +125,6 @@ export default function SearchedUserProfile (props) {
 </View>
 </ScrollView>
         <View style={styles.bottompane}>
-         
-        
          <View style={{flex:1, alignItems:'center', paddingBottom:10}}>
          <Animatable.View animation = "bounceInRight" duration= {1000}>
             <TouchableOpacity onPress={()=>{navigate('Home')}}>
