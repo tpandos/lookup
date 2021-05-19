@@ -1,24 +1,22 @@
-import React, {useState, useContext, useEffect} from 'react';
-import {Text, View, Button, ActivityIndicator, Alert, StyleSheet, ScrollView, Image, SafeAreaView} from 'react-native';
+import React, {useState} from 'react';
+import {Text, View, Alert, StyleSheet, ScrollView, Image, SafeAreaView} from 'react-native';
 import { FontAwesome5 } from '@expo/vector-icons';
 import { Ionicons } from '@expo/vector-icons';
 import { FontAwesome } from '@expo/vector-icons';
-import * as Location from 'expo-location';
+import { Entypo } from '@expo/vector-icons';
 import * as api from "../../services/auth";
 import { useAuth } from "../../providers/auth";
-import { FlatList, TouchableHighlight, TouchableOpacity } from 'react-native-gesture-handler';
+import * as Animatable from 'react-native-animatable';
+import {  TouchableOpacity } from 'react-native-gesture-handler';
 
 export default function SearchedUserProfile (props) {
     const {navigation} = props;
     const {navigate} = props.navigation;
-    const [location, setLocation] = useState(null);
     const [errorMsg, setErrorMsg] = useState(null);
     const {state, updateUser } = useAuth();
     
     const user = props.navigation.getParam('userProfile', "No ID") // the user whose profile is searched
-    console.log("userData is", user)
     // state.user is the user who is making the search
-
 
     async function onConnect(){
         const request = 'friend';
@@ -74,9 +72,6 @@ export default function SearchedUserProfile (props) {
          </TouchableOpacity>
         
         </View>
-        // <View key={i}>
-        // <Text style={{ textAlign: 'center', marginTop: 5 }} >{user.skills[i].name}: {user.skills[i].rank}</Text>
-        // </View>
         );
     }
     // end loop
@@ -92,92 +87,88 @@ export default function SearchedUserProfile (props) {
 
     return (
         <View style={{flex:1, backgroundColor:'#000033'}}>
-        <ScrollView showsVerticalScrollIndicator={false} style={{backgroundColor: '#000033'}}>
+        <ScrollView showsVerticalScrollIndicator={false} >
 
-            <View style={{flex:1, flexDirection:'column', backgroundColor:'#000033'}}> 
-                <View style={{ width: '100%', backgroundColor: '#000033', height: 70}}>
-                </View>
-        
-            <View style={{alignItems: 'center', backgroundColor:'white',borderWidth: 3, borderColor:'#00ffff', borderRadius:20}}>
-           
-                <Image source={profileImage} style={{width: 260, height: 260, borderRadius: 200, marginTop: -70,borderWidth:3,borderColor:'#00ffff'}}></Image>
-                <Text style={{fontSize: 25, fontWeight: 'bold', padding: 10}}>{user.username}</Text>
-        
-                    <View style={{flexDirection:'row'}}>
-                        <View style={{ padding:10, marginHorizontal:100, marginBottom:5}}>
-                            <FontAwesome5 name="network-wired" size={30} color="#FF00FF" />
-                        </View>
-        
-                        <TouchableHighlight activeOpacity={0.5} underlayColor='lightgrey'>
-                            <View style={{  padding:10, marginHorizontal:100}}>
-                                <FontAwesome5 name="user-friends" size={30} color="#6600FF" />
-                            </View>
-                        </TouchableHighlight>
-                    </View>
-            </View>
-        
-    
-            <View style={styles.fieldview}>
-                <FontAwesome5 name="school" size={20} color="#00ffff" />
-                <Text style={styles.fieldstext}>    {user.institute}</Text>
-            </View>
+<View style={{flex:1, flexDirection:'column', backgroundColor:'#000033'}}> 
+<View style={{ flexDirection:'row'}}>
+    <View style={{ width: '50%', height: 70}}></View>
+        <View style={{ width: '50%', height: 70}}>
+        </View>     
+    </View>
 
-            <View style={styles.fieldview}>
-                <FontAwesome name="id-card" size={20} color="#00ffff" />
-                <Text style={styles.fieldstext}>    {user.role}</Text>
-            </View>
+    {/* profile photo */}
+    <Animatable.View animation = "fadeInUp" duration= {1000}>
+    <View style={{alignItems: 'center', backgroundColor:'white',borderWidth: 3, borderColor:'#00ffff', borderRadius:10}}>
+        <Image source={profileImage} style={{width: 200, height: 200, borderRadius: 200, marginTop: -70,borderWidth:3,borderColor:'#00ffff'}}></Image>
+            <Text style={{fontSize: 25, fontWeight: 'bold', padding: 20}}>{user.username}</Text>
 
-            <View style={styles.fieldview}>
-                <FontAwesome5 name="book" size={20} color="#00ffff" />
-                <Text style={styles.fieldstext}>    {user.major}</Text>
-            </View>
+    </View>
 
-            <View style={styles.fieldview}>
-                <Ionicons name="school-sharp" size={20} color="#00ffff" />
-                <Text style={styles.fieldstext}>    {user.grade}</Text>
-            </View> 
+    {/* Profile details  */}
+    <View style={styles.fieldview}>
+        <FontAwesome5 name="school" size={20} color="#00ffff" />
+            <Text style={styles.fieldstext}>    {user.institute}</Text>
+    </View>
+
+    <View style={styles.fieldview}>
+        <FontAwesome name="id-card" size={20} color="#00ffff" />
+            <Text style={styles.fieldstext}>    {user.role}</Text>
+    </View>
+
+    <View style={styles.fieldview}>
+        <FontAwesome5 name="book" size={20} color="#00ffff" />
+            <Text style={styles.fieldstext}>    {user.major}</Text>
+    </View>
+
+    <View style={styles.fieldview}>
+        <Ionicons name="school-sharp" size={20} color="#00ffff" />
+            <Text style={styles.fieldstext}>    {user.grade}</Text>
+    </View> 
+    </Animatable.View>
+
+    {/* skills and ranks */}
+<View style={styles.skillsandRankContainer}> 
+    <View style={styles.skillsSectionTop}>
+        <Text style={{padding:10, color: '#00ffff', fontWeight:'bold', fontSize:25, marginBottom:10}}>SKILLS</Text>
+    </View>
+
+    <View style={styles.skillsLoop}>
+        <Text>{myloop}</Text>
+    </View> 
+</View>
+
+
+</View>
+</ScrollView>
+        <View style={styles.bottompane}>
+         
         
-            <View style={styles.skillsSectionTop}>
-                <View style={{ marginTop:10, marginLeft:90, alignContent: 'center'}}>
-            <FontAwesome name="gears" size={30} color="#00ffff" />
-            </View>
-                <Text style={{padding:10, color: '#00ffff', fontWeight:'bold', fontSize:25, marginBottom:10}}>SKILLS</Text>
-            </View>
-            
-            {/* call loop */}
-        <View style={styles.skillsLoop}>
-            <Text> {myloop} </Text>
-           </View>
-        
-            <View style={{flex:1, flexDirection:'row', alignSelf:'center', backgroundColor:'#000033', padding:30}}>
-            <TouchableOpacity onPress={() => {onConnect()}}>
-                    <View style={styles.button}>
-                        <Text style={{fontWeight: 'bold', fontSize: 25}}>Connect</Text>
-                    </View>    
-                </TouchableOpacity>   
-            </View>   
-        
-            </View>
-        </ScrollView>
-        <TouchableOpacity onPress={() => {navigate('Search_')}}>
-        <View style={styles.searchButton}>
-        
-        <Text style={{color:'black', fontSize:20, marginRight:30, fontWeight:'bold'}}>
-            Back to Search
-        </Text>
-        <FontAwesome5 name="search-location" size={30} color="black" />
-        
+         <View style={{flex:1, alignItems:'center', paddingBottom:10}}>
+         <Animatable.View animation = "bounceInRight" duration= {1000}>
+            <TouchableOpacity onPress={()=>{navigate('Home')}}>
+            <Entypo name="home" size={35} color="#29e3dd" />
+            </TouchableOpacity> 
+            </Animatable.View>
+          </View>
+
+           <View style={{ flex:1,paddingBottom:15, alignItems:'center'}}>
+           <Animatable.View animation = "bounceInRight" duration= {1000}>
+          <TouchableOpacity onPress={() => {onConnect()}}>
+          <FontAwesome5 name="people-arrows" size={35} color="orange" />
+            </TouchableOpacity> 
+            </Animatable.View>
+          </View>
+          
         </View>
-        </TouchableOpacity>
         </View>
+
         );
     }
-    
+     
     const styles = StyleSheet.create({
         fieldview: {
             alignSelf: 'center', 
             flexDirection: 'row', 
-            //justifyContent: 'center',
             backgroundColor: '#000033', 
             width: '90%',
             padding: 10, 
@@ -191,19 +182,17 @@ export default function SearchedUserProfile (props) {
             marginTop: 20,
             marginBottom: 1
         }, 
-        button: {
-            
-            fontWeight: 'bold', 
-            padding:20, 
-            backgroundColor:'#09ff00',
-            borderRadius:10,
-            marginHorizontal: 5
-        }, 
         fieldstext: {
             fontSize: 18, 
             fontWeight: 'bold', 
             padding: 1,
             color: 'white'
+        },
+        skillsandRankContainer:{
+                flex:1, 
+                marginTop:50,
+                backgroundColor: 'orange', 
+                flexDirection: 'column'
         },
         skillsStyle:{
             color: 'white',
@@ -215,46 +204,27 @@ export default function SearchedUserProfile (props) {
             color: 'red',
             fontSize: 23, 
             textAlign: 'center',
-            //borderWidth:1,
-            //borderRadius:75
-            
         },
         skillsSectionTop:{
-            backgroundColor:'#1a1a1a', 
-            marginTop:50, 
             flex:1, 
-            flexDirection:'row',
-             marginHorizontal:20,
-             borderTopColor: 'yellow', 
-             borderTopWidth:1,
-             padding: 10, 
-             
-             
-             
-              //borderBottomEndRadius:50,
-            //   alignItems:'center',
-            //   alignContent:'center',
-              //borderRadius:50
+            backgroundColor:'#1a1a1a', 
+            alignItems: 'center'
         },
         skillsLoop:{
             backgroundColor:'#1a1a1a',
             flex:1, 
             flexDirection:'row',
-            marginHorizontal:20,
             justifyContent:'center',
             paddingBottom: 20,
             borderBottomColor:'yellow',
             borderWidth: 1,
             borderTopColor:'#1a1a1a'
         },
-        searchButton:{
-            flexDirection:'row', 
-            padding:5,
-            marginBottom:10,
-            marginHorizontal:50, 
-            paddingLeft:90,
-            alignContent:'center',
-            borderRadius:10, 
-            backgroundColor:'#29e3dd'
-        }
+        bottompane:{
+            flexDirection:'row',
+            padding:10,
+            paddingBottom:20,
+          }
     })
+    
+    

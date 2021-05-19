@@ -136,7 +136,7 @@ export default function Home(props) {
 
 
             {/* logout or profile settings */}
-            <View style={{flex:1, flexDirection:'row', alignSelf:'center', marginTop:100, marginBottom:50}}>
+            <View style={{flex:1, flexDirection:'row', alignSelf:'center', marginTop:100, marginBottom:10}}>
                
                 <TouchableOpacity onPress={() => {handleLogout(); navigate('Auth');}}>
                     <View style={{flex:1,flexDirection:'row',alignItems:'center', backgroundColor:'#00ffff', padding:5, paddingLeft:15, marginLeft:20, borderWidth:2, borderBottomLeftRadius:10, borderColor:'white'}}>
@@ -184,7 +184,6 @@ export default function Home(props) {
         </View>
         );
     }
-
     
     const styles = StyleSheet.create({
         fieldview: {
@@ -197,7 +196,8 @@ export default function Home(props) {
             borderRadius: 10, 
             borderColor: 'cyan', 
             borderWidth: 2, 
-            shadowOpacity: 80,
+            shadowOffset: {width: 0, height: 10},
+            shadowOpacity: 0.3,
             shadowColor: 'white',  
             elevation: 15, 
             marginTop: 20,
