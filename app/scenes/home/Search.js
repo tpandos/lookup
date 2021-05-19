@@ -94,9 +94,15 @@ async function fetchApi(){
   <View>
     <ScrollView>
     <View style= {styles.container}>
+<<<<<<< HEAD
         <View style={{flex:1, padding:50}}>
             <ErrorText error={error}/>
             <Animatable.View animation = "slideInRight" duration= {1000} style= {{width: 380, height: 350, backgroundColor: '#000033', 
+=======
+        <View style={{flex:1, padding:50, backgroundColor : "#000033"}}>
+            <ErrorText error={error}/>
+            <Animatable.View animation = "slideInRight" duration= {1000} style= {{flex : 1, width: 380, height: 350, backgroundColor: '#000033', 
+>>>>>>> ec13e75136b4fd4646f73e7170c5c25cfb19ce71
             flexDirection:'row', padding: 5, alignItems: 'center', paddingRight:5, borderRadius: 1}}>
               <Form
                 fields={fields}
@@ -131,4 +137,8 @@ async function fetchApi(){
       })
 
       // <Animatable.View animation = "fadeInLeft" duration = {400}> 
+<<<<<<< HEAD
       //         </Animatable.View>
+=======
+      //         </Animatable.View>
+>>>>>>> ec13e75136b4fd4646f73e7170c5c25cfb19ce71
