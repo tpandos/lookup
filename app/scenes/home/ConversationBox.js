@@ -19,82 +19,62 @@ export default function ConversationBox (props){
   //const { friend_id } = route.params
   const {navigation} = props;
   const {navigate} = props.navigation;
-  const friendId = props.navigation.getParam('friend_info', "No ID")
+  const friend = props.navigation.getParam('friend_info', "No ID")
+  const friendId = friend._id;
+  const friendImage = friend.profileImage;
   const [messages, setMessages] = useState([]);
+  const [convoId, setConvoId] = useState();
   const {state, setState} = useAuth();
   const user = state.user;
+  const [mount , setmount] = useState(true);
   //const friendId = props.navigation.state.params('friend_id', "No such friend")
 
-  //console.log("-------------------------------- friends id",friendId)
+  console.log("-------------------------------- friends id",friendId)
+  // console.log("-------------------------------- friends Image",friendImage)
 
-//  async function loadConversationData() { 
-//  try{
-//   let response = await api.loadConversation(state.user._id)
-//   .then(conversationHistory => {
-
-//     var messageLoop = [];
-//     var messageId = 0;
-    
-
-//     for(let i = conversationHistory.length-1; i >= 0; i--){
-//       messageLoop.push({
-//         _id: messageId = messageId + 1,
-//         text: conversationHistory[i].text,
-//         createdAt: conversationHistory[i].createdAt,
-//         user:{
-//             _id: conversationHistory[i]._id,
-//             name: 'React Native',
-//             avatar: 'https://placeimg.com/140/140/any',
-//          }
-
-
-//        });
-//   }
-//   setMessages(messageLoop)
-// return messageLoop;
-// })
-// } catch(err){
-//       console.warn(err);
-//   }
-// }
 useEffect(() => {
-
+// if (mount == true) { 
   async function loadConversationData() { 
     try{
-     let response = await api.loadConversation(state.user._id)
-     .then(conversationHistory => {
+     let response = await api.loadConversation(state.user._id, friendId)
    
        var messageLoop = [];
        var messageId = 0;
+        
+      setConvoId(response[0]._id);
+      console.log("convoId before useEffect" , convoId)
+      //  console.log("data" , data)
        
    
-       for(let i = conversationHistory.length-1; i >= 0; i--){
+       for(let i = response[0].conversationHistory.length-1; i >= 0; i--){
          messageLoop.push({
            _id: messageId = messageId + 1,
-           text: conversationHistory[i].text,
-           createdAt: conversationHistory[i].createdAt,
+           text: response[0].conversationHistory[i].text,
+           createdAt: response[0].conversationHistory[i].createdAt,
            user:{
-               _id: conversationHistory[i]._id,
+               _id: response[0].conversationHistory[i]._id,
                name: 'React Native',
-               avatar: 'https://placeimg.com/140/140/any',
+               avatar: friendImage,
             }
-   
-   
           });
      }
      setMessages(messageLoop)
    return messageLoop;
-   })
    } catch(err){
          console.warn(err);
      }
    }
    loadConversationData();
-}, [])
+  //  setmount(false)
+  // }
+}, [convoId])
+
+console.log("convoId after effect" , convoId)
 
   const onSend = useCallback((messages = []) => {
     let userText = messages[messages.length-1].text;
-    let response = api.addMessage(state.user._id,userText);
+    let response = api.addMessage(state.user._id, convoId , userText);
+    // setmount(true);
 
     setMessages((previousMessages) => 
       GiftedChat.append(previousMessages, messages),
@@ -148,7 +128,7 @@ useEffect(() => {
       messages={messages}
       onSend={(messages) => onSend(messages)}
       user={{
-        _id: friendId,
+        _id: state.user._id,
       }}
       renderBubble={renderBubble}
       alwaysShowSend

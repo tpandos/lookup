@@ -170,19 +170,22 @@ export async function sendRequest(userId, reciever_id, req){
 
 }
 
-export async function loadConversation(userId){
+export async function loadConversation(userId , otherUserId){
         try {
-        let res = await axios.post(`${c.CONVERSATION}/${userId}/loadConversation`, {to_userId: "60592ef6f8cd70001599df31"})
-        return res.data.exist_conversation[0].conversationHistory;
+        let res = await axios.post(`${c.CONVERSATION}/${userId}/loadConversation`, {to_userId: otherUserId})
+        console.log("----------------------data",res.data.exist_conversation)
+        //return res.data.exist_conversation[0].conversationHistory;
+        return res.data.exist_conversation
         }
         catch (e) {
             throw handler(e);
         }
     }
 
-export async function addMessage(userId, text){
+export async function addMessage(userId, convoId, text){
         try {
-        let res = await axios.post(`${c.SEND_MESSAGE}/${userId}/sendMessage`, {conversationId: "60841769e5b35838526fe770", text: text})
+        let res = await axios.post(`${c.SEND_MESSAGE}/${userId}/sendMessage`, {conversationId: convoId, text: text})
+        console.log("ADD MESSAGE RESPONSE IS" , res)
         return res;
         }
         catch (e) {

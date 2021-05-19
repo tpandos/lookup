@@ -6,18 +6,62 @@ import {Text, View, StyleSheet, Image, FlatList,Alert} from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { Entypo } from '@expo/vector-icons';
 import {createStackNavigator} from 'react-navigation-stack';
+import * as c from '../../constants'
+import axios from 'axios';
+import AsyncStorage from '@react-native-community/async-storage';
 
 export default function ConversationList(props) {
 
     const {navigation} = props;
     const {navigate} = props.navigation;
     const {state, setState} = useAuth();
-    const [friId, setFriId] = useState(false);
+    const {updateUser} = useAuth();
+    const [friId, setFriId] = useState();
+    const [friendsList, getFriendList] = useState(); 
     const user = state.user;
+    const [mount , setMount] = useState(null)
 
     // console.log("username---------------", user.username); 
-    // console.log("array size friends_id===", user.friends._id);
+    
+    // console.log("array size props are ===", updateUser());
+    // console.log("array size friends_id===", user.friends);
 
+    useEffect(()=>{
+     async function getAllFriends() {
+      const response = await axios.get(`${c.UPDATE_PROFILE}/${user._id}`)
+          const allFriends = response.data.user.friends; 
+          console.log("messages" , response.data.user.friends)
+          getFriendList(allFriends);
+
+      }
+      getAllFriends();
+  //     if (mount == true) {
+  //       async function loadData () {
+  //      // props.navigation.navigate('ConversationBox', {friend_info : friId})
+  //      //props.navigation.navigate('ConversationBox')
+  //       let loadConvo = await api.loadConversation(state.user._id, friId)
+  //       console.log("loadConvo======", loadConvo)
+  //       await AsyncStorage.setItem( "userId" , JSON.stringify(loadConvo));
+  //       setMount(false)
+  //     }
+  //   loadData();
+  //   return () => { 
+  //     setMount(false)
+  // }
+  //   }
+    
+    },[]); 
+
+    // function onPress(dataId) {
+    //   // props.navigation.navigate('ConversationBox', {friend_info : dataId})
+    //   // let loadConvo = await api.loadConversation(state.user._id, dataId)
+    //   // console.log("loadConvo======", loadConvo)
+    //   // await AsyncStorage.setItem( "userId" , JSON.stringify(loadConvo));
+    //   setFriId(dataId)
+    //   console.log("friID is " , dataId)
+    //   console.log("friID is " , friId)
+    //   setMount(true)
+    // }
 
     
     return (
@@ -25,7 +69,7 @@ export default function ConversationList(props) {
          <View style={{flex:1}}>
   
               <FlatList
-                data = {user.friends}
+                data = {friendsList}
                 keyExtractor = {(item, index) => index.toString()}
                   renderItem={({item , index})=>(
                     <View style={{flex:1,flexDirection:'row', padding: 8, borderBottomColor: 'grey', borderBottomWidth:1}}>
@@ -42,7 +86,7 @@ export default function ConversationList(props) {
                       </View>
   
                       <View style={{marginTop:15}}>
-                        <TouchableOpacity onPress={() => {props.navigation.navigate('ConversationBox', {friend_info: item._id})}}>
+                        <TouchableOpacity onPress={() => {props.navigation.navigate('ConversationBox', {friend_info : item})}}>
       
                         
                         <Text style={{color:'white',borderColor:'white',borderWidth:2, padding:10, borderRadius:10}}>
