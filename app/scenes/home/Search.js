@@ -1,5 +1,6 @@
 import React, {useState, useSafeState, useContext, useEffect, useRef} from 'react';
 import 'react-native-gesture-handler';
+import { Entypo } from '@expo/vector-icons';
 import { FlatList, SafeAreaView, ActivityIndicator, ScrollView, StyleSheet, Text, View} from 'react-native'
 import AsyncStorage from '@react-native-community/async-storage';
 import Icon from 'react-native-vector-icons/Ionicons'
@@ -61,9 +62,9 @@ function onSubmit (data) {
 useEffect(() => {
 if (mount == true ){
 
-    console.log("state.user===")
+   // console.log("state.user===")
     //console.log(state.user);
-    console.log(state.user._id);
+ //   console.log(state.user._id);
 
 async function fetchApi(){
     setLoading(true);
@@ -91,12 +92,12 @@ async function fetchApi(){
 
 
   return(
-  <View>
+    <View style={{flex:1, backgroundColor:'#000033'}}>
     <ScrollView>
     <View style= {styles.container}>
-        <View style={{flex:1, padding:50, backgroundColor : "#000033"}}>
+        <View style={{flex:1, padding:50}}>
             <ErrorText error={error}/>
-            <Animatable.View animation = "slideInRight" duration= {1000} style= {{flex : 1, width: 380, height: 350, backgroundColor: '#000033', 
+            <Animatable.View animation = "slideInRight" duration= {1000} style= {{width: 380, height: 350, backgroundColor: '#000033', 
             flexDirection:'row', padding: 5, alignItems: 'center', paddingRight:5, borderRadius: 1}}>
               <Form
                 fields={fields}
@@ -107,15 +108,22 @@ async function fetchApi(){
                 //style = {{backgroundColor: '#6D25BE',  marginTop:2, marginLeft: 2, padding: 10, width: 150, borderRadius: 30, borderColor:'#fff', borderWidth: '2'}}
                 onSubmit={onSubmit}/>
             </Animatable.View>
-            <TouchableOpacity
+            {/* <TouchableOpacity
             style={{backgroundColor: '#6D25BE', alignItems: 'center',  marginTop:2, marginLeft: 2, padding: 10, width: 150, borderRadius: 30, borderColor:'#fff', borderWidth: '2'}}
             onPress={()=>{navigate('App')}}> 
-            <Text style={{ textAlign: 'center', color: '#fff', fontSize: 15}}> Back to Home</Text>
-            </TouchableOpacity>
+            <Text style={{ textAlign: 'center', color: '#fff', fontSize: 15}}> Home</Text>
+            </TouchableOpacity> */}
             
         </View>
     </View>
    </ScrollView>
+   <View style={styles.bottompane}>
+         <View style={{flex:1, alignItems:'center', paddingBottom:15}}>
+            <TouchableOpacity onPress={()=>{navigate('App')}}>
+            <Entypo name="home" size={35} color="#29e3dd" />
+            </TouchableOpacity> 
+          </View>
+        </View>
  </View>
         
     )
@@ -126,7 +134,12 @@ async function fetchApi(){
           flex: 1,
           alignItems: 'center',
           justifyContent: 'center',
-          backgroundColor: "#eaeaea"
+          backgroundColor: "#000033"
+        },
+        bottompane:{
+          flexDirection:'row',
+          padding:10,
+          paddingBottom:20,
         }
       })
 
