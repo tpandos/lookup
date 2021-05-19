@@ -10,7 +10,6 @@ import {headerStyle, headerTitleStyle} from '../theme';
 
 const FriendListStack = createStackNavigator(
     {
-        
         Home: HomeScreen,
         FriendList: FriendListScreen,
     },

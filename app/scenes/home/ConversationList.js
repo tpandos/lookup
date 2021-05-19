@@ -1,115 +1,104 @@
+import React, {useState, useEffect} from 'react';
+import 'react-native-gesture-handler';
+import {Image, View, StyleSheet, Text, Animated} from 'react-native'
+import {  TouchableOpacity } from 'react-native-gesture-handler';
 import * as api from "../../services/auth";
 import { useAuth } from "../../providers/auth";
-import React, {useState, useContext, useEffect} from 'react';
-import { Profiler } from 'react';
-import {Text, View, StyleSheet, Image, FlatList,Alert} from 'react-native';
-import { TouchableOpacity } from 'react-native-gesture-handler';
-import { Entypo } from '@expo/vector-icons';
-import {createStackNavigator} from 'react-navigation-stack';
 import * as c from '../../constants'
 import axios from 'axios';
-import AsyncStorage from '@react-native-community/async-storage';
+import { Entypo } from '@expo/vector-icons';
+import { MaterialIcons } from '@expo/vector-icons';
 
 export default function ConversationList(props) {
 
+  const {navigation} = props;
+  const {navigate} = props.navigation;
+  const {state, setState} = useAuth();
+  const [loading, setLoading] = useState(false);
+  const [friendsList, getFriendList] = useState([]); 
+  const [loadFriendUpdate, setLoadFriend] = useState(false); // set to true for updating 
+  const user = state.user; 
+  const scrollY = React.useRef(new Animated.Value(0)).current;
+  const ITEM_SIZE = 160;
+
+   // adding new useeffect 
+  useEffect(()=>{
+  async function getAllFriends (){
+    await axios.get(`${c.UPDATE_PROFILE}/${user._id}`)
+    .then((response)=>{
+      const allFriends = response.data.user.friends; 
+      getFriendList(allFriends);
+      setLoadFriend(false); 
+    })
+    .catch(error => console.error(`error: ${error}`));
+    setLoadFriend(false); 
+  }
+    getAllFriends();
+  },[loadFriendUpdate]); 
+
+  async function loadConversation(friend_id, friend_username) {  //data is friend_id 
+    // call loadConversation function 
     const {navigation} = props;
     const {navigate} = props.navigation;
-    const {state, setState} = useAuth();
-    const {updateUser} = useAuth();
-    const [friId, setFriId] = useState();
-    const [friendsList, getFriendList] = useState(); 
-    const user = state.user;
-    const [mount , setMount] = useState(null)
+    setLoading(true);
+    let response = await api.loadConversation(state.user._id, friend_id);// <-- friend id
+    setLoadFriend(true); 
+    navigate('ConversationBox', {conversation_id: response[0]._id, history: response[0].conversationHistory, friend_id: friend_id, friend_username: friend_username})
+   } 
 
-    // console.log("username---------------", user.username); 
-    
-    // console.log("array size props are ===", updateUser());
-    // console.log("array size friends_id===", user.friends);
+    return(
+      <View style={styles.container}>
+        <View style={{flex:1}}>
+          <Animated.FlatList
+            data = {friendsList}
+            onScroll = {Animated.event([{ nativeEvent : {contentOffset: {y : scrollY}}}],{useNativeDriver : true})}
+            keyExtractor={profile => profile._id.toString()}
+            renderItem = {({item ,index}) => { 
 
-    useEffect(()=>{
-     async function getAllFriends() {
-      const response = await axios.get(`${c.UPDATE_PROFILE}/${user._id}`)
-          const allFriends = response.data.user.friends; 
-          console.log("messages" , response.data.user.friends)
-          getFriendList(allFriends);
+              const inputRange = [-1,0,ITEM_SIZE * index,ITEM_SIZE * (index + 2)]
+              const scale = scrollY.interpolate({inputRange,outputRange : [1 , 1 , 1, 0]})
+                return <Animated.View
+                  style = {{ 
+                  shawdowColor: "#000",
+                  shadowOffset: {width: 0, height: 10},
+                  shadowOpacity : 0.3, 
+                  transform : [{scale}]
+                  }}>
+                  <View style={{flex : 1, flexDirection: "row", backgroundColor: '#000033', marginTop:2, marginLeft: 10, padding: 20, width: 400, borderRadius: 30, marginHorizontal: 2, borderColor:'#fff', borderWidth: '2'}}>
+                    <View>
+                      <TouchableOpacity >
+                        <Image source={{uri: item.profileImage}} style={styles.imageDisplay}/>
+                      </TouchableOpacity>
+                    </View>
 
-      }
-      getAllFriends();
-  //     if (mount == true) {
-  //       async function loadData () {
-  //      // props.navigation.navigate('ConversationBox', {friend_info : friId})
-  //      //props.navigation.navigate('ConversationBox')
-  //       let loadConvo = await api.loadConversation(state.user._id, friId)
-  //       console.log("loadConvo======", loadConvo)
-  //       await AsyncStorage.setItem( "userId" , JSON.stringify(loadConvo));
-  //       setMount(false)
-  //     }
-  //   loadData();
-  //   return () => { 
-  //     setMount(false)
-  // }
-  //   }
-    
-    },[]); 
-
-    // function onPress(dataId) {
-    //   // props.navigation.navigate('ConversationBox', {friend_info : dataId})
-    //   // let loadConvo = await api.loadConversation(state.user._id, dataId)
-    //   // console.log("loadConvo======", loadConvo)
-    //   // await AsyncStorage.setItem( "userId" , JSON.stringify(loadConvo));
-    //   setFriId(dataId)
-    //   console.log("friID is " , dataId)
-    //   console.log("friID is " , friId)
-    //   setMount(true)
-    // }
-
-    
-    return (
-        <View style={styles.container}>
-         <View style={{flex:1}}>
-  
-              <FlatList
-                data = {friendsList}
-                keyExtractor = {(item, index) => index.toString()}
-                  renderItem={({item , index})=>(
-                    <View style={{flex:1,flexDirection:'row', padding: 8, borderBottomColor: 'grey', borderBottomWidth:1}}>
-
-                        <View>
-                           <TouchableOpacity >
-                          <Image source={{uri: item.profileImage}} style={styles.imageDisplay}/>
-                          </TouchableOpacity>
-                        </View>
-                      
-                      <View style={{flex:1, flexDirection:'row'}}>
-                      <View style={{flex:1,marginTop:20}}>
-                          <Text style={{ color: 'white', fontSize: 18}}> {item.username} </Text>
+                    <View style={{flex:1, flexDirection:'row'}}>
+                      <View style={{flex:1,marginTop:22, marginLeft: 10}}>
+                        <Text style={{ color: 'white', fontSize: 18}}> {item.username} </Text>
                       </View>
-  
-                      <View style={{marginTop:15}}>
-                        <TouchableOpacity onPress={() => {props.navigation.navigate('ConversationBox', {friend_info : item})}}>
-      
-                        
+                      
+                      <View style={{paddingTop:20, marginRight:30}}>
+                        <TouchableOpacity onPress={() => {loadConversation(item._id, item.username)}}>
                         <Text style={{color:'white',borderColor:'white',borderWidth:2, padding:10, borderRadius:10}}>
                           message
                         </Text>
                         </TouchableOpacity>
                       </View>
-                      </View>
                     </View>
-                  )}>
-                
-              </FlatList>
-            
-         </View>
-         <View style={styles.bottompane}>
-           <View style={{flex:1, alignItems:'center', paddingBottom:10}}>
-              <TouchableOpacity onPress={()=>{navigation.navigate('Home')}}>
+                  </View>
+                </Animated.View>
+            }}
+          />  
+        </View>
+
+        <View style={styles.bottompane}>
+          <View style={{flex:1, alignItems:'center', paddingBottom:10}}>
+            <TouchableOpacity onPress={()=>{navigate('Home')}}>
               <Entypo name="home" size={35} color="#29e3dd" />
-              </TouchableOpacity> 
-            </View>
+            </TouchableOpacity> 
           </View>
         </View>
-          );
+      </View>
+    );
       }
   
       const styles = StyleSheet.create({

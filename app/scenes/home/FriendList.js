@@ -115,10 +115,3 @@ export default function FriendList (props) {
           paddingBottom:20
         }
       })
-
-
-    //   SearchResults.navigationOptions = ({}) => {
-    //     return {
-    //         title: `Search Results`
-    //     }
-    // };
