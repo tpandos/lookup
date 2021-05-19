@@ -21,7 +21,6 @@ export default function UpdateProfile (props) {
     let initialData = {}
     // // set initial data 
     if (state.user.skills.length === 0) {
-        //console.log("1111111111111111111111111111"); 
 
          initialData = {
             "username": state.user.username,
@@ -37,7 +36,6 @@ export default function UpdateProfile (props) {
             "rank_3":  "",
         };
     } else{
-        //console.log("*********************************"); 
 
         initialData = {
         "username": state.user.username,
@@ -53,16 +51,13 @@ export default function UpdateProfile (props) {
         "rank_3": state.user.skills[2].rank,
     };
 
-        //console.log(state.user.skills.length);
     }
 
         // profile Image url
         let profileImage;
         let filename; 
         let match;
-        //let type;
 
-    // console.log(state.user)
 
     const fields = [
         {name: 'username', label: 'Username', required: true},
@@ -85,29 +80,23 @@ export default function UpdateProfile (props) {
             {  name: 'rank_3', label: 'Rank (1-10)', required: true, type: TYPES.Number},
              
         ]
-     
+        
     ];
 
 
     async function onSubmit(data) {
-        console.log('@@@@ SUBMIT CLICKED')
         setLoading(true);
-        //console.log("profile---////////////////////////////-", profileImage); 
 
         if(profileImage[0] === "f"){
-            console.log("***ADDING NEW PROFILE IMAGE",); 
             data.profileImage = profileImage; 
         } else {
             data.profileImage = state.user.profileImage; 
-            console.log("*** EXISTING PROFILE IMAGE");
         }
 
         try {
            let response = await api.updateProfile(state.user._id, data);
-      
             updateUser(response.user);
             setLoading(false);
-
             navigation.goBack();
         } catch (error) {
             setError(error.message);
@@ -141,8 +130,6 @@ export default function UpdateProfile (props) {
           aspect: [4, 3],
           quality: 1,
         });
-    
-        //console.log("URI::----> ", result.uri);
         
         if (!result.cancelled) {
         profileImage = result.uri; 
