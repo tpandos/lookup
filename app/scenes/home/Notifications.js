@@ -6,7 +6,6 @@ import { Entypo } from '@expo/vector-icons';
 import * as api from "../../services/auth";
 import * as c from '../../constants'
 import axios from 'axios';
-
 import { MaterialIcons } from '@expo/vector-icons';
 
 export default function Notifications(props) {

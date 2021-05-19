@@ -115,7 +115,7 @@ if (userData.message == "Results by ranking"){
           <TouchableOpacity
           onPress= {() => (OnPress(userData.results[index]._id))}
           //onPress= {() => {navigate('SearchedUserProfile', { userprofile : api.SearchedUserProfile(state.user._id, response[index]._id)})}}
-          style={{flex : 1, flexDirection: "row", justifyContent: "space-between", backgroundColor: '#000033', marginTop:2, marginLeft: 10, padding: 20, width: 400, borderRadius: 30, marginHorizontal: 2, borderColor:'#fff', borderWidth: '2'}}>
+          style={{flex : 1, flexDirection: "row", justifyContent: "space-between", backgroundColor: '#000033', marginTop:2, marginLeft: 10, padding: 20, borderRadius: 30, marginHorizontal: 2, borderColor:'#fff', borderWidth: '2'}}>
           <Image source={{uri: userData.results[index].profileImage}} style={{width:100, height:100, borderRadius:30}}/>
           <Text style={{ textAlign: 'center', color: '#fff', fontSize: 22, fontWeight:"bold"}}> {item.username} </Text>
           <Text style={{ textAlign: 'right', color: '#fff', fontSize: 18}}> Ranking: {userData.results[index].ranking} </Text>
@@ -130,7 +130,7 @@ if (userData.message == "Results by ranking"){
       return(
         <SafeAreaView style= {styles.container}>
           <TouchableOpacity
-          style={{alignItems: 'center', backgroundColor: 'white', marginTop:2, marginLeft: 10, padding: 20, width: 400, marginHorizontal: 2, fontSize: 24}}
+          style={{alignItems: 'center', backgroundColor: 'white', marginTop:2, marginLeft: 10, padding: 20, marginHorizontal: 2, fontSize: 24}}
           onPress ={()=>{navigate('Search_')}}> 
           <Text Texstyle={{flex:1, color: '#37474f', padding:50, justifyContent: 'center', alignItems: 'center'}}> Back to Search </Text>
           </TouchableOpacity>

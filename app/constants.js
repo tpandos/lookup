@@ -13,4 +13,3 @@ export const SEARCH = `${API_URL}/user`;
 export const SEARCHED_PROFILE = `${API_URL}/user`;
 export const CONVERSATION = `${API_URL}/user`;
 export const SEND_MESSAGE = `${API_URL}/user`;
-
